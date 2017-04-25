@@ -1,28 +1,4 @@
-#!/bin/bash
-dr="/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/ora2edb"
-psql ntp -t -c "select 'drop sequence XDB_ADMIN.'||sequence_name||' ;'  from dba_sequences@gzoci where SEQUENCE_OWNER='XDB_ADMIN' AND SEQUENCE_NAME LIKE 'LOB%' order by sequence_name;" > $dr/drop_ora_lob_dml_seq_trigger.sql
 
-psql ntp -t -c  "select ' drop table  XDB_ADMIN.'|| table_NAME||' ;' FROM dba_tables@gzoci WHERE OWNER='XDB_ADMIN' AND TABLE_NAME LIKE 'LOB%' ORDER BY TABLE_NAME;" >> $dr/drop_ora_lob_dml_seq_trigger.sql
-
-
-psql ntp -t -c "select ' drop trigger XDB_ADMIN.'|| TRIGGER_NAME||' ;' FROM dba_triggers@gzoci WHERE OWNER='XDB_ADMIN' AND TRIGGER_NAME LIKE 'LOB%' ORDER BY TRIGGER_NAME;" >> $dr/drop_ora_lob_dml_seq_trigger.sql
-
-
-
-/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/ora2edb: $ cd ../edb2ora/
-/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/edb2ora: $ ls -l
-total 184
--rw-rw-r--. 1 edb edb   3615 Apr 24 19:14 create_lobdml_seq_edb.sql
--rw-rw-r--. 1 edb edb   5835 Apr 24 19:14 create_lobdml_status_tables_edb.sql
--rw-rw-r--. 1 edb edb  27115 Apr 24 19:14 create_lobdml_trg_edb.sql
--rw-rw-r--. 1 edb edb 117895 Apr 24 19:14 create_lob_edb2ora_sync_function.sql
--rw-rw-r--. 1 edb edb   1995 Apr 24 19:13 drop_lobdml_edb_seq.sql
--rw-rw-r--. 1 edb edb   1605 Apr 24 19:13 drop_lobdml_edb_trg.sql
--rw-rw-r--. 1 edb edb   1995 Apr 24 19:13 drop_lobdml_status_edb_tables.sql
--rw-rw-r--. 1 edb edb   2055 Apr 24 19:13 drop_lob_edb2ora_sync_function.sql
--rwx------. 1 edb edb    920 Apr 24 19:13 drop_lob_sync_script_generator.sh
--rwx------. 1 edb edb   7954 Apr 24 19:14 lob_sync_edb2ora_script_generator.sh
-/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/edb2ora: $ cat lob_sync_edb2ora_script_generator.sh
 #!/bin/bash
 
 # get lob table names
