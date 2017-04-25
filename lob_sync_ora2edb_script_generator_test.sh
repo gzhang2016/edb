@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # get lob table names
-tblist=`cat /opt/PostgresSQL/xdb_scripts/lob_sync_scripts/lob_table_sync_list.txt`
-#tblist="GZ_TEST"
+#tblist=`cat /opt/PostgresSQL/xdb_scripts/lob_sync_scripts/lob_table_sync_list.txt`
+tblist="GZ_TEST GZTEST_CLOB_LONG_TABLE_NAME"
 dr="/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/ora2edb"
 ora_control_schema='XDB_ADMIN'
 ora_user='P42'
@@ -79,7 +79,11 @@ echo "             where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type;">>$d
 echo "          END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      IF  rec_dml.dml_type = 'update' THEN ">>$dr/create_lob_ora2edb_sync_function.sql
-echo "        update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "           IF  rec_dml.dml_id < (select  max(dml_id) from $ora_control_schema.LOB_${short_tb}_DML@$edblink where dml_type ='update' and sync_status='no' and pkey=rec_dml.pkey group by pkey) THEN ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "               update $ora_control_schema.LOB_${short_tb}_DML@$edblink set sync_status = 'NotLatestUpdate' ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                      where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type and dml_id=rec_dml.dml_id; ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "           ELSE ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "               update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_function.sql
 
 # get lob table column names
 
@@ -91,15 +95,16 @@ echo "        update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_funct
                     do
                         if [[ $col_name = ${col_list[-1]} ]]
                           then
-                          echo "             $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey)">>$dr/create_lob_ora2edb_sync_function.sql
+                          echo "                     $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey)">>$dr/create_lob_ora2edb_sync_function.sql
                         else
-                          echo "             $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey),">>$dr/create_lob_ora2edb_sync_function.sql
+                          echo "                     $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey),">>$dr/create_lob_ora2edb_sync_function.sql
                         fi
                    done
-echo "        where  ${tb}_ID = rec_dml.pkey ;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                            where  ${tb}_ID = rec_dml.pkey ;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "">>$dr/create_lob_ora2edb_sync_function.sql
-echo "        update $ora_control_schema.LOB_${short_tb}_DML@$edblink set sync_status = 'yes',sync_time=CURRENT_TIMESTAMP ">>$dr/create_lob_ora2edb_sync_function.sql
-echo "         where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "             update $ora_control_schema.LOB_${short_tb}_DML@$edblink set sync_status = 'yes',sync_time=CURRENT_TIMESTAMP ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                  where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type and dml_id=rec_dml.dml_id;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "           END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "   END LOOP;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "   CLOSE cur_dmls;">>$dr/create_lob_ora2edb_sync_function.sql
@@ -165,7 +170,11 @@ echo "             where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type;">>$d
 echo "          END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      IF  rec_dml.dml_type = 'update' THEN ">>$dr/create_lob_ora2edb_sync_function.sql
-echo "        update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "           IF  rec_dml.dml_id < (select  max(dml_id) from $ora_control_schema.LOB_${tb}_DML@$edblink where dml_type ='update' and sync_status='no' and pkey=rec_dml.pkey group by pkey) THEN ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "               update $ora_control_schema.LOB_${tb}_DML@$edblink set sync_status = 'NotLatestUpdate' ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                      where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type and dml_id=rec_dml.dml_id; ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "           ELSE ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "               update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_function.sql
 
 # get lob table column names
 
@@ -177,15 +186,16 @@ echo "        update  $edb_schema.${tb} set ">>$dr/create_lob_ora2edb_sync_funct
                     do
                         if [[ $col_name = ${col_list[-1]} ]]
                           then
-                          echo "             $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey)">>$dr/create_lob_ora2edb_sync_function.sql
+                          echo "                   $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey)">>$dr/create_lob_ora2edb_sync_function.sql
                         else
-                          echo "             $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey),">>$dr/create_lob_ora2edb_sync_function.sql
+                          echo "                   $col_name = (select $col_name from  $ora_user.${tb}@$edblink where ${tb}_ID = rec_dml.pkey),">>$dr/create_lob_ora2edb_sync_function.sql
                         fi
                    done
-echo "        where  ${tb}_ID = rec_dml.pkey ;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                       where  ${tb}_ID = rec_dml.pkey ;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "">>$dr/create_lob_ora2edb_sync_function.sql
-echo "        update $ora_control_schema.LOB_${tb}_DML@$edblink set sync_status = 'yes',sync_time=CURRENT_TIMESTAMP ">>$dr/create_lob_ora2edb_sync_function.sql
-echo "         where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "               update $ora_control_schema.LOB_${tb}_DML@$edblink set sync_status = 'yes',sync_time=CURRENT_TIMESTAMP ">>$dr/create_lob_ora2edb_sync_function.sql
+echo "                 where pkey = rec_dml.pkey and dml_type=rec_dml.dml_type and dml_id=rec_dml.dml_id;">>$dr/create_lob_ora2edb_sync_function.sql
+echo "          END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "      END IF;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "   END LOOP;">>$dr/create_lob_ora2edb_sync_function.sql
 echo "   CLOSE cur_dmls;">>$dr/create_lob_ora2edb_sync_function.sql
@@ -196,3 +206,4 @@ echo "  ">>$dr/create_lob_ora2edb_sync_function.sql
 echo "  ">>$dr/create_lob_ora2edb_sync_function.sql
    fi
   done
+
