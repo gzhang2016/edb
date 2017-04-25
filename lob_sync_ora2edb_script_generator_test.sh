@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # get lob table names
-#tblist=`cat /opt/PostgresSQL/xdb_scripts/lob_sync_scripts/lob_table_sync_list.txt`
-tblist="GZ_TEST GZTEST_CLOB_LONG_TABLE_NAME"
+tblist=`cat /opt/PostgresSQL/xdb_scripts/lob_sync_scripts/lob_table_sync_list.txt`
 dr="/opt/PostgresSQL/xdb_scripts/lob_sync_scripts/ora2edb"
 ora_control_schema='XDB_ADMIN'
 ora_user='P42'
