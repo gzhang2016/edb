@@ -681,7 +681,7 @@ Please paste this into your cluster properties file.
 
 
 virtualIp=10.91.10.225
-virtualIp.interface=eth0:0
+virtualIp.interface=eth0:0 ( should be:ens192:0)
 virtualIp.netmask=225.225.225.0
 
   
@@ -704,6 +704,78 @@ eth0:0: ERROR while getting interface flags: No such device
 SIOCSIFNETMASK: No such device
 eth0:0: ERROR while getting interface flags: No such device
 
+-- try user interface ens192 ( got it by "ifconfig")
 
+[root@pg-prd2 bin]# /usr/efm-2.1/bin/efm_address assign ens192:0 10.91.10.225 225.225.225.0
+
+-- hang over there --> close putty --> re ssh with putty and does not work 
+  ---> putty to pg-prd2 and then ssh to pg-prd1( 10.91.10.226) --> OK ????
+
+
+-- check vip 
+
+[enterprisedb@pg-prd1 ~]$ ifconfig
+ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.91.10.226  netmask 255.255.255.0  broadcast 10.91.10.255
+        inet6 fe80::250:56ff:fea6:4a7b  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:a6:4a:7b  txqueuelen 1000  (Ethernet)
+        RX packets 2838103  bytes 302231696 (288.2 MiB)
+        RX errors 0  dropped 591531  overruns 0  frame 0
+        TX packets 109120  bytes 107066039 (102.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens192:0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.91.10.225  netmask 255.0.0.0  broadcast 10.255.255.255
+        ether 00:50:56:a6:4a:7b  txqueuelen 1000  (Ethernet)
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 3121  bytes 935070 (913.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3121  bytes 935070 (913.1 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+-- check vip 
+
+[root@pg-prd1 ~]#  /bin/ping -q -c3 -w5 10.91.10.225
+PING 10.91.10.225 (10.91.10.225) 56(84) bytes of data.
+
+--- 10.91.10.225 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 1999ms
+rtt min/avg/max/mdev = 0.031/0.038/0.045/0.005 ms
+
+-- good !!!
+
+-- release vip
+
+/usr/efm-2.1/bin/efm_address release  ens192:0 
+
+[root@pg-prd1 ~]# /usr/efm-2.1/bin/efm_address release  ens192:0
+[root@pg-prd1 ~]# ifconfig
+ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.91.10.226  netmask 255.255.255.0  broadcast 10.91.10.255
+        inet6 fe80::250:56ff:fea6:4a7b  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:a6:4a:7b  txqueuelen 1000  (Ethernet)
+        RX packets 2841257  bytes 302479542 (288.4 MiB)
+        RX errors 0  dropped 592141  overruns 0  frame 0
+        TX packets 109586  bytes 107110981 (102.1 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 3302  bytes 971286 (948.5 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3302  bytes 971286 (948.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+-- virtualIp.interface should be: ens192
+
+
+
+==================================================================
 
 
