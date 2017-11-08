@@ -1,0 +1,709 @@
+step 1: downlad repo epel
+
+ rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+
+step 2: download edb yum repo 
+
+  rpm -ivh http://yum.enterprisedb.com/edbrepos/edb-repo-9.6-4.noarch.rpm
+
+user:qs-investors
+password: cc3ed73fcedcc6485eddae01ccd24778
+
+sed -i "s/<username>/qs-investors/g"  /etc/yum.repos.d/edb.repo
+
+
+sed -i "s/<password>/cc3ed73fcedcc6485eddae01ccd24778/g"  /etc/yum.repos.d/edb.repo
+
+
+---------------------
+
+[edbas96]
+name=EnterpriseDB Advanced Server 9.6 $releasever - $basearch
+baseurl=http://qs-investors:cc3ed73fcedcc6485eddae01ccd24778@yum.enterprisedb.com/9.6/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/ENTERPRISEDB-GPG-KEY
+
+
+step 3: yum liste edb-as*
+        yum list *bart*
+        yum list *efm*
+
+step 4 install
+
+yum install edb-as96-server -y
+
+ yum install efm21 -y
+
+
+step 4: change owner of /var/data to enterprisedb
+
+
+root: cd /var
+
+chown -R enterprisedb:enterprisedb data
+
+step 5: 
+
+  link data dirctory /var/data to default : /var/lib/edb/as9.6/data
+
+[root@pg-prd1 as9.6]# rm -rf /var/lib/edb/as9.6/data
+[root@pg-prd1 as9.6]# ls
+backups
+
+-- make link :    
+  ln -s /var/data/ /var/lib/edb/as9.6/data
+
+
+[root@pg-prd1 as9.6]# ln -s /var/data/ /var/lib/edb/as9.6/data
+[root@pg-prd1 as9.6]# ls
+backups  data
+[root@pg-prd1 as9.6]# ls -ltr
+total 0
+drwx------. 2 enterprisedb enterprisedb  6 Aug 30 02:33 backups
+lrwxrwxrwx. 1 root         root         10 Nov  8 11:47 data -> /var/data/
+[root@pg-prd1 as9.6]#
+
+step 6: initdb  ( postgres compatible )
+
+enterprisedb:
+ /usr/edb/as9.6/bin/initdb --no-redwood-compat --encoding=UTF8 -U postgres -D /var/lib/edb/as9.6/data
+
+
+[root@pg-prd1 ~]# su - enterprisedb
+Last login: Wed Nov  8 10:24:31 EST 2017 from qsi-nydc-xd003.qsi.local on pts/0
+
+[enterprisedb@pg-prd1 ~]$ /usr/edb/as9.6/bin/initdb --no-redwood-compat --encoding=UTF8 -U postgres -D /var/lib/edb/as9.6/data
+The files belonging to this database system will be owned by user "enterprisedb".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_US.UTF-8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/edb/as9.6/data ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+loading edb contrib modules ...
+dbms_aqadm_public.sql ok
+dbms_aqadm.plb ok
+dbms_aq_public.sql ok
+dbms_aq.plb ok
+edb_bulkload.sql ok
+edb_gen.sql ok
+edb_objects.sql ok
+waitstates.sql ok
+installing extension edb_dblink_libpq ... ok
+installing extension edb_dblink_oci ... ok
+installing extension pldbgapi ... ok
+snap_tables.sql ok
+snap_functions.sql ok
+dblink_ora.sql ok
+edb_infinitecache.sql ok
+sys_stats.sql ok
+finalizing initial databases ... ok
+syncing data to disk ... ok
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    /usr/edb/as9.6/bin/pg_ctl -D /var/lib/edb/as9.6/data -l logfile start
+
+[enterprisedb@pg-prd1 ~]$
+[enterprisedb@pg-prd1 ~]$
+
+
+step 7: enable edb-as-9.6
+
+[root@pg-prd1 ~]# systemctl enable edb-as-9.6
+Created symlink from /etc/systemd/system/multi-user.target.wants/edb-as-9.6.service to /usr/lib/systemd/system/edb-as-9.6.service.
+[root@pg-prd1 ~]#
+
+step 8: start edb-as-9.6
+
+  systemctl start edb-as-9.6 
+
+  systemctl status edb-as-9.6
+
+  ps -ef | grep edb 
+ 
+/usr/edb/as9.6/bin/edb-postmaster -D /var/lib/edb/as9.6/data
+
+
+step 9: connect to postgres ( postgrs compatible)
+
+-- user is postgres
+   db is postgres 
+
+[enterprisedb@pg-prd1 ~]$ psql postgres -U postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+postgres=#
+
+
+step 10: check user enterpirsedb env
+
+[enterprisedb@pg-prd1 ~]$ pwd
+/home/enterprisedb
+[enterprisedb@pg-prd1 ~]$ ls -la
+total 24
+drwx------. 6 enterprisedb domain users  177 Nov  8 12:10 .
+drwxr-xr-x. 6 root         root           78 Oct 30 13:36 ..
+-rw-------. 1 enterprisedb domain users 1056 Nov  8 12:06 .bash_history
+-rw-------. 1 enterprisedb domain users   18 Oct 30 12:03 .bash_logout
+-rw-------. 1 enterprisedb domain users  193 Oct 30 12:03 .bash_profile
+-rw-------. 1 enterprisedb domain users  231 Oct 30 12:03 .bashrc
+drwxr-xr-x. 3 enterprisedb domain users   18 Oct 30 12:05 .cache
+drwxr-xr-x. 3 enterprisedb domain users   18 Oct 30 12:05 .config
+drwx------. 4 enterprisedb domain users   39 Oct 30 12:03 .mozilla
+-rw-------. 1 enterprisedb domain users    3 Nov  8 12:06 .psql_history
+drwx------. 2 enterprisedb domain users   25 Nov  3 08:29 .ssh
+-rw-------. 1 enterprisedb domain users 1306 Nov  8 12:10 .viminfo
+[enterprisedb@pg-prd1 ~]$
+
+vi .bash_profile
+
+
+PGDATA=/var/lib/edb/as9.6/data
+LD_LIBRARY_PATH=/usr/edb/as9.6/lib
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/edb/as9.6/bin
+export PGDATA
+export LD_LIBRARY_PATH
+export PATH
+
+
+
+
+
+step 11 update postgresql.conf file 
+
+-- check free memory 
+
+[enterprisedb@pg-prd1 data]$ cat  /proc/meminfo| grep MemTotal
+MemTotal:       49292040 kB
+
+
+[enterprisedb@pg-prd1 data]$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:            47G        563M         45G        218M        1.4G         45G
+Swap:          3.9G          0B        3.9G
+
+http://pgtune.leopard.in.ua/
+-- get suggestion:
+
+input: mem:48GB
+
+# DB Version: 9.6
+# OS Type: linux
+# DB Type: oltp
+# Total Memory (RAM): 48 GB
+# Number of Connections: 300
+
+max_connections = 300
+shared_buffers = 12GB
+effective_cache_size = 36GB
+work_mem = 41943kB
+maintenance_work_mem = 2GB
+min_wal_size = 2GB
+max_wal_size = 4GB
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+default_statistics_target = 100
+------------------------------
+
+cat >>$PGDATA/postgresql.conf <<EOF
+
+max_connections = 300
+shared_buffers = 12GB
+effective_cache_size = 36GB
+work_mem = 40MB
+maintenance_work_mem = 2GB
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+default_statistics_target = 100
+
+hot_standby = on
+hot_standby_feedback = on
+max_wal_senders = 6
+wal_level = hot_standby
+archive_mode = on
+archive_command = '/bin/rue'
+logging_collector = on
+log_lock_waits = on
+log_temp_files = 0
+log_checkpoints = on
+log_autovacuum_min_duration = 0
+log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d'
+min_wal_size = 512MB
+max_wal_size = 5GB
+wal_keep_segments = 64
+edb_dynatune = 100
+
+EOF
+
+step 12 craete  rep user 
+
+ create user repuser with replication password 'reppass';
+
+-- create /home/enterprisedb/.pgpass
+
+ vi .pgpass
+
+localhost:5444:replication:repuser:reppass
+10.91.10.226:5444:replication:repuser:reppass
+10.91.10.227:5444:replication:repuser:reppass
+10.81.10.226:5444:replication:repuser:reppass
+
+chmod 600 .pgpass
+
+
+-- edit pg_hba.conf
+
+host    replication     repuser         10.91.10.226/32          md5
+host    replication     repuser         10.91.10.227/32          md5
+host    replication     repuser         10.81.10.226/32          md5
+
+
+-- restart db 
+
+systemctl stop edb-as-9.6
+systemctl start edb-as-9.6
+
+
+
+[enterprisedb@pg-prd1 ~]$ psql postgres -U postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+postgres=# \l
+                                     List of databases
+   Name    |  Owner   | Encoding |   Collate   |    Ctype    | ICU |   Access privileges
+-----------+----------+----------+-------------+-------------+-----+-----------------------
+ postgres  | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |     |
+ template0 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |     | =c/postgres          +
+           |          |          |             |             |     | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 |     | =c/postgres          +
+           |          |          |             |             |     | postgres=CTc/postgres
+(3 rows)
+
+
+step 13: standby setup 
+
+  13.1 install as96 on pg-prd2 at 10.91.10.227 with root 
+  13.2: change owner of /var/data to enterprisedb
+            root: cd /var
+            chown -R enterprisedb:enterprisedb data
+            chmod 700 data
+
+  13.3 make link /var/data/ to /var/lib/edb/as9.6/data 
+
+root@pg-prd2 as9.6]# rm -rf /var/lib/edb/as9.6/data
+[root@pg-prd2 as9.6]# ls
+backups
+
+-- make link :    
+  ln -s /var/data/ /var/lib/edb/as9.6/data
+
+[root@pg-prd1 as9.6]# ln -s /var/data/ /var/lib/edb/as9.6/data
+
+  13.4: create /home/enterprisedb/.pgpass 
+
+localhost:5444:replication:repuser:reppass
+10.91.10.226:5444:replication:repuser:reppass
+10.91.10.227:5444:replication:repuser:reppass
+10.81.10.226:5444:replication:repuser:reppass
+
+  13.5: set env  /home/enterprisedb/.bash_profile 
+      
+
+PGDATA=/var/lib/edb/as9.6/data
+LD_LIBRARY_PATH=/usr/edb/as9.6/lib
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/edb/as9.6/bin
+export PGDATA
+export LD_LIBRARY_PATH
+export PATH
+  
+ 13.6 use pg_basebackup to get database from pg-prd1 on pg-prd2
+   
+   pg-prd1: root: systemctl stop firewalld
+
+
+   pg-prd2:
+     /usr/edb/as9.6/bin/pg_basebackup --host=10.91.10.226 --user=repuser --pgdata=$PGDATA  --write-recovery-conf --xlog-method=stream  --progress --verbose
+
+[enterprisedb@pg-prd2 ~]$  /usr/edb/as9.6/bin/pg_basebackup --host=10.91.10.226 --user=repuser --pgdata=$PGDATA  --write-recovery-conf --xlog-method=stream  --progress --verbose
+pg_basebackup: initiating base backup, waiting for checkpoint to complete
+pg_basebackup: checkpoint completed
+transaction log start point: 0/2000028 on timeline 1
+pg_basebackup: starting background WAL receiver
+27517/27517 kB (100%), 1/1 tablespace
+transaction log end point: 0/20000F8
+pg_basebackup: waiting for background process to finish streaming ...
+pg_basebackup: base backup completed
+[enterprisedb@pg-prd2 ~]$
+
+  13.7: check $/PGDATA/recovery.conf
+   standby_mode = 'on'
+primary_conninfo = 'user=repuser host=10.91.10.226 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
+
+  13.8: start standby at pg-prd2
+
+    systemctl start edb-as-9.6
+
+  13.9: check stanby db 
+   [enterprisedb@pg-prd2 ~]$ psql postgres -U postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+
+postgres=# select pg_is_in_recovery();
+ pg_is_in_recovery
+-------------------
+ t
+(1 row)
+
+step 14: change password for db superuser postgres
+
+pg-prd1:
+   postgres=# alter role postgres password 'edb';
+
+=====================================================
+instsall pem on server pem-prd (10.91.
+
+ ./pem-server-7.0.0-1-linux-x64.run --extract-dependents /root/pemdeped
+
+cd /root/pemdeped
+
+[root@pem-prd pemdeped]# ./edb-languagepack-10-2-linux-x64.run
+Language Selection
+
+Please select the installation language
+[1] English - English
+Please choose an option [1] :
+\----------------------------------------------------------------------------
+Welcome to the Language Pack Setup Wizard.
+
+----------------------------------------------------------------------------
+Setup is now ready to begin installing on your computer.
+
+/opt/edb/languagepack-10
+
+Do you want to continue? [Y/n]: y
+
+Do you want to continue? [Y/n]:
+
+----------------------------------------------------------------------------
+Please wait while Setup installs Language Pack on your computer.
+
+ Installing Language Pack
+ 0% ______________ 50% ______________ 100%
+ #########################################
+
+----------------------------------------------------------------------------
+EnterpriseDB is the leading provider of value-added products and services for
+the Postgres community.
+
+Please visit our website at www.enterprisedb.com
+
+[root@pem-prd pemdeped]# ./pem-httpd-2.4.25-1-linux-x64.run
+----------------------------------------------------------------------------
+Welcome to the PEM-HTTPD Setup Wizard.
+
+----------------------------------------------------------------------------
+Please specify the directory where PEM-HTTPD will be installed.
+
+Installation Directory [/opt/edb/pem/httpd]:
+
+----------------------------------------------------------------------------
+Apache Server Details
+
+Please specify a port on which Apache will run
+
+Apache Port [8080]:
+
+----------------------------------------------------------------------------
+Setup is now ready to begin installing PEM-HTTPD on your computer.
+
+Do you want to continue? [Y/n]:
+
+----------------------------------------------------------------------------
+Please wait while Setup installs PEM-HTTPD on your computer.
+
+ Installing PEM-HTTPD
+ 0% ______________ 50% ______________ 100%
+ #########################################
+
+----------------------------------------------------------------------------
+EnterpriseDB is the leading provider of value-added products and services for
+the Postgres community.
+
+Please visit our website at www.enterprisedb.com
+
+
+
+[root@pem-prd pemdeped]# ./postgresql-9.6.3-2-linux-x64.run
+----------------------------------------------------------------------------
+Welcome to the PostgreSQL Setup Wizard.
+
+----------------------------------------------------------------------------
+Please specify the directory where PostgreSQL will be installed.
+
+Installation Directory [/opt/PostgreSQL/9.6]:
+
+----------------------------------------------------------------------------
+Please select a directory under which to store your data.
+
+Data Directory [/opt/PostgreSQL/9.6/data]:
+
+----------------------------------------------------------------------------
+Please provide a password for the database superuser (postgres). A locked Unix
+user account (postgres) will be created if not present.
+
+Password :postgres
+Retype password :postgres
+----------------------------------------------------------------------------
+Please select the port number the server should listen on.
+
+Port [5432]:
+
+----------------------------------------------------------------------------
+Advanced Options
+
+Select the locale to be used by the new database cluster.
+
+Locale
+
+[1] [Default locale]
+[2] aa_DJ
+.......
+[772] zu_ZA.iso88591
+[773] zu_ZA.utf8
+Please choose an option [1] :
+
+----------------------------------------------------------------------------
+Setup is now ready to begin installing PostgreSQL on your computer.
+
+Do you want to continue? [Y/n]:
+
+----------------------------------------------------------------------------
+Please wait while Setup installs PostgreSQL on your computer.
+
+ Installing
+ 0% ______________ 50% ______________ 100%
+ #########################################
+
+----------------------------------------------------------------------------
+Setup has finished installing PostgreSQL on your computer.
+
+-- install pem 
+[root@pem-prd ~]# ./pem-server-7.0.0-1-linux-x64.run
+----------------------------------------------------------------------------
+Welcome to the Postgres Enterprise Manager (PEM) Server Setup Wizard.
+
+----------------------------------------------------------------------------
+Please read the following License Agreement. You must accept the terms of this
+agreement before continuing with the installation.
+
+Press [Enter] to continue:
+Limited Use Software License Agreement
+Version 2.9
+
+......
+
+Press [Enter] to continue:
+
+Do you accept this license? [y/n]:
+
+Do you accept this license? [y/n]: y
+
+----------------------------------------------------------------------------
+EnterpriseDB User Account Information
+
+Please enter the email address and password for your enterprisedb.com user
+account.
+
+
+
+Email address []: guorong.zhang@enterprisedb.com
+
+Password :
+
+----------------------------------------------------------------------------
+Installation Directory
+
+Please select a directory for the PEM server installation.
+
+Installation Directory [/opt/edb/pem]:
+
+
+
+Show &advanced options [y/N]: y
+
+
+----------------------------------------------------------------------------
+Advanced options
+
+Select installation type
+
+[1] Web Services and Database
+[2] Web Services
+[3] Database
+Please choose an option [1] :
+
+----------------------------------------------------------------------------
+Database Server Selection
+
+Select the database server.
+
+The database servers below may be used by Postgres Enterprise Manager for its data store.
+
+[1] PostgreSQL 9.6 on Port 5432
+[2] Other Database Server
+Please choose an option [1] : 1
+
+----------------------------------------------------------------------------
+Database Server Installation Details
+
+Please specify user and password for the local server - 'PostgreSQL 9.6'
+installation running on port 5432.
+
+User [postgres]:
+
+Password :
+
+----------------------------------------------------------------------------
+Network Details
+
+Please enter the CIDR formatted network address range that agents will connect
+to the server from, to be added to the server's pg_hba.conf file. For example,
+192.168.1.0/24.
+
+Network address [127.0.0.1/32]:
+
+----------------------------------------------------------------------------
+Agent Details.
+
+Please specify a description for the agent.
+
+Description. [Postgres Enterprise Manager Host]:
+
+Agent certificate path [/root/.pem]:
+
+----------------------------------------------------------------------------
+Setup is now ready to begin installing the PEM server on your computer.
+
+Do you want to continue? [Y/n]:
+
+----------------------------------------------------------------------------
+Please wait while Setup installs the PEM server on your computer.
+
+ Installing
+ 0% ______________ 50% ______________ 100%
+ #########################################
+
+Info: Configured the webservice for Postgres Enterprise Manager (PEM) Server on
+port '8443'.
+Created and configured the 'pem' database.
+Press [Enter] to continue:
+----------------------------------------------------------------------------
+EnterpriseDB is the leading provider of value-added products and services for
+the Postgres community.
+
+Please visit our website at www.enterprisedb.com
+
+You have mail in /var/spool/mail/root
+[root@pem-prd ~]#
+
+[root@pem-prd ~]# ps -ef | pem
+bash: pem: command not found...
+[root@pem-prd ~]# ps -ef | grep pem
+avahi      783     1  0 Oct20 ?        00:00:00 avahi-daemon: running [pem-prd.local]
+root     20780     1  0 16:06 ?        00:00:00 /opt/edb/pem/agent/bin/pemagent -c /opt/edb/pem/agent/etc/agent.cfg
+root     20781 20780  0 16:06 ?        00:00:01 /opt/edb/pem/agent/bin/pemworker -c /opt/edb/pem/agent/etc/agent.cfg --pid 20780
+postgres 20793 20610  0 16:06 ?        00:00:01 postgres: agent1 pem 127.0.0.1(54800) idle
+postgres 20794 20610  1 16:06 ?        00:00:17 postgres: agent1 pem 127.0.0.1(54802) SELECT
+postgres 20796 20610  0 16:06 ?        00:00:00 postgres: agent1 pem 127.0.0.1(54804) idle
+postgres 20797 20610  0 16:06 ?        00:00:00 postgres: agent1 pem 127.0.0.1(54806) idle
+postgres 20798 20610  0 16:06 ?        00:00:00 postgres: agent1 pem 127.0.0.1(54808) idle
+root     20834     1  0 16:07 ?        00:00:00 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+pem      20835 20834  0 16:07 ?        00:00:00 EDBPEM                              -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+daemon   20836 20834  0 16:07 ?        00:00:00 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+daemon   20837 20834  0 16:07 ?        00:00:00 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+daemon   20838 20834  0 16:07 ?        00:00:00 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+root     24178 18003  0 16:30 pts/0    00:00:00 grep --color=auto pem
+
+-- check db on pem server
+
+ ps -ef | grep postgres
+
+
+ /opt/PostgreSQL/9.6/bin/postgres -D /opt/PostgreSQL/9.6/data
+
+use firefox ( add exception) 
+-- also firewall is needed to disabled 
+
+  systemctl stop firewalld 
+
+
+https://10.91.10.229:8443/pem 
+ 
+
+
+==================================
+setu efm 
+
+  need efm license number: ??????
+
+step 1: generate encypyted pass for db user postgres ( pass: edb)
+
+[root@pem-prd efm-2.1]# /usr/efm-2.1/bin/efm encrypt efm
+This utility will generate an encrypted password for you to place in your
+EFM cluster property file.
+Please enter the password and hit enter:
+
+Please enter the password again to confirm:
+
+The encrypted password is: 22a85432353cbff0bb8b4cab6cd53045
+
+Please paste this into your cluster properties file.
+        db.password.encrypted=22a85432353cbff0bb8b4cab6cd53045
+[root@pem-prd efm-2.1]#
+
+
+virtualIp=10.91.10.225
+virtualIp.interface=eth0:0
+virtualIp.netmask=225.225.225.0
+
+  
+-- test vip 
+[root@pg-prd2 efm-2.1]# /bin/ping -q -c3 -w5 10.91.10.225
+PING 10.91.10.225 (10.91.10.225) 56(84) bytes of data.
+
+--- 10.91.10.225 ping statistics ---
+4 packets transmitted, 0 received, +4 errors, 100% packet loss, time 2999ms
+pipe 4
+[root@pg-prd2 efm-2.1]#
+
+-- assign vip on master
+
+/usr/efm-2.1/bin/efm_address assign eth0:0 10.91.10.225 225.225.225.0 
+
+[root@pg-prd2 bin]# /usr/efm-2.1/bin/efm_address assign eth0:0 10.91.10.225 225.225.225.0
+SIOCSIFADDR: No such device
+eth0:0: ERROR while getting interface flags: No such device
+SIOCSIFNETMASK: No such device
+eth0:0: ERROR while getting interface flags: No such device
+
+
+
+
