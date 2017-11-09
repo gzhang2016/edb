@@ -804,5 +804,29 @@ host    all     postgres             10.91.10.229/32          md5
          pem-prd os user"postgres" -- cannot use centralized backup 
    
    ============================
+   
+   HOW TO START AGENT
+
+   systemctl START  efm-2.1.service 
+
+    ROOT: /usr/efm-2.1/bin/
+    or 
+        /usr/efm-2.1/bin/runefm.sh  start efm   # IF "systemctl START  efm-2.1.service" CANNOT START  
+
+HOW TO STOP AGENT AND CLUSTER :
+
+  Stop agent on any node and just stop local node's agent
+ systemctl stop efm-2.1.service 
+   -- service will refresh file efm.nodes
+   
+  Stop  cluster(EFM) on any node ( will stop agent across all of node)
+
+        /usr/efm-2.1/bin/efm stop-cluster efm
+
+  Stop local agent
+  /usr/efm-2.1/bin/runefm.sh  stop efm
+
+  ** Stop cluster  by “efm stop-cluster efm” will not edit file /etc/efm-2.1/efm.nodes
+
  
 
