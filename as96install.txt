@@ -780,6 +780,11 @@ efmn.nodes file:
 10.91.10.227:7809
 10.91.10.229:7809
 
+pg_hba.conf
+host    all     enterprisedb         10.91.10.226/32          md5
+host    all     enterprisedb         10.91.10.227/32          md5
+host    all     postgres             10.91.10.229/32          md5
+
 
 ==================================================================
 1: slow down installation due to copy/paste is disabled 
@@ -798,5 +803,6 @@ efmn.nodes file:
    NFS : shared file system ( pg-prd1 and pg-prd2: indentical os user "enterprisedb") ok 
          pem-prd os user"postgres" -- cannot use centralized backup 
    
-   
+   ============================
+ 
 
