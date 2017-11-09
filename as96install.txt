@@ -842,3 +842,4 @@ trigger_file='/var/lib/edb/as9.6/data/tigger_file'
 -- add standby node to efm 
 
      /usr/efm-2.1/bin/efm add-node efm 
+db.port in wintness must be same as primary db 
