@@ -837,5 +837,5 @@ HOW TO STOP AGENT AND CLUSTER :
 [ 11/9/17 10:09:57 AM ] Could not read the trigger file location from recovery.conf in directory specified in properties file. See log for more details.
 [root@pg-prd2 efm-2.1]#
 
- trigger_file='/opt/ppas95/pgdata/tigger_file'
+trigger_file='/var/lib/edb/as9.6/data/tigger_file'
 
