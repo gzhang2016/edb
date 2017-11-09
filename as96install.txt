@@ -827,6 +827,9 @@ HOW TO STOP AGENT AND CLUSTER :
   /usr/efm-2.1/bin/runefm.sh  stop efm
 
   ** Stop cluster  by “efm stop-cluster efm” will not edit file /etc/efm-2.1/efm.nodes
+  -- check status 
+  
+/usr/efm-2.1/bin/efm cluster-status efm
 
  
 
