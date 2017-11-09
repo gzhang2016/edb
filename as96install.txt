@@ -831,5 +831,11 @@ HOW TO STOP AGENT AND CLUSTER :
   
 /usr/efm-2.1/bin/efm cluster-status efm
 
+[root@pg-prd2 efm-2.1]# cat startup-efm.log
+[ 11/9/17 10:09:57 AM ] Starting agent.
+[ 11/9/17 10:09:57 AM ] Continuing startup in standby mode.
+[ 11/9/17 10:09:57 AM ] Could not read the trigger file location from recovery.conf in directory specified in properties file. See log for more details.
+[root@pg-prd2 efm-2.1]#
+
  
 
