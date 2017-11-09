@@ -777,5 +777,21 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 
 ==================================================================
-
+1: slow down installation due to copy/paste is disabled 
+2: PEM server:
+   both in pem-prd and pem-dr ?
+   pem production key ??
+   QSI account in edb info: email: company_name@enterprisedb.com/password
+   pem webclient : firewall ( currently firewll is disabled) 
+3: EFM
+   license key: ?
+   VirtualIp:interface: ??
+   virtualIpmask: 255.255.255.0 ?
+   pg-dr will not join EFM --> what if failover happend on pg-dr ?
+4: Bart
+   which server will be installed ? which database will be backedup by bart ?( prd from primary node or standby node? pem-prd?)
+   NFS : shared file system ( pg-prd1 and pg-prd2: indentical os user "enterprisedb") ok 
+         pem-prd os user"postgres" -- cannot use centralized backup 
+   
+   
 
