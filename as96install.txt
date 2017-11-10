@@ -889,4 +889,35 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         TX packets 25461  bytes 6571177 (6.2 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
+=================
+insall pemagent
 
+yum install pem-agent -y
+
+--edit pg_hba.conf on pem server
+
+hostssl pem +pem_user 10.91.10.226/32 md5
+hostssl postgres +pem_user 10.91.10.226/32 md5
+
+hostssl pem +pem_user 10.91.10.227/32 md5
+hostssl postgres +pem_user 10.91.10.227/32 md5
+
+-- reload pem db
+pg_ctl reload
+
+-- 
+
+cd /usr/pem/agent on mnanaged db server ( password is pem db user "postgres" password)
+
+# PGPASSWORD=postgres /usr/pem/agent/bin/pemworker --register-agent --pem-server
+dxpgpem01.ascap.com --pem-port 5432 --pem-user postgres
+
+
+-- Edit pem-agent file on managed db server
+
+Adding following to file:t/usr/pem/agent/etc/ agent.cfg
+heartbeat_connection = true
+ca_file=/usr/libexec/libcurl-pem7/share/certs/ca-bundle.cr
+
+-- start pemagent on manged db server 
+systemctl start pemagent
