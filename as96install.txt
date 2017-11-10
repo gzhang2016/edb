@@ -963,3 +963,15 @@ could not save history to file "/opt/PostgreSQL/9.6/.psql_history": Permission d
 Password for user postgres:
 psql.bin (9.6.3, server 9.6.5.10)
 Type "help" for help.
+
+
+===================
+
+customer email: tomislav.goles@qsinvestors.com
+
+pem server key: 
+Product Key = 4008J-6GL6H-RB010-1SRYH-JBNP7
+
+EFM key: 4008J-6GL6H-RB010-7S412-GCTFN
+
+
