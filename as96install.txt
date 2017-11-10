@@ -931,7 +931,8 @@ pg_ctl reload
 
 cd /usr/pem/agent on mnanaged db server ( password is pem db user "postgres" password)
 
-[root@pg-prd1 agent]# PGPASSWORD=postgres /usr/pem/agent/bin/pemworker --register-agent --pem-server pem-prd --pem-port 5432 --pem-user postgres
+[root@pg-prd1 agent]# PGPASSWORD=postgres /usr/pem/agent/bin/
+--register-agent --pem-server pem-prd --pem-port 5432 --pem-user postgres
 Postgres Enterprise Manager Agent registered successfully!
 [root@pg-prd1 agent]#
 
@@ -993,3 +994,7 @@ EFM key: 4008J-6GL6H-RB010-7S412-GCTFN
 
 -- start efm
 /usr/efm-2.1/bin/runefm.sh  start efm 
+
+-- ADD PEMAGEN AT 10.81.10.26
+
+PGPASSWORD=postgres /usr/pem/agent/bin/pemworker --register-agent --pem-server pem-dr --pem-port 5432 --pem-user postgres
