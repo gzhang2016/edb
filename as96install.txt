@@ -359,6 +359,20 @@ primary_conninfo = 'user=repuser host=10.91.10.226 port=5444 sslmode=prefer sslc
   13.8: start standby at pg-prd2
 
     systemctl start edb-as-9.6
+    
+    -- reset up replication from DR ( get db from standby pg-prd2 at 10.91.10.227)
+    
+  [enterprisedb@pg-dr data]$ /usr/edb/as9.6/bin/pg_basebackup --host=10.91.10.227 --user=repuser --pgdata=$PGDATA  --write-recovery-conf --xlog-method=stream  --progress --verbose
+pg_basebackup: initiating base backup, waiting for checkpoint to complete
+pg_basebackup: checkpoint completed
+transaction log start point: 0/5020BB8 on timeline 1
+pg_basebackup: starting background WAL receiver
+36830/36830 kB (100%), 1/1 tablespace
+transaction log end point: 0/5020C98
+pg_basebackup: waiting for background process to finish streaming ...
+pg_basebackup: base backup completed
+[enterprisedb@pg-dr data]$
+
 
   13.9: check stanby db 
    [enterprisedb@pg-prd2 ~]$ psql postgres -U postgres
