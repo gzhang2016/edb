@@ -977,4 +977,5 @@ EFM key: 4008J-6GL6H-RB010-7S412-GCTFN
 -- stop efm 
   /usr/efm-2.1/bin/efm stop-cluster efm
 
-
+-- start efm
+/usr/efm-2.1/bin/runefm.sh  start efm 
