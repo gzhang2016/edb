@@ -952,3 +952,14 @@ update pem.agent set active=true where id=3;
 
 efm instll location: /usr/efm-2.1/bin
 
+-- test connection to db with vip 
+-bash-4.2$ psql -h 10.91.10.226 postgres -U postgres -p 5444                    Password for user postgres:
+psql.bin (9.6.3, server 9.6.5.10)
+Type "help" for help.
+
+postgres=# \q
+could not save history to file "/opt/PostgreSQL/9.6/.psql_history": Permission denied
+-bash-4.2$ psql -h 10.91.10.225 postgres -U postgres -p 5444
+Password for user postgres:
+psql.bin (9.6.3, server 9.6.5.10)
+Type "help" for help.
