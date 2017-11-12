@@ -720,7 +720,7 @@ eth0:0: ERROR while getting interface flags: No such device
 
 -- try user interface ens192 ( got it by "ifconfig")
 
-[root@pg-prd2 bin]# /usr/efm-2.1/bin/efm_address assign ens192:0 10.91.10.225 225.225.225.0
+[root@pg-prd2 bin]# /usr/efm-2.1/bin/efm_address assign ens192:0 10.91.10.225 255.255.255.0
 
 -- hang over there --> close putty --> re ssh with putty and does not work 
   ---> putty to pg-prd2 and then ssh to pg-prd1( 10.91.10.226) --> OK ????
@@ -739,8 +739,10 @@ ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 ens192:0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 10.91.10.225  netmask 255.0.0.0  broadcast 10.255.255.255
+        inet 10.91.10.225  netmask 255.255.255.0  broadcast 10.91.10.255
         ether 00:50:56:a6:4a:7b  txqueuelen 1000  (Ethernet)
+
+)
 
 lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         inet 127.0.0.1  netmask 255.0.0.0
@@ -753,12 +755,14 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 -- check vip 
 
-[root@pg-prd1 ~]#  /bin/ping -q -c3 -w5 10.91.10.225
+[root@pg-prd1 ~]# /bin/ping -q -c3 -w5 10.91.10.225
 PING 10.91.10.225 (10.91.10.225) 56(84) bytes of data.
 
 --- 10.91.10.225 ping statistics ---
 3 packets transmitted, 3 received, 0% packet loss, time 1999ms
-rtt min/avg/max/mdev = 0.031/0.038/0.045/0.005 ms
+rtt min/avg/max/mdev = 0.032/0.037/0.044/0.007 ms
+[root@pg-prd1 ~]#
+
 
 -- good !!!
 
