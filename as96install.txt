@@ -1002,3 +1002,18 @@ EFM key: 4008J-6GL6H-RB010-7S412-GCTFN
 -- ADD PEMAGEN AT 10.81.10.26
 
 PGPASSWORD=postgres /usr/pem/agent/bin/pemworker --register-agent --pem-server pem-dr --pem-port 5432 --pem-user postgres
+
++++++++++++++++++++++++++++++++
+2017-11-13:
+
+-- put all of config files in into /var/pg_configuration
+
+-- change include_dir to /var/pg_configuration
+# These options allow settings to be loaded from files other than the
+# default postgresql.conf.
+
+#include_dir = 'conf.d'                 # include files ending in '.conf' from
+                                        # directory 'conf.d'
+#include_if_exists = 'exists.conf'      # include file only if it exists
+#include = 'special.conf'               # include file
+
