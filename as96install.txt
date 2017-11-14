@@ -1016,4 +1016,20 @@ PGPASSWORD=postgres /usr/pem/agent/bin/pemworker --register-agent --pem-server p
                                         # directory 'conf.d'
 #include_if_exists = 'exists.conf'      # include file only if it exists
 #include = 'special.conf'               # include file
+============================
+#2017-11-14
+MOVE $PGDATA/pg_xlog to new mount poin /var/pg_xlog
 
+pg_ctl stop $PGDATA
+
+check pg_xlog mount point:
+
+  /var/pg_xlog
+
+mv $PGDATA/pg_xlog/* /var/pg_xlog/
+
+rmdir $PGDATA/pg_xlog
+
+ln -s /var/pg_xlog/ $PGDATA/pg_xlog
+
+pg_ctl start $PGDATA
