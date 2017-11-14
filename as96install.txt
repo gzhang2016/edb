@@ -1033,3 +1033,10 @@ rmdir $PGDATA/pg_xlog
 ln -s /var/pg_xlog/ $PGDATA/pg_xlog
 
 pg_ctl start $PGDATA
+
+==============================
+change log directory in postgresql.conf
+
+log_directory = '/var/pg_log'
+
+
