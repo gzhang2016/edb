@@ -1039,4 +1039,22 @@ change log directory in postgresql.conf
 
 log_directory = '/var/pg_log'
 
+========================
+-- change pg_prd primary_conninfo in recovery.conf IP to vip as 10.91.10.225 which is priamry IP now 
+1: stop db 
+2: change host=10.91.10.226 to vip host=10.91.10.225 in recovery.conf in pg-dr
+
+primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
+3: add 10.91.10.225:5444:replication:repuser:reppass to .pgpass at pg-dr /home/enterprisedb/.pgpass
+
+[enterprisedb@pg-dr ~]$ cat .pgpass
+localhost:5444:replication:repuser:reppass
+10.91.10.226:5444:replication:repuser:reppass
+10.91.10.227:5444:replication:repuser:reppass
+10.81.10.226:5444:replication:repuser:reppass
+10.91.10.225:5444:replication:repuser:reppass
+4: start pg-dr 
+    pg_ctl -D $PDDATA
+    
+  ====================================  
 
