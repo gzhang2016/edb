@@ -675,7 +675,11 @@ https://10.91.10.229:8443/pem
 
 ==================================
 setup efm 
-
+-- check java version ( must be over 1.7) 
+[enterprisedb@pg-prd1 ~]$ java -version
+openjdk version "1.8.0_151"
+OpenJDK Runtime Environment (build 1.8.0_151-b12)
+OpenJDK 64-Bit Server VM (build 25.151-b12, mixed mode)
   need efm license number: ??????
 
 step 1: generate encypyted pass for db user postgres ( pass: edb)
@@ -906,6 +910,64 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 25461  bytes 6571177 (6.2 MiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        
+        
+        -- efm pro-check
+       [root@pg-prd1 ~]# /usr/efm-2.1/bin/efm prop-check efm
+Agents:
+        10.91.10.226:7809
+Binding address: 10.91.10.226
+I am witness node: false
+Cluster name: efm
+User emails: [guorong.zhang@enterprisedb.com]
+Notification script: null
+VIP: 10.91.10.225
+VIP interface: ens192:0
+VIP netmask: 255.255.255.0
+Automatic failover set to: false
+
+Network interfaces:
+ens192
+        fe80:0:0:0:250:56ff:fea6:4a7b%ens192
+        10.91.10.225
+        10.91.10.226
+
+        ens192:0
+                10.91.10.225
+lo
+        0:0:0:0:0:0:0:1%lo
+        127.0.0.1
+        
+ -- check efm status 
+ [root@pg-prd1 ~]# /usr/efm-2.1/bin/efm cluster-status efm
+Cluster Status: efm
+VIP: 10.91.10.225
+Automatic failover is disabled.
+
+        Agent Type  Address              Agent  DB       Info
+        --------------------------------------------------------------
+        Standby     10.91.10.227         UP     UP
+        Master      10.91.10.226         UP     UP
+        Witness     10.91.10.229         UP     N/A
+
+Allowed node host list:
+        10.91.10.226 10.91.10.227 10.91.10.229
+
+Membership coordinator: 10.91.10.226
+
+Standby priority host list:
+        10.91.10.227
+
+Promote Status:
+
+        DB Type     Address              XLog Loc         Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         0/B177F18
+        Standby     10.91.10.227         0/B177F18
+
+        Standby database(s) in sync with master. It is safe to promote.
+
+        
 
 ==================================================
 insall pemagent
