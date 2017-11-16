@@ -674,7 +674,7 @@ https://10.91.10.229:8443/pem
 
 
 ==================================
-setu efm 
+setup efm 
 
   need efm license number: ??????
 
@@ -683,9 +683,9 @@ step 1: generate encypyted pass for db user postgres ( pass: edb)
 [root@pem-prd efm-2.1]# /usr/efm-2.1/bin/efm encrypt efm
 This utility will generate an encrypted password for you to place in your
 EFM cluster property file.
-Please enter the password and hit enter:
+Please enter the password and hit enter:edb
 
-Please enter the password again to confirm:
+Please enter the password again to confirm:edb
 
 The encrypted password is: 22a85432353cbff0bb8b4cab6cd53045
 
