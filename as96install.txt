@@ -1145,5 +1145,8 @@ localhost:5444:replication:repuser:reppass
 enterpr+  4480  4473  0 Nov14 ?        00:01:51 postgres: wal receiver process   streaming 0/555D09B0
 enterpr+ 19888 17946  0 10:31 pts/1    00:00:00 grep --color=auto receiver
 [enterprisedb@pg-prd2 data]$
+-- query to check streaming replication 
+
+select usename,client_addr,sent_location,write_location from pg_stat_replication;
 
 
