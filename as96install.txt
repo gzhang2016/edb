@@ -1,5 +1,5 @@
 step 1: downlad repo epel
-
+ # EPEL Repo required to resolve PostGIS dependencies
  rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 
 step 2: download edb yum repo 
