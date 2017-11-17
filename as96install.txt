@@ -1148,5 +1148,17 @@ enterpr+ 19888 17946  0 10:31 pts/1    00:00:00 grep --color=auto receiver
 -- query to check streaming replication 
 
 select usename,client_addr,sent_location,write_location from pg_stat_replication;
+[enterprisedb@pg-prd1 ~]$ psql postgres -U postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+postgres=# select usename,client_addr,sent_location,write_location from pg_stat_replication;
+ usename | client_addr  | sent_location | write_location
+---------+--------------+---------------+----------------
+ repuser | 10.91.10.227 | 0/555D0B70    | 0/555D0B70
+ repuser | 10.81.10.226 | 0/555D0B70    | 0/555D0B70
+(2 rows)
+
+postgres=#
 
 
