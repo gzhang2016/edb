@@ -1247,6 +1247,6 @@ sender: enterprisedb@pem-dr.localdomain
 [enterprisedb@pem-dr ~]$ echo " from qsi"| mail -s "test" guorong.zhang@enterprisedb.com
 You have mail in /var/spool/mail/enterprisedb
 -- i also  get this email 
-sender: enterprisedb@pem-dr.localdomain
+sender:enterprisedb@pem-dr.localdomain
 
 
