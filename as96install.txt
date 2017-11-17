@@ -1237,5 +1237,16 @@ full_page_writes = on
 [enterprisedb@pg-prd2 pg_log]$ cd $PGDATA
 [enterprisedb@pg-prd2 data]$ vi postgresql.conf
 
+===============================
+test mail function in pem-dr 
+
+[enterprisedb@pem-dr ~]$ mail -s "test" guorong.zhang@enterprisedb.com < test.txt
+-- i got this email 
+sender: enterprisedb@pem-dr.localdomain
+
+[enterprisedb@pem-dr ~]$ echo " from qsi"| mail -s "test" guorong.zhang@enterprisedb.com
+You have mail in /var/spool/mail/enterprisedb
+-- i also  get this email 
+sender: enterprisedb@pem-dr.localdomain
 
 
