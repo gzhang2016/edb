@@ -138,6 +138,22 @@ step 8: start edb-as-9.6
  
 /usr/edb/as9.6/bin/edb-postmaster -D /var/lib/edb/as9.6/data
 
+[enterprisedb@pg-prd1 data]$ ps -ef | grep postgres
+enterpr+ 18660 24710  0 Nov15 ?        00:00:10 postgres: wal sender process repuser 10.81.10.226[51764] streaming 0/555CFE38
+enterpr+ 20161 24710  0 09:20 ?        00:00:00 postgres: postgres postgres 127.0.0.1[58354] idle
+enterpr+ 22213  5026  0 09:29 pts/3    00:00:00 grep --color=auto postgres
+enterpr+ 24710     1  0 Nov14 ?        00:01:47 /usr/edb/as9.6/bin/edb-postgres -D /var/lib/edb/as9.6/data
+enterpr+ 24711 24710  0 Nov14 ?        00:00:01 postgres: logger process
+enterpr+ 24713 24710  0 Nov14 ?        00:00:32 postgres: checkpointer process
+enterpr+ 24714 24710  0 Nov14 ?        00:00:02 postgres: writer process
+enterpr+ 24715 24710  0 Nov14 ?        00:00:06 postgres: wal writer process
+enterpr+ 24716 24710  0 Nov14 ?        00:00:08 postgres: autovacuum launcher process
+enterpr+ 24717 24710  0 Nov14 ?        00:00:11 postgres: archiver process   failed on 000000010000000000000001
+enterpr+ 24718 24710  0 Nov14 ?        00:01:35 postgres: stats collector process
+enterpr+ 24720 24710  0 Nov14 ?        00:00:01 postgres: bgworker: dbms_aq launcher
+enterpr+ 24888 24710  0 Nov14 ?        00:00:12 postgres: wal sender process repuser 10.91.10.227[53596] streaming 0/555CFE38
+enterpr+ 29404 24710  0 Nov14 ?        00:09:05 postgres: postgres postgres 10.91.10.229[36896] idle
+
 
 step 9: connect to postgres ( postgrs compatible)
 
