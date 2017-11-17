@@ -1160,5 +1160,42 @@ postgres=# select usename,client_addr,sent_location,write_location from pg_stat_
 (2 rows)
 
 postgres=#
+=================================
+-- change paramters in postgesql.conf 
+
+bgwriter_delay = 100ms
+
+bgwriter_lru_maxpages = 1000
+
+bgwriter_lru_multiplier = 4
+vacuum_cost_limit = 800
+checkpoint_completion_target = 0.9	
+checkpoint_timeout = 5min	
+checkpoint_warning = 1min	
+wal_buffers = 64MB
+wal_log_hints = on
+wal_compression = off
+cpu_tuple_cost = 0.03	
+random_page_cost = 2	
+max_parallel_workers_per_gather = 4
+
+autovacuum = on	
+autovacuum_vacuum_cost_delay = 10ms	
+autovacuum_max_workers = 3	
+autovacuum_naptime = 5	
+utovacuum_vacuum_scale_factor = 0.05 
+autovacuum_analyze_scale_factor = 0.05	
+autovacuum_vacuum_cost_limit = -1 
+vacuum_cost_limit = 800	
+
+log_min_duration_statement = 1000
+log_autovacuum_min_duration = 0	
+log_checkpoints = on	
+log_lock_waits = on
+log_temp_files = 0	
+
+max_replication_slots = 10
+full_page_writes = on 
+
 
 
