@@ -1139,3 +1139,7 @@ localhost:5444:replication:repuser:reppass
 
  yum install edb-bart20
 
+==================
+-- verify streaming replication 
+
+
