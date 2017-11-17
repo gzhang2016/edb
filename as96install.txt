@@ -1219,3 +1219,21 @@ vacuum_cost_limit = 800
 max_replication_slots = 10
 full_page_writes = on
 
+==========================
+2017-11-17 13:14:11 EST [19675]: [1-1] user=,db=LOG:  started streaming WAL from primary at 0/56000000 on timeline 1
+2017-11-17 13:14:11 EST [4476]: [7-1] user=,db=FATAL:  hot standby is not possible because max_worker_processes = 8 is a lower setting than on the master server (its value was 12)
+2017-11-17 13:14:11 EST [4476]: [8-1] user=,db=CONTEXT:  xlog redo at 0/56000098 for XLOG/PARAMETER_CHANGE: max_connections=300 max_worker_processes=12 max_prepared_xacts=0 max_locks_per_xact=64 wal_level=replica wal_log_hints=on track_commit_timestamp=off
+2017-11-17 13:14:11 EST [4473]: [13-1] user=,db=LOG:  startup process (PID 4476) exited with exit code 1
+2017-11-17 13:14:11 EST [4473]: [14-1] user=,db=LOG:  terminating any other active server processes
+2017-11-17 13:14:11 EST [18674]: [1-1] user=postgres,db=postgresWARNING:  terminating connection because of crash of another server process
+2017-11-17 13:14:11 EST [18674]: [2-1] user=postgres,db=postgresDETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2017-11-17 13:14:11 EST [18674]: [3-1] user=postgres,db=postgresHINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2017-11-17 13:14:11 EST [7836]: [1-1] user=postgres,db=postgresWARNING:  terminating connection because of crash of another server process
+2017-11-17 13:14:11 EST [7836]: [2-1] user=postgres,db=postgresDETAIL:  The postmaster has commanded this server process to roll back the current transaction and exit, because another server process exited abnormally and possibly corrupted shared memory.
+2017-11-17 13:14:11 EST [7836]: [3-1] user=postgres,db=postgresHINT:  In a moment you should be able to reconnect to the database and repeat your command.
+2017-11-17 13:14:11 EST [4473]: [15-1] user=,db=LOG:  database system is shut down
+[enterprisedb@pg-prd2 pg_log]$ cd $PGDATA
+[enterprisedb@pg-prd2 data]$ vi postgresql.conf
+
+
+
