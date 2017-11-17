@@ -1202,7 +1202,7 @@ full_page_writes = on
 edb_dynatune = 100
 log_directory = '/var/pg_log'
 max_connections = 300
-shared_buffers = 12GB
+shared_buffers = 10GB
 effective_cache_size = 36GB
 work_mem = 40MB
 maintenance_work_mem = 2GB
@@ -1253,4 +1253,4 @@ vacuum_cost_limit = 800
 max_replication_slots = 10
 full_page_writes = on
 
-
+max_worker_processes = 12
