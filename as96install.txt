@@ -1119,4 +1119,7 @@ localhost:5444:replication:repuser:reppass
     pg_ctl -D $PDDATA
     
   ====================================  
+-- install bart :
+
+ yum install edb-bart20
 
