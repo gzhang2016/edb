@@ -1172,6 +1172,7 @@ effective_cache_size = 36GB
 work_mem = 128MB
 maintenance_work_mem = 2GB
 default_statistics_target = 100
+max_worker_processes = 12
 
 hot_standby = on
 hot_standby_feedback = on
@@ -1218,4 +1219,3 @@ vacuum_cost_limit = 800
 max_replication_slots = 10
 full_page_writes = on
 
-max_worker_processes = 12
