@@ -1332,4 +1332,8 @@ efm.loglevel=INFO
 jvm.options=-Xmx32m
 [root@pg-prd1 efm-2.1]#
 
+==================
+pem export bug in pem:
+-- when export db from pem and got :
 
+{"success":0,"errormsg":"ERROR:  could not open relation with OID 23025\n","data":null,"info":"","result":null}
