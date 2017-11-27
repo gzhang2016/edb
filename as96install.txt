@@ -1337,3 +1337,109 @@ pem export bug in pem:
 -- when export db from pem and got :
 
 {"success":0,"errormsg":"ERROR:  could not open relation with OID 23025\n","data":null,"info":"","result":null}
+
+===================================
+-- check why efm stopped on 11/22/2017
+--efm log on pg-prd2:
+11/22/17 2:57:07 PM com.enterprisedb.efm.nodes.EfmAgent doHandle INFO: responding to db status request with status:10.226%%true%%true%%
+
+11/22/17 2:57:07 PM com.enterprisedb.efm.admin.AdminServerThread processRequest INFO: admin service responding: Mas26%%true%%true%% ||Standby%%10.91.10.227%%true%%true%% ||Witness%%10.91.10.229%%true%%false%% ||10.91.10.226 10.91..229%%10.91.10.226%%10.91.10.227
+
+11/22/17 3:00:34 PM com.enterprisedb.efm.nodes.EfmAgent doHandle INFO: responding to db status request with status:10.226%%true%%true%%
+
+--efm-log on pg-prd2
+11/22/17 3:15:35 AM com.enterprisedb.efm.nodes.EfmNode checkClusterStatus INFO: Sending status message to all nodes: node_status
+
+11/22/17 3:15:35 AM com.enterprisedb.efm.nodes.EfmAgent doHandle INFO: responding to db status request with status: Standby%%10.91.10.227%%true%%true%%
+
+11/22/17 3:15:35 AM com.enterprisedb.efm.admin.AdminServerThread processRequest INFO: admin service responding: Witness%%10.91.10.229%%true%%false%% ||Standby%%10.91.10.227%%true%%true%% ||Master%%10.91.10.226%%true%%true%% ||10.91.10.226 10.91.10.227 10.91.10.229%%10.91.10.226%%10.91.10.227
+--efm-log on pem-prd :
+11/22/17 3:02:13 PM com.enterprisedb.efm.DBMonitor checkOnce WARNING: Could not connect to database at 10.91.10.227: org.postgresql.util.PSQLException: The connection attempt failed., state: 08001, time: 2,945
+
+11/22/17 3:02:13 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread db_ping_local in case still running.
+
+11/22/17 3:02:13 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread ping_monitor in case still running.
+
+11/22/17 3:02:13 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Checking to see if node is responsive. Check type: DB_PING
+
+11/22/17 3:02:13 PM com.enterprisedb.efm.DBMonitor checkOnce INFO: DB monitor testing jdbc:postgresql://10.91.10.226:5444/postgres?ApplicationName='efm-2.1'
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.DBMonitor checkOnce WARNING: Could not connect to database at 10.91.10.226: org.postgresql.util.PSQLException: The connection attempt failed., state: 08001, time: 3,007
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread db_ping_local in case still running.
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread ping_monitor in case still running.
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.nodes.EfmNode updateStableClusterSize INFO: At least one node was suspect before leaving. Starting timer to update known cluster size.
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.exec.ExecUtil performExec INFO: [/bin/ping -q -c3 -w5 8.8.8.8]
+
+11/22/17 3:02:16 PM com.enterprisedb.efm.utils.ClusterSizeUpdater$TimerThread run INFO: updater thread started
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.exec.ExecUtil performExec INFO: ProcessResult{exitValue=0, errorOut='', stdOut='PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 1.273/1.352/1.468/0.083 ms'}
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.utils.ClusterUtils pingHost INFO: ProcessResult{exitValue=0, errorOut='', stdOut='PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 1.273/1.352/1.468/0.083 ms'}
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.ClusterState removeAddress INFO: Removing standby address pg-prd2-44343
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.ClusterState removeAddress INFO: Removing standby info 10.91.10.227 from failover priority list.
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.nodes.EfmNode handleMissingNonMasterNodes WARNING: Missing nodes: Standby:pg-prd2-44343
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.nodes.EfmNode handleViewChange SEVERE: Master node has disappeared.
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.utils.Notifications sendMail INFO: Sending notification:
+To: [guorong.zhang@enterprisedb.com]
+Subject: [WARNING] EFM Subset of cluster efm disconnected from master
+Body:
+EFM node:     10.91.10.229
+Cluster name:  efm
+Database name: postgres
+VIP support:   ENABLED
+Auto Failover: DISABLED
+
+This node is no longer connected to the majority of the cluster
+efm. Because this node is part of a subset of the cluster, failover
+will not be attempted. Current nodes that are visible are:
+10.91.10.229
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Checking to see if node is responsive. Check type: DB_PING
+
+11/22/17 3:02:18 PM com.enterprisedb.efm.DBMonitor checkOnce INFO: DB monitor testing jdbc:postgresql://10.91.10.227:5444/postgres?ApplicationName='efm-2.1'
+
+11/22/17 3:02:21 PM com.enterprisedb.efm.DBMonitor checkOnce WARNING: Could not connect to database at 10.91.10.227: org.postgresql.util.PSQLException: The connection attempt failed., state: 08001, time: 3,005
+
+11/22/17 3:02:21 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread db_ping_local in case still running.
+
+11/22/17 3:02:21 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread ping_monitor in case still running.
+
+11/22/17 3:02:21 PM com.enterprisedb.efm.utils.Notifications sendMail INFO: Sending notification:
+To: [guorong.zhang@enterprisedb.com]
+Subject: [WARNING] EFM No standby agent in cluster for cluster efm
+Body:
+EFM node:     10.91.10.229
+Cluster name:  efm
+Database name: postgres
+VIP support:   ENABLED
+Auto Failover: DISABLED
+
+The standby on 10.91.10.227 has left the cluster.
+
+11/22/17 3:03:50 PM com.enterprisedb.efm.utils.ClusterStateVerifier$TimerThread run INFO: verifier thread exiting
+
+11/22/17 3:03:50 PM com.enterprisedb.efm.nodes.EfmWitness doHandle INFO: responding to db status request with status: Witness%%10.91.10.229%%true%%false%%
+
+11/22/17 3:07:16 PM com.enterprisedb.efm.nodes.EfmNode updateStableSize INFO: stable cluster size now 1
+
+
+
+
+
