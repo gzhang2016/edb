@@ -1354,6 +1354,32 @@ pem export bug in pem:
 
 11/22/17 3:15:35 AM com.enterprisedb.efm.admin.AdminServerThread processRequest INFO: admin service responding: Witness%%10.91.10.229%%true%%false%% ||Standby%%10.91.10.227%%true%%true%% ||Master%%10.91.10.226%%true%%true%% ||10.91.10.226 10.91.10.227 10.91.10.229%%10.91.10.226%%10.91.10.227
 --efm-log on pem-prd :
+11/22/17 2:57:07 PM com.enterprisedb.efm.nodes.EfmWitness doHandle INFO: responding to db status request with status: Witness%%10.91.10.229%%true%%false%%
+
+11/22/17 3:00:30 PM com.enterprisedb.efm.nodes.EfmWitness doHandle INFO: responding to db status request with status: Witness%%10.91.10.229%%true%%false%%
+
+11/22/17 3:01:13 PM com.enterprisedb.efm.nodes.EfmWitness doHandle INFO: responding to db status request with status: Witness%%10.91.10.229%%true%%false%%
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode suspect WARNING: Address suspect: pg-prd2-44343 at 10.91.10.227
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode suspect WARNING: Address suspect: pg-prd1-4519 at 10.91.10.226
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode viewAccepted INFO: View changed. I am pem-prd-49337 Total jgroups nodes: 1
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode updateNodesFile INFO: New .nodes file information:
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.exec.ExecUtil performExec INFO: [sudo /usr/efm-2.1/bin/efm_root_functions writenodes efm ]
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.utils.ClusterStateVerifier$TimerThread run INFO: Cluster state verifier thread started.
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.exec.ExecUtil performExec INFO: ProcessResult{exitValue=0, errorOut='', stdOut=''}
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode updateStableClusterSize INFO: Cluster size now 1, was 3.
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Checking to see if node is responsive. Check type: DB_PING
+
+11/22/17 3:02:10 PM com.enterprisedb.efm.DBMonitor checkOnce INFO: DB monitor testing jdbc:postgresql://10.91.10.227:5444/postgres?ApplicationName='efm-2.1'
+
 11/22/17 3:02:13 PM com.enterprisedb.efm.DBMonitor checkOnce WARNING: Could not connect to database at 10.91.10.227: org.postgresql.util.PSQLException: The connection attempt failed., state: 08001, time: 2,945
 
 11/22/17 3:02:13 PM com.enterprisedb.efm.nodes.EfmNode nodeStillUp INFO: Cleaning thread db_ping_local in case still running.
@@ -1438,6 +1464,8 @@ The standby on 10.91.10.227 has left the cluster.
 11/22/17 3:03:50 PM com.enterprisedb.efm.nodes.EfmWitness doHandle INFO: responding to db status request with status: Witness%%10.91.10.229%%true%%false%%
 
 11/22/17 3:07:16 PM com.enterprisedb.efm.nodes.EfmNode updateStableSize INFO: stable cluster size now 1
+
+[root@pem-prd efm-2.1]#
 
 
 
