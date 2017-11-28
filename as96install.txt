@@ -1481,5 +1481,16 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/edb-as-9.6.serv
 [root@pg-prd1 efm-2.1]# systemctl enable efm-2.1
 Created symlink from /etc/systemd/system/multi-user.target.wants/efm-2.1.service to /usr/lib/systemd/system/efm-2.1.service.
 [root@pg-prd1 efm-2.1]#
+============================
+pg-prd1 pemagent log 
 
+Tue Nov 21 14:31:09 2017 : WARNING: Heartbeat: Unable to ping server: 4, error: FATAL:  terminating connection due to administrator command
+server closed the connection unexpectedly
+        This probably means the server terminated abnormally
+        before or while processing the request.
+.
+Mon Nov 27 17:34:50 2017 : WARNING: failed to query jobs table: FATAL:  terminating connection due to administrator command
+server closed the connection unexpectedly
+        This probably means the server terminated abnormally
+        before or while processing the request.
 
