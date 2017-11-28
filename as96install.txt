@@ -1477,4 +1477,9 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/pemagent.servic
 Created symlink from /etc/systemd/system/multi-user.target.wants/edb-as-9.6.service to /usr/lib/systemd/system/edb-as-9.6.service.
 [root@pg-prd2 ~]#
 
+-- enable service when start os
+[root@pg-prd1 efm-2.1]# systemctl enable efm-2.1
+Created symlink from /etc/systemd/system/multi-user.target.wants/efm-2.1.service to /usr/lib/systemd/system/efm-2.1.service.
+[root@pg-prd1 efm-2.1]#
+
 
