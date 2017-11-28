@@ -1467,7 +1467,14 @@ The standby on 10.91.10.227 has left the cluster.
 
 [root@pem-prd efm-2.1]#
 
+[root@pg-prd1 ~]# systemctl enable pemagent
+Created symlink from /etc/systemd/system/multi-user.target.wants/pemagent.service to /usr/lib/systemd/system/pemagent.service.
+[root@pg-prd1 ~]#
 
 
+-- enable start service when boot 
+[root@pg-prd2 ~]# systemctl enable edb-as-9.6
+Created symlink from /etc/systemd/system/multi-user.target.wants/edb-as-9.6.service to /usr/lib/systemd/system/edb-as-9.6.service.
+[root@pg-prd2 ~]#
 
 
