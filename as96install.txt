@@ -1493,4 +1493,15 @@ Mon Nov 27 17:34:50 2017 : WARNING: failed to query jobs table: FATAL:  terminat
 server closed the connection unexpectedly
         This probably means the server terminated abnormally
         before or while processing the request.
+Archiving Log Enabled
+===================
+Directory to local = /var/wal_arch running successfully.
+
+[enterprisedb@pg-prd1 wal_arch]$ ps -ef | grep postgres
+enterpr+  2181  1928  0 Nov27 ?        00:00:00 postgres: logger process
+enterpr+  2271  1928  0 Nov27 ?        00:00:08 postgres: checkpointer process
+enterpr+  2272  1928  0 Nov27 ?        00:00:01 postgres: writer process
+enterpr+  2273  1928  0 Nov27 ?        00:00:01 postgres: wal writer process
+enterpr+  2274  1928  0 Nov27 ?        00:00:32 postgres: autovacuum launcher process
+enterpr+  2275  1928  0 Nov27 ?        00:00:05 postgres: archiver process   archiving 0000000100000002000000A5
 
