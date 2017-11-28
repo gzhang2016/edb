@@ -1505,3 +1505,41 @@ enterpr+  2273  1928  0 Nov27 ?        00:00:01 postgres: wal writer process
 enterpr+  2274  1928  0 Nov27 ?        00:00:32 postgres: autovacuum launcher process
 enterpr+  2275  1928  0 Nov27 ?        00:00:05 postgres: archiver process   archiving 0000000100000002000000A5
 
+Status of Replication of both standbys(NY DC/NJ DR)
+=====
+[enterprisedb@pg-prd1 wal_arch]$ ps -ef | grep send
+enterpr+  5479 28162  0 11:05 pts/2    00:00:00 grep --color=auto send
+enterpr+  6290  1928  0 09:12 ?        00:00:00 postgres: wal sender process repuser 10.91.10.227[45498] streaming 12/91000220
+enterpr+ 10514  1928  0 09:27 ?        00:00:00 postgres: wal sender process repuser 10.81.10.226[39256] streaming 12/91000220
+
+EFM STatus Check
+------------------
+[root@pg-prd1 ~]# /usr/efm-2.1/bin/efm cluster-status efm
+Cluster Status: efm
+VIP: 10.91.10.225
+Automatic failover is disabled.
+
+        Agent Type  Address              Agent  DB       Info
+        --------------------------------------------------------------
+        Witness     10.91.10.229         UP     N/A
+        Standby     10.91.10.227         UP     UP
+        Master      10.91.10.226         UP     UP
+
+Allowed node host list:
+        10.91.10.226 10.91.10.227 10.91.10.229
+
+Membership coordinator: 10.91.10.226
+
+Standby priority host list:
+        10.91.10.227
+
+Promote Status:
+
+        DB Type     Address              XLog Loc         Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         12/91000300
+        Standby     10.91.10.227         12/91000300
+
+        Standby database(s) in sync with master. It is safe to promote.
+[root@pg-prd1 ~]#
+
