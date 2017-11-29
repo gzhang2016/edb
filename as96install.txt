@@ -1545,3 +1545,20 @@ Promote Status:
 -- mv archive file to /var/pg_xlog/tmp_archive/ in pg-prd1
 
  find /var/wal_arch/ -mmin  +1200 -exec mv "{}" /var/pg_xlog/tmp_archive/ \;
+ 
+ 
+ 
+ -rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000023
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000024
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000025
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000026
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000027
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000028
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD00000029
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002A
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002B
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002C
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002D
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002E
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002F
+
