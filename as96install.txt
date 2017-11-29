@@ -1542,4 +1542,6 @@ Promote Status:
 
         Standby database(s) in sync with master. It is safe to promote.
 [root@pg-prd1 ~]#
+-- mv archive file to /var/pg_xlog/tmp_archive/ in pg-prd1
 
+ find /var/wal_arch/ -mmin  +1200 -exec mv "{}" /var/pg_xlog/tmp_archive/ \;
