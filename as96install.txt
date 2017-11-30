@@ -1733,6 +1733,8 @@ $bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
 CREATE ROLE bartuser WITH LOGIN SUPERUSER PASSWORD 'bartuser';
 -- change db user to bartuser in bart.cfg 
 -- INIT bart agqin 
+ bart INIY -r -s pgprdas96
+ 
 [enterprisedb@pg-prd1 bktest]$ bar INIT -r -s pgprdas96
 bash: bar: command not found...
 [enterprisedb@pg-prd1 bktest]$ bart  INIT -r -s pgprdas96
