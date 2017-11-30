@@ -1691,3 +1691,29 @@ description = "PG_PRD1 EPAS 96 server"
 INFO:  setting archive_command for server 'pgprdas96'
 WARNING: archive_command is not set for server 'pgprdas96'
 
+[enterprisedb@pg-prd1 ~]$ bart INIT -s pgprdas96
+INFO:  setting archive_command for server 'pgprdas96'
+WARNING: archive_command is not set for server 'pgprdas96'
+[enterprisedb@pg-prd1 ~]$ bart show-servers
+SERVER NAME         : pgprdas96
+BACKUP FRIENDLY NAME: pg-prd1_%year-%month-%dayT%hour:%minute:%second
+HOST NAME           : 127.0.0.1
+USER NAME           : postgres
+PORT                : 5444
+REMOTE HOST         :
+RETENTION POLICY    : 2 Backups
+DISK UTILIZATION    : 0.00 bytes
+NUMBER OF ARCHIVES  : 0
+ARCHIVE PATH        : /backup/pgprdas96/archived_wals
+ARCHIVE COMMAND     : /bin/true
+XLOG METHOD         : fetch
+WAL COMPRESSION     : disabled
+TABLESPACE PATH(s)  :
+INCREMENTAL BACKUP  : ENABLED
+DESCRIPTION         : "PG_PRD1 EPAS 96 server"
+
+[enterprisedb@pg-prd1 ~]$
+
+
+archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
+
