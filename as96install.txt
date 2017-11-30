@@ -1565,16 +1565,91 @@ Promote Status:
 SELECT pg_size_pretty( SUM(pg_database_size(datname))::bigint ) As Total_db_size   from pg_database
 
 =============
-SELECT schema_name, 
-       sum(table_size),
-       (sum(table_size) / database_size) * 100
-FROM (
-  SELECT pg_catalog.pg_namespace.nspname as schema_name,
-         pg_relation_size(pg_catalog.pg_class.oid) as table_size,
-         sum(pg_relation_size(pg_catalog.pg_class.oid)) over () as database_size
-  FROM   pg_catalog.pg_class
-     JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
-) t
-GROUP BY schema_name, database_size
+-- check schema size for db data-warehouse in pg-prd1
+
+
+postgres=# \c data_warehouse
+You are now connected to database "data_warehouse" as user "postgres".
+data_warehouse=# SELECT schema_name,
+data_warehouse-#        pg_size_pretty(sum(table_size)::bigint),
+data_warehouse-#        (sum(table_size) / pg_database_size(current_database())) * 100
+data_warehouse-# FROM (
+data_warehouse(#   SELECT pg_catalog.pg_namespace.nspname as schema_name,
+data_warehouse(#          pg_relation_size(pg_catalog.pg_class.oid) as table_size
+data_warehouse(#   FROM   pg_catalog.pg_class
+data_warehouse(#      JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
+data_warehouse(# ) t
+data_warehouse-# GROUP BY schema_name
+data_warehouse-# ORDER BY schema_name;
+    schema_name     | pg_size_pretty |            ?column?
+--------------------+----------------+--------------------------------
+ dbms_aq            | 0 bytes        | 0.0000000000000000000000000000
+ dbms_aqadm         | 0 bytes        | 0.0000000000000000000000000000
+ entity_master      | 116 GB         |        52.02720765064082365600
+ information_schema | 96 kB          |     0.000041100811410031362500
+ pg_catalog         | 227 MB         |         0.09957646561721659300
+ pg_toast           | 423 MB         |         0.18561657594957363100
+ public             | 38 GB          |        16.83843474505911457400
+ sys                | 104 kB         |     0.000044525148544657085400
+ temp_data          | 69 GB          |        30.80253500033396663200
+(9 rows)
+
+-- check schema size for db data-warehouse in pg-prd2
+postgres=# \c data_warehouse
+You are now connected to database "data_warehouse" as user "postgres".
+data_warehouse=# SELECT schema_name,
+data_warehouse-#        pg_size_pretty(sum(table_size)::bigint),
+data_warehouse-#        (sum(table_size) / pg_database_size(current_database())) * 100
+data_warehouse-# FROM (
+data_warehouse(#   SELECT pg_catalog.pg_namespace.nspname as schema_name,
+data_warehouse(#          pg_relation_size(pg_catalog.pg_class.oid) as table_size
+data_warehouse(#   FROM   pg_catalog.pg_class
+data_warehouse(#      JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
+data_warehouse(# ) t
+data_warehouse-# GROUP BY schema_name
+data_warehouse-# ORDER BY schema_name;
+    schema_name     | pg_size_pretty |            ?column?
+--------------------+----------------+--------------------------------
+ dbms_aq            | 0 bytes        | 0.0000000000000000000000000000
+ dbms_aqadm         | 0 bytes        | 0.0000000000000000000000000000
+ entity_master      | 116 GB         |        69.16701213754876347100
+ information_schema | 96 kB          |     0.000054556621579716893400
+ pg_catalog         | 229 MB         |         0.13310451749911429100
+ pg_toast           | 239 MB         |         0.13924213742683244100
+ public             | 38 GB          |        22.47446386821042494800
+ sys                | 104 kB         |     0.000059103006711359967900
+ temp_data          | 14 GB          |         8.05621718519718614200
+(9 rows)
+
+-- check schema size for db data-warehouse in pg-dr
+
+postgres=# \c data_warehouse
+You are now connected to database "data_warehouse" as user "postgres".
+data_warehouse=# SELECT schema_name,
+data_warehouse-#        pg_size_pretty(sum(table_size)::bigint),
+data_warehouse-#        (sum(table_size) / pg_database_size(current_database())) * 100
+data_warehouse-# FROM (
+data_warehouse(#   SELECT pg_catalog.pg_namespace.nspname as schema_name,
+data_warehouse(#          pg_relation_size(pg_catalog.pg_class.oid) as table_size
+data_warehouse(#   FROM   pg_catalog.pg_class
+data_warehouse(#      JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
+data_warehouse(# ) t
+data_warehouse-# GROUP BY schema_name
+data_warehouse-# ORDER BY schema_name;
+    schema_name     | pg_size_pretty |            ?column?
+--------------------+----------------+--------------------------------
+ dbms_aq            | 0 bytes        | 0.0000000000000000000000000000
+ dbms_aqadm         | 0 bytes        | 0.0000000000000000000000000000
+ entity_master      | 116 GB         |        69.13502279773520907900
+ information_schema | 96 kB          |     0.000054479569220874024300
+ pg_catalog         | 231 MB         |         0.13429667809355620900
+ pg_toast           | 242 MB         |         0.14067532765650021000
+ public             | 38 GB          |        22.52531336855484715600
+ sys                | 104 kB         |     0.000059019533322613526400
+ temp_data          | 14 GB          |         8.03480576743806199000
+(9 rows)
+
+data_warehouse=#
+
 
 
