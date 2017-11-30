@@ -1694,7 +1694,6 @@ WARNING: archive_command is not set for server 'pgprdas96'
 [enterprisedb@pg-prd1 ~]$ bart INIT -s pgprdas96
 INFO:  setting archive_command for server 'pgprdas96'
 WARNING: archive_command is not set for server 'pgprdas96'
-[enterprisedb@pg-prd1 archived_wals]$ cd
 [enterprisedb@pg-prd1 ~]$ bart show-servers
 SERVER NAME         : pgprdas96
 BACKUP FRIENDLY NAME: pg-prd1_%year-%month-%dayT%hour:%minute:%second
@@ -1703,10 +1702,10 @@ USER NAME           : postgres
 PORT                : 5444
 REMOTE HOST         :
 RETENTION POLICY    : 2 Backups
-DISK UTILIZATION    : 16.00 MB
+DISK UTILIZATION    : 0.00 bytes
 NUMBER OF ARCHIVES  : 0
 ARCHIVE PATH        : /backup/pgprdas96/archived_wals
-ARCHIVE COMMAND     : cp %p /backup/pgprdas96/archived_wals/%f
+ARCHIVE COMMAND     : /bin/true
 XLOG METHOD         : fetch
 WAL COMPRESSION     : disabled
 TABLESPACE PATH(s)  :
@@ -1721,7 +1720,9 @@ archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
 recovery.conf
 
 standby_mode = on
-primary_conninfo = ''
+primary_conninfo = 'Q'
 trigger_file = '/tmp/postgres_promotion.trigger'
 restore_command = 'cp /backup/pgprdas96/archived_wals/%f %p'
-recovery_target_timeline = 'latest'
+-- backup (full)
+
+$bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
