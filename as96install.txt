@@ -1730,4 +1730,4 @@ $bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
 
 -- create bart db user in pg-prd1 
 
-CREATE ROLE bartuser WITH LOGIN SUPERUSER PASSWORD 'bartuse';
+CREATE ROLE bartuser WITH LOGIN SUPERUSER PASSWORD 'bartuser';
