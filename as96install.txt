@@ -1726,3 +1726,6 @@ restore_command = 'cp /backup/pgprdas96/archived_wals/%f %p'
 -- backup (full)
 
 $bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
+
+
+00000001000002FD000000AD
