@@ -1756,3 +1756,15 @@ TABLESPACE PATH(s)  :
 INCREMENTAL BACKUP  : ENABLED
 DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 
+-- try bart backup again 
+[enterprisedb@pg-prd1 bktest]$ bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
+INFO:  creating backup for server 'pgprdas96'
+INFO:  backup identifier: '1512081823004'
+
+-- check backup 
+[enterprisedb@pg-prd1 1512081823004]$ du -sh
+3.4G    .
+[enterprisedb@pg-prd1 1512081823004]$ pwd
+/backup/pgprdas96/1512081823004
+[enterprisedb@pg-prd1 1512081823004]$ du -sh
+17G
