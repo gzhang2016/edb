@@ -1779,3 +1779,10 @@ primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslc
 restore_command = 'scp enterprisedb@pg-prd:/backup/pgprdas96/archived_wals/%f %p'
 #restore_command = 'scp pg-prd1:/backup/pgprdas96/archived_wals/%f %p'
 #recovery_target_timeline = 'latest'
+
+====================================
+set up email group in pem server
+
+technology@qsinvestors.com 
+
+
