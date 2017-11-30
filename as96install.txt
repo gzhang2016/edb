@@ -1717,3 +1717,9 @@ DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 
 archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
 
+recovery.conf
+
+standby_mode = on
+primary_conninfo = 'Q'
+trigger_file = '/tmp/postgres_promotion.trigger'
+restore_command = 'cp /backup/pgprdas96/archived_wals/%f %p'
