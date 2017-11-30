@@ -1728,4 +1728,6 @@ restore_command = 'cp /backup/pgprdas96/archived_wals/%f %p'
 $bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
 
 
-00000001000002FD000000AD
+-- create bart db user in pg-prd1 
+
+CREATE ROLE bartuser WITH LOGIN SUPERUSER PASSWORD 'bartuse';
