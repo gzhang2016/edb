@@ -1679,7 +1679,7 @@ scanner_logfile = /tmp/bart_scanner.log
 [PGPRDAS96]
 host = 127.0.0.1
 port = 5444
-user = enterprisedb
+user = postgres
 cluster_owner = enterprisedb
 backup_name = dxpgedb01_%year-%month-%dayT%hour:%minute:%second
 retention_policy = 2 BACKUPS
@@ -1687,4 +1687,7 @@ retention_policy = 2 BACKUPS
 allow_incremental_backups = enabled
 description = "PG_PRD1 EPAS 96 server"
 
+[enterprisedb@pg-prd1 ~]$ bart INIT -s pgprdas96
+INFO:  setting archive_command for server 'pgprdas96'
+WARNING: archive_command is not set for server 'pgprdas96'
 
