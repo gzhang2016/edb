@@ -1561,4 +1561,5 @@ Promote Status:
 -rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002D
 -rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002E
 -rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002F
-
+===========================
+SELECT pg_size_pretty( SUM(pg_database_size(datname))::bigint ) As Total_db_size   from pg_database
