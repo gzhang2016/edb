@@ -1731,3 +1731,26 @@ $bart backup -s pgprdas96 --backup-name pg-prd1_full_parent
 -- create bart db user in pg-prd1 
 
 CREATE ROLE bartuser WITH LOGIN SUPERUSER PASSWORD 'bartuser';
+-- change db user to bartuser in bart.cfg 
+-- INIT bart agqin 
+[enterprisedb@pg-prd1 bktest]$ bar INIT -r -s pgprdas96
+bash: bar: command not found...
+[enterprisedb@pg-prd1 bktest]$ bart  INIT -r -s pgprdas96
+[enterprisedb@pg-prd1 bktest]$ bart show-servers
+SERVER NAME         : pgprdas96
+BACKUP FRIENDLY NAME: pg-prd1_%year-%month-%dayT%hour:%minute:%second
+HOST NAME           : 10.91.10.226
+USER NAME           : bartuser
+PORT                : 5444
+REMOTE HOST         :
+RETENTION POLICY    : 2 Backups
+DISK UTILIZATION    : 17.72 GB
+NUMBER OF ARCHIVES  : 0
+ARCHIVE PATH        : /backup/pgprdas96/archived_wals
+ARCHIVE COMMAND     : cp %p /backup/pgprdas96/archived_wals/%f
+XLOG METHOD         : fetch
+WAL COMPRESSION     : disabled
+TABLESPACE PATH(s)  :
+INCREMENTAL BACKUP  : ENABLED
+DESCRIPTION         : "PG_PRD1 EPAS 96 server"
+
