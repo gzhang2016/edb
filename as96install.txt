@@ -1666,4 +1666,11 @@ $ scp ~/.ssh/id_rsa.pub enterprisedb@pg-prd1:temp.pub # from remote server
 $ cat temp.pub >> ~/.ssh/authorized_keys # on both bart server and remote  
 $ chmod 600 ~/.ssh/id_rsa.pub # both bart server and remote server 
 
+bart.cfg:
+
+backup_name = dxpgedb01_%year-%month-%dayT%hour:%minute:%second
+retention_policy = 3 BACKUPS
+archive_command = 'cp %p %a/%f'
+allow_incremental_backups = enabled
+
 
