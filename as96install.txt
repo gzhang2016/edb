@@ -1776,6 +1776,6 @@ INFO:  backup identifier: '1512081823004'
 [enterprisedb@pg-dr data]$ cat recovery.conf
 standby_mode = 'on'
 primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
-restore_command = 'scp pg-prd:/backup/pgprdas96/archived_wals/%f %p'
+restore_command = 'scp enterprisedb@pg-prd:/backup/pgprdas96/archived_wals/%f %p'
 #restore_command = 'scp pg-prd1:/backup/pgprdas96/archived_wals/%f %p'
 #recovery_target_timeline = 'latest'
