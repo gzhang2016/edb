@@ -1563,3 +1563,18 @@ Promote Status:
 -rw-------. 1 enterprisedb enterprisedb 16777216 Nov 29 15:48 00000001000000AD0000002F
 ===========================
 SELECT pg_size_pretty( SUM(pg_database_size(datname))::bigint ) As Total_db_size   from pg_database
+
+=============
+SELECT schema_name, 
+       sum(table_size),
+       (sum(table_size) / database_size) * 100
+FROM (
+  SELECT pg_catalog.pg_namespace.nspname as schema_name,
+         pg_relation_size(pg_catalog.pg_class.oid) as table_size,
+         sum(pg_relation_size(pg_catalog.pg_class.oid)) over () as database_size
+  FROM   pg_catalog.pg_class
+     JOIN pg_catalog.pg_namespace ON relnamespace = pg_catalog.pg_namespace.oid
+) t
+GROUP BY schema_name, database_size
+
+
