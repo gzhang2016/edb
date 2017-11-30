@@ -1661,8 +1661,9 @@ $ chmod 600  ~/.ssh/authorized_keys
 
 ----------------
 $ ssh-keygen -t rsa    # on both bart server and remote server 
-$ scp ~/.ssh/id_rsa.pub postgres@remote_server:temp.pub # from bart server
-$ scp ~/.ssh/id_rsa.pub postgres@bart_server:tmp.pub # from remote server
-$ cat tmp.pub >> ~/.ssh/authorized_keys # on both bart server and remote  $ chmod 600 ~/.ssh/id_rsa.pub # both bart server and remote server 
+$ scp ~/.ssh/id_rsa.pub enterprisedb@pg-prd2:temp.pub # from bart server
+$ scp ~/.ssh/id_rsa.pub enterprisedb@pg-prd1:temp.pub # from remote server
+$ cat temp.pub >> ~/.ssh/authorized_keys # on both bart server and remote  
+$ chmod 600 ~/.ssh/id_rsa.pub # both bart server and remote server 
 
 
