@@ -1880,3 +1880,9 @@ ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
  pg-prd1 WAL lag time:
 -rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 08:58 /backup/pgprdas96/archived_wals/00000001000004A1000000AB
 
+====================
+
+-- remove old wal log 
+enterprisedb@pg-prd1 archived_wals]$ find /backup/pgprdas96/archived_wals/ -type f -mmin +900 -exec rm {} \;
+
+
