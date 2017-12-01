@@ -1785,5 +1785,37 @@ set up email group in pem server
 
 sender:enterprisedb@pem-prd.localdomain
 receiver: technology@qsinvestors.com 
+===============================
+[enterprisedb@pg-dr pg_log]$ hostname
+pg-dr
+[enterprisedb@pg-dr pg_log]$ host pg-dr
+pg-dr.qsi.local has address 10.81.10.226
+[enterprisedb@pg-dr pg_log]$
+=============
+enterprisedb@pem-prd ~]$ hosname
+bash: hosname: command not found...
+[enterprisedb@pem-prd ~]$ hostname
+pem-prd
+[enterprisedb@pem-prd ~]$ host pem-prd
+pem-prd.qsi.local has address 10.91.10.229
+[enterprisedb@pem-prd ~]$
+==================
+[enterprisedb@pg-prd1 archived_wals]$ hostname
+pg-prd1
+[enterprisedb@pg-prd1 archived_wals]$ host pg-prd1
+pg-prd1.qsi.local has address 10.91.10.226
+[enterprisedb@pg-prd1 archived_wals]$
+==========================
+[enterprisedb@pg-prd2 pg_log]$ hostname
+pg-prd2
+[enterprisedb@pg-prd2 pg_log]$ host pg-prd2
+pg-prd2.qsi.local has address 10.91.10.227
+[enterprisedb@pg-prd2 pg_log]$
+================
+[enterprisedb@pem-dr ~]$ hostname
+pem-dr
+[enterprisedb@pem-dr ~]$ host pem-dr
+pem-dr.qsi.local has address 10.81.10.229
+[enterprisedb@pem-dr ~]$
 
 
