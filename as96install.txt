@@ -2077,4 +2077,45 @@ Fri Dec  1 13:09:58 EST 2017
 enterprisedb@pg-prd1 archived_wals]$ find /backup/pgprdas96/archived_wals/ -type f -mmin +900 -exec rm {} \;
 
 ===================
+modify scrip check_wal_lag.sh on pg-prd1:
 
+[enterprisedb@pg-prd1 ~]$ cat check_wal_lag.sh
+#!/bin/bash
+pgdrlastlog=$(ssh pg-dr "ls -ltr /var/pg_log| tail -1")
+pgdrlastloglastline=$(echo $pgdrlastlog| awk '{print $NF}')
+pgdrlastwal=$(ssh pg-dr " cat  /var/pg_log/$pgdrlastloglastline| grep restored|tail -1")
+pgdrlastwalfile=$(echo $pgdrlastwal |awk '{print $10}' | sed 's/"//g')
+
+echo " pg-dr on DR WAL lag time:"
+ls -l /backup/pgprdas96/archived_wals/$pgdrlastwalfile
+
+pgprdlastlog=$(ssh pg-prd2 "ls -ltr /var/pg_log| tail -1")
+pgprdlastloglastline=$(echo $pgprdlastlog| awk '{print $NF}')
+pgprdlastwal=$(ssh pg-prd2 " cat  /var/pg_log/$pgprdlastloglastline| grep restored|tail -1")
+pgprdlastwalfile=$(echo $pgprdlastwal |awk '{print $10}' | sed 's/"//g')
+
+echo " pg-prd2 WAL lag time:"
+ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
+
+echo "current  oldest wal log time:"
+
+cd /backup/pgprdas96/archived_wals
+
+ls -ltr | head -n 2| grep -v total
+
+echo " total wal files size before removing:"
+
+du -sh
+
+echo "remove wal file older than 600 minutes..."
+
+find /backup/pgprdas96/archived_wals/ -type f -mmin +600 -exec rm {} \;
+echo "oldest wal log file time after remove wal file older than 600 minutes:"
+ls -ltr | head -n 2| grep -v total
+
+echo " total wal file size after wal file removed:"
+
+du -sh
+
+cd
+=============================
