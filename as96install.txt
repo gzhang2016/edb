@@ -1880,6 +1880,84 @@ ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
  pg-prd1 WAL lag time:
 -rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 08:58 /backup/pgprdas96/archived_wals/00000001000004A1000000AB
 
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 05:27 /backup/pgprdas96/archived_wals/000000010000044E000000A6
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:23 /backup/pgprdas96/archived_wals/00000001000004AB0000005F
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 05:31 /backup/pgprdas96/archived_wals/000000010000044F000000EB
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:25 /backup/pgprdas96/archived_wals/00000001000004AC0000005C
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 05:53 /backup/pgprdas96/archived_wals/000000010000045800000014
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:43 /backup/pgprdas96/archived_wals/00000001000004B20000005B
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 12:23:02 EST 2017
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 12:23:06 EST 2017
 [enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
 #############################################################
 Welcome to QSI
@@ -1932,7 +2010,66 @@ Disconnect IMMEDIATELY if you are not  an authorized user!
 -rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:55 /backup/pgprdas96/archived_wals/00000001000004B5000000C2
 [enterprisedb@pg-prd1 ~]$ date
 Fri Dec  1 12:36:52 EST 2017
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 12:53:58 EST 2017
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 06:20 /backup/pgprdas96/archived_wals/0000000100000461000000B7
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 10:08 /backup/pgprdas96/archived_wals/00000001000004B9000000B2
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 12:54:08 EST 2017
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 13:09:47 EST 2017
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 06:33 /backup/pgprdas96/archived_wals/0000000100000466000000A9
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 10:19 /backup/pgprdas96/archived_wals/00000001000004BD000000B9
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 13:09:58 EST 2017
 [enterprisedb@pg-prd1 ~]$
+
 
 ====================
 
