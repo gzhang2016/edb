@@ -1880,9 +1880,64 @@ ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
  pg-prd1 WAL lag time:
 -rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 08:58 /backup/pgprdas96/archived_wals/00000001000004A1000000AB
 
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 05:54 /backup/pgprdas96/archived_wals/00000001000004580000005A
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:43 /backup/pgprdas96/archived_wals/00000001000004B20000009E
+[enterprisedb@pg-prd1 ~]$ ./check_wal_lag.sh
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+#############################################################
+Welcome to QSI
+All Connections are monitored and recorded
+Disconnect IMMEDIATELY if you are not  an authorized user!
+#############################################################
+ pg-dr on DR WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 06:04 /backup/pgprdas96/archived_wals/000000010000045C00000072
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+#############################################################
+#                     Welcome to QSI                        #
+#       All connections are monitored and recored           #
+# Disconnect IMMEDIATELY if you are not an authorized user! #
+#############################################################
+ pg-prd2 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 09:55 /backup/pgprdas96/archived_wals/00000001000004B5000000C2
+[enterprisedb@pg-prd1 ~]$ date
+Fri Dec  1 12:36:52 EST 2017
+[enterprisedb@pg-prd1 ~]$
+
 ====================
 
 -- remove old wal log 
 enterprisedb@pg-prd1 archived_wals]$ find /backup/pgprdas96/archived_wals/ -type f -mmin +900 -exec rm {} \;
 
+===================
 
