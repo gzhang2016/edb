@@ -2119,3 +2119,7 @@ du -sh
 
 cd
 =============================
+
+-- run every two hours for check_wal_log.sh 
+0 */2 * * * /home/enterprisedb/check_wal_lag.sh  > /tmp/check_wal_lag.txt 2>1
+
