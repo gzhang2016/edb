@@ -1818,4 +1818,10 @@ pem-dr
 pem-dr.qsi.local has address 10.81.10.229
 [enterprisedb@pem-dr ~]$
 
+WAL lag:
+
+[enterprisedb@pg-prd1 archived_wals]$ ls -l 000000010000048000000038
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 07:37 000000010000048000000038 -- this pg-prd2
+[enterprisedb@pg-prd1 archived_wals]$ ls -l 00000001000003750000009A
+-rw-------. 1 enterprisedb enterprisedb 16777216 Nov 30 21:33 00000001000003750000009A  -- this pg-dr
 
