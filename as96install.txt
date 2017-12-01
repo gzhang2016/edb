@@ -1872,4 +1872,11 @@ pgprdlastwalfile=$(echo $pgprdlastwal |awk '{print $10}' | sed 's/"//g')
 echo " pg-prd1 WAL lag time:"
 ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
 
+-- run script 
+ [enterprisedb@pg-prd1 ~]$   check_wal_lag.sh > check_wal_lag.txt
+[enterprisedb@pg-prd1 ~]$ cat check_wal_lag.txt
+ pg-dr WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 04:58 /backup/pgprdas96/archived_wals/000000010000044400000000
+ pg-prd1 WAL lag time:
+-rw-------. 1 enterprisedb enterprisedb 16777216 Dec  1 08:58 /backup/pgprdas96/archived_wals/00000001000004A1000000AB
 
