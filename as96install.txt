@@ -1783,6 +1783,7 @@ restore_command = 'scp enterprisedb@pg-prd:/backup/pgprdas96/archived_wals/%f %p
 ====================================
 set up email group in pem server
 
-technology@qsinvestors.com 
+sender:enterprisedb@pem-prd.localdomain
+receiver: technology@qsinvestors.com 
 
 
