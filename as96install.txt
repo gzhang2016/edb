@@ -1851,3 +1851,25 @@ postgres=# show max_wal_size;
 2017-11-30 17:32:12 EST [9704]: [1-1] user=postgres,db=data_warehouseLOG:  duration: 1797.970 ms  statement: UPDATE temp_data.t_1512081130_912997580 SET data_status=CASE WHEN (temp_data.t_1512081130_912997580.data_hash = entity_master.perspective_entity.data_hash) THEN 'M' ELSE 'D' END, key=entity_master.perspective_entity.key FROM entity_master.perspective_entity WHERE (temp_data.t_1512081130_912997580.identifier_value = entity_master.perspective_entity.:
 
 ===================================
+
+-- use script to check wal lag time :
+
+[enterprisedb@pg-prd1 ~]$ cat check_wal_lag.sh
+#!/bin/bash
+pgdrlastlog=$(ssh pg-dr "ls -ltr /var/pg_log| tail -1")
+pgdrlastloglastline=$(echo $pgdrlastlog| awk '{print $NF}')
+pgdrlastwal=$(ssh pg-dr " cat  /var/pg_log/$pgdrlastloglastline| grep restored|tail -1")
+pgdrlastwalfile=$(echo $pgdrlastwal |awk '{print $10}' | sed 's/"//g')
+
+echo " pg-dr WAL lag time:"
+ls -l /backup/pgprdas96/archived_wals/$pgdrlastwalfile
+
+pgprdlastlog=$(ssh pg-prd2 "ls -ltr /var/pg_log| tail -1")
+pgprdlastloglastline=$(echo $pgprdlastlog| awk '{print $NF}')
+pgprdlastwal=$(ssh pg-prd2 " cat  /var/pg_log/$pgprdlastloglastline| grep restored|tail -1")
+pgprdlastwalfile=$(echo $pgprdlastwal |awk '{print $10}' | sed 's/"//g')
+
+echo " pg-prd1 WAL lag time:"
+ls -l /backup/pgprdas96/archived_wals/$pgprdlastwalfile
+
+
