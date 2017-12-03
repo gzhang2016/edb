@@ -2186,3 +2186,27 @@ pg_basebackup: initiating base backup, waiting for checkpoint to complete
    
    -- ALSO STOP DATA TRNASFER IN PG-DR USING PG_BASEBACKUP AND REMOVE ALL OF DATA IN $PGDATA DIRECTORY.
    -- REBUILD PG-DR AFTER DATA LOADING!
+   
+   how to improve data loading
+   
+
+    Disable any triggers on the table
+
+    Drop indexes before starting the import, re-create them afterwards. (It takes much less time to build an index in one pass than it does to add the same data to it progressively, and the resulting index is much more compact).
+
+    If doing the import within a single transaction, it's safe to drop foreign key constraints, do the import, and re-create the constraints before committing. Do not do this if the import is split across multiple transactions as you might introduce invalid data.
+
+    If possible, use COPY instead of INSERTs
+
+    If you can't use COPY consider using multi-valued INSERTs if practical. You seem to be doing this already. Don't try to list too many values in a single VALUES though; those values have to fit in memory a couple of times over, so keep it to a few hundred per statement.
+
+    Batch your inserts into explicit transactions, doing hundreds of thousands or millions of inserts per transaction. There's no practical limit AFAIK, but batching will let you recover from an error by marking the start of each batch in your input data. Again, you seem to be doing this already.
+
+    Use synchronous_commit=off and a huge commit_delay to reduce fsync() costs. This won't help much if you've batched your work into big transactions, though.
+
+    INSERT or COPY in parallel from several connections. How many depends on your hardware's disk subsystem; as a rule of thumb, you want one connection per physical hard drive if using direct attached storage.
+
+    Set a high checkpoint_segments value and enable log_checkpoints. Look at the PostgreSQL logs and make sure it's not complaining about checkpoints occurring too frequently.
+
+    If and only if you don't mind losing your entire PostgreSQL cluster (your database and any others on the same cluster) to catastrophic corruption if the system crashes during the import, you can stop Pg, set fsync=off, start Pg, do your import, then (vitally) stop Pg and set fsync=on again. See WAL configuration. Do not do this if there is already any data you care about in any database on your PostgreSQL install. If you set fsync=off you can also set full_page_writes=off; again, just remember to turn it back on after your import to prevent database corruption and data loss. See non-durable settings in the Pg manual.
+
