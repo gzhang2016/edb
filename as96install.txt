@@ -2124,6 +2124,31 @@ cd
 0 */2 * * * /home/enterprisedb/check_wal_lag.sh  > /tmp/check_wal_lag.txt 2>1
 
 ===============================
+2017-12-03
+-- check cput usage on pg-prd1
+top - 10:36:08 up 2 days, 20:33,  4 users,  load average: 8.57, 7.93, 6.30
+Tasks: 599 total,   7 running, 571 sleeping,  21 stopped,   0 zombie
+%Cpu(s):  2.8 us,  1.2 sy,  0.0 ni, 85.1 id, 10.6 wa,  0.0 hi,  0.2 si,  0.0 st
+KiB Mem : 26397454+total,   732360 free,  8458152 used, 25478403+buff/cache
+KiB Swap:  4063228 total,  2572680 free,  1490548 used. 24194822+avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+13494 enterpr+  20   0 10.597g 2.468g 2.440g R  38.5  1.0   0:30.77 edb-postmaster
+26909 enterpr+  20   0 10.571g 8.629g 8.627g R  21.9  3.4   1:27.96 edb-postmaster
+ 6028 enterpr+  20   0 10.587g 9.405g 9.386g R  21.6  3.7   3:42.95 edb-postmaster
+11769 enterpr+  20   0 10.576g 2.251g 2.245g S  11.3  0.9   0:11.49 edb-postmaster
+26128 root       0 -20       0      0      0 R   5.0  0.0   1:35.78 kworker/15:0H
+ 3065 enterpr+  20   0 10.569g 0.010t 0.010t S   3.0  4.1  70:37.06 edb-postmaster
+11701 enterpr+  20   0 10.574g 3.072g 3.067g D   3.0  1.2   0:14.25 edb-postmaster
+15624 root      20   0       0      0      0 R   3.0  0.0   3:47.34 kworker/15:0
+
+free -h
+[enterprisedb@pg-prd1 archived_wals]$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           251G        8.0G        723M         11G        242G        230G
+Swap:          3.9G        1.4G        2.5G
+[enterprisedb@pg-prd1 archived_wals]$
+
 pg-dr wal lag is removed 
 --check pg-dr log:
 
