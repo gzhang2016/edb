@@ -2123,3 +2123,21 @@ cd
 -- run every two hours for check_wal_log.sh 
 0 */2 * * * /home/enterprisedb/check_wal_lag.sh  > /tmp/check_wal_lag.txt 2>1
 
+===============================
+pg-dr wal lag is removed 
+--check pg-dr log:
+
+2017-12-03 02:02:14 EST [30882]: [2-1] user=,db=FATAL:  could not receive data from WAL stream: ERROR:  requested WAL segment 00000001000006F80000005D has already been removed
+..........
+scp: /backup/pgprdas96/archived_wals/00000001000006F80000005E: No such file or directory
+2017-12-03 10:28:45 EST [12406]: [1-1] user=,db=LOG:  started streaming WAL from primary at 6F8/5D000000 on timeline 1
+2017-12-03 10:28:45 EST [12406]: [2-1] user=,db=FATAL:  could not receive data from WAL stream: ERROR:  requested WAL segment 00000001000006F80000005D has already been removed
+
+2017-12-03 10:28:50 EST [19041]: [5-1] user=,db=LOG:  received fast shutdown request
+2017-12-03 10:28:50 EST [19041]: [6-1] user=,db=LOG:  aborting any active transactions
+2017-12-03 10:28:50 EST [19048]: [1593-1] user=,db=LOG:  shutting down
+2017-12-03 10:28:50 EST [19048]: [1594-1] user=,db=LOG:  database system is shut down
+2017-12-03 10:28:51 EST [19041]: [7-1] user=,db=LOG:  database system is shut down
+[enterprisedb@pg-dr pg_log]$
+--reset up pg-dr 
+
