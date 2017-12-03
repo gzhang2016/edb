@@ -2178,3 +2178,11 @@ restore_command = 'scp enterprisedb@pg-prd:/backup/pgprdas96/archived_wals/%f %p
 pg-dr: /usr/edb/as9.6/bin/pg_basebackup --host=10.91.10.226 --user=repuser --pgdata=$PGDATA  --write-recovery-conf --xlog-method=stream  --progress --verbose
 
 pg_basebackup: initiating base backup, waiting for checkpoint to complete
+
+-- in order to speed up data loading on pg-prd1, disable archive wal log in pg-prd by set :
+   archive_command = '/bin/true'
+   
+   -- reload db on pg-prd1 ( pg_ctl -D $PGDATA reload )
+   
+   -- ALSO STOP DATA TRNASFER IN PG-DR USING PG_BASEBACKUP AND REMOVE ALL OF DATA IN $PGDATA DIRECTORY.
+   -- REBUILD PG-DR AFTER DATA LOADING!
