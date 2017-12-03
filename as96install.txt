@@ -2165,4 +2165,16 @@ scp: /backup/pgprdas96/archived_wals/00000001000006F80000005E: No such file or d
 2017-12-03 10:28:51 EST [19041]: [7-1] user=,db=LOG:  database system is shut down
 [enterprisedb@pg-dr pg_log]$
 --reset up pg-dr 
+--save pg-dr reconvery.conf 
+[enterprisedb@pg-dr data]$ cat recovery.conf
+standby_mode = 'on'
+primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
+restore_command = 'scp enterprisedb@pg-prd:/backup/pgprdas96/archived_wals/%f %p'
+#restore_command = 'scp pg-prd1:/backup/pgprdas96/archived_wals/%f %p'
+#recovery_target_timeline = 'latest'
+===============================
+-- transfer data from pg-prd1 to pg-dr
 
+pg-dr: /usr/edb/as9.6/bin/pg_basebackup --host=10.91.10.226 --user=repuser --pgdata=$PGDATA  --write-recovery-conf --xlog-method=stream  --progress --verbose
+
+pg_basebackup: initiating base backup, waiting for checkpoint to complete
