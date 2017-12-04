@@ -2209,4 +2209,8 @@ pg_basebackup: initiating base backup, waiting for checkpoint to complete
     Set a high checkpoint_segments value and enable log_checkpoints. Look at the PostgreSQL logs and make sure it's not complaining about checkpoints occurring too frequently.
 
     If and only if you don't mind losing your entire PostgreSQL cluster (your database and any others on the same cluster) to catastrophic corruption if the system crashes during the import, you can stop Pg, set fsync=off, start Pg, do your import, then (vitally) stop Pg and set fsync=on again. See WAL configuration. Do not do this if there is already any data you care about in any database on your PostgreSQL install. If you set fsync=off you can also set full_page_writes=off; again, just remember to turn it back on after your import to prevent database corruption and data loss. See non-durable settings in the Pg manual.
+===
+2017-12-04
+=================
+pg-prd2 needed wal log is removed and pg-prd2 is out of sync and cannot be used as standby --- need to rebuild after data loading .
 
