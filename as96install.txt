@@ -2291,3 +2291,54 @@ postgres-# order by pg_database_size(t1.datname) desc;
  template0        | 8689 kB
 (7 rows)
 
+-- increase work_mem can avoid huge temp file 
+
+can change work_mem at session level ad belwo or globlly by reset it in postgresql.conf and reload 
+
+[enterprisedb@pg-prd1 base]$ psql postgres postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+postgres=# show work_mem;
+ work_mem
+----------
+ 128MB
+(1 row)
+
+postgres=# \q
+[enterprisedb@pg-prd1 base]$ psql postgres postgres
+psql.bin (9.6.5.10)
+Type "help" for help.
+
+postgres=# show work_mem;
+ work_mem
+----------
+ 128MB
+(1 row)
+
+postgres=# alter session set work_mem='1GB';
+ALTER SESSION
+postgres=# show work_mem;
+ work_mem
+----------
+ 1GB
+(1 row)
+
+postgres=# alter session set work_mem='126MB';
+ALTER SESSION
+postgres=# show work_mem;
+ work_mem
+----------
+ 126MB
+(1 row)
+
+postgres=# alter system  set work_mem='1GB';
+ALTER SYSTEM
+postgres=# show work_mem;
+ work_mem
+----------
+ 126MB
+(1 row)
+
+postgres=#
+
