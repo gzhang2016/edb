@@ -2257,3 +2257,17 @@ FROM   pg_stat_database db;
                0 |                       0
                0 |                       0
 (7 rows)
+
+postgres=# SELECT temp_files AS "Temporary files"
+     , temp_bytes AS "Size of temporary files"
+FROM   pg_stat_database db;
+ Temporary files | Size of temporary files
+-----------------+-------------------------
+               0 |                       0
+               0 |                       0
+               0 |                       0
+            9444 |           5473844360435
+              29 |             29834813440
+               0 |                       0
+               0 |                       0
+(7 rows)
