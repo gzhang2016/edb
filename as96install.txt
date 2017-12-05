@@ -2342,3 +2342,10 @@ postgres=# show work_mem;
 
 postgres=#
 
+================
+-- adam responded QSI as:
+The work_mem parameter which controls the amount of memory for sorts and hashes can be increased globally to reduce the amount of temp files be generated, but setting this parameter too high is risky because the memory on the server can be exhausted with multiple concurrent queries (the memory is per planner node ). Alternatively, work_mem can be set differently for an individual user or even for a single session. The value work_mem is currently set at '128MB' on pg-prd1. You can set work_mem for the data loading process by running 'set work_mem to '512MB' during the session and you can verify the effective value by running 'show work_mem'. 
+
+Also, be sure that statistics are up to date with ANALYZE on the tables be queried so that planner is correctly deciding to a hash-join. That is the approach we recommend: 1) verify the statistics are up to date by running ANALYZE on the tables accessed during this process and then 2) set 'work_mem' higher for this session and verify how that affects this process. The only option after that is to get the EXPLAIN plans and look closely at the SQL being called. 
+
+===============================
