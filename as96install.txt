@@ -2226,3 +2226,16 @@ cp: cannot stat ‘/backup/pgprdas96/archived_wals/0000000100000A720000002D’: 
  --- stop efm on pg-prd1 ( becuase standby is shutdonw in purpose).
  [root@pg-prd1 ~]# /usr/efm-2.1/bin/efm stop-cluster efm
 
+-- pgsql_tmp is over 2TB data ????
+[enterprisedb@pg-prd1 base]$ pwd
+/var/data/base
+[enterprisedb@pg-prd1 base]$ du -sh *
+8.7M    1
+8.6M    13712
+8.7M    13713
+185M    16391
+753G    16392
+173G    16393
+8.7M    16394
+2.1T    pgsql_tmp
+[enterprisedb@pg-prd1 base]$
