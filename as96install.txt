@@ -2244,9 +2244,7 @@ cp: cannot stat ‘/backup/pgprdas96/archived_wals/0000000100000A720000002D’: 
 SELECT temp_files AS "Temporary files"
      , temp_bytes AS "Size of temporary files"
 FROM   pg_stat_database db;
-postgres=# SELECT temp_files AS "Temporary files"
-     , temp_bytes AS "Size of temporary files"
-FROM   pg_stat_database db;
+
  Temporary files | Size of temporary files
 -----------------+-------------------------
                0 |                       0
@@ -2276,3 +2274,20 @@ select t1.datname AS db_name,
        pg_size_pretty(pg_database_size(t1.datname)) as db_size
 from pg_database t1
 order by pg_database_size(t1.datname) desc;
+
+postgres=# select t1.datname AS db_name,
+postgres-#        pg_size_pretty(pg_database_size(t1.datname)) as db_size
+postgres-# from pg_database t1
+postgres-# order by pg_database_size(t1.datname) desc;
+
+     db_name      | db_size
+------------------+---------
+ data_warehouse   | 752 GB
+ qsi              | 172 GB
+ aristos_metadata | 185 MB
+ sandbox          | 8855 kB
+ postgres         | 8831 kB
+ template1        | 8831 kB
+ template0        | 8689 kB
+(7 rows)
+
