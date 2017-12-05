@@ -2269,7 +2269,7 @@ FROM   pg_stat_database db;
                0 |                       0
                0 |                       0
 (7 rows)
-
+:/var/data/base/pgsql_tmp  --> over 3TB 
 select t1.datname AS db_name,  
        pg_size_pretty(pg_database_size(t1.datname)) as db_size
 from pg_database t1
