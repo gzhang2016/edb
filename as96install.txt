@@ -2373,3 +2373,22 @@ ps -ef | grep 'postmaster' >> /tmp/check_pg-prd1.txt
 mailx  -s "Current DB status in pg-prd1" guorong.zhang@enterprisedb.com < /tmp/check_pg-prd1.txt
 
 [enterprisedb@pg-prd1 ~]$
+
+-- while loop to check file size reach limit :
+
+file="afile"
+maxsize=100    # 100 kilobytes
+
+while true; do
+    actualsize=$(du -k "$file" | cut -f1)
+    if [ $actualsize -ge $maxsize ]; then
+        echo size is over $maxsize kilobytes
+        .... send email ....
+        exit
+    else
+        echo size is under $maxsize kilobytes
+    fi
+
+    sleep 1800 # in seconds = 30 minutes
+done
+
