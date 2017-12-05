@@ -2349,3 +2349,27 @@ The work_mem parameter which controls the amount of memory for sorts and hashes 
 Also, be sure that statistics are up to date with ANALYZE on the tables be queried so that planner is correctly deciding to a hash-join. That is the approach we recommend: 1) verify the statistics are up to date by running ANALYZE on the tables accessed during this process and then 2) set 'work_mem' higher for this session and verify how that affects this process. The only option after that is to get the EXPLAIN plans and look closely at the SQL being called. 
 
 ===============================
+
+-- this script for checking db info on pg-prd1
+[enterprisedb@pg-prd1 ~]$ cat  check_pg-prd1.sh
+#!/bin/bash
+rm /tmp/check_pg-prd1.txt
+touch /tmp/check_pg-prd1.txt
+
+printf  "\nCurrent time:\n" >> /tmp/check_pg-prd1.txt
+date >>  /tmp/check_pg-prd1.txt
+printf  "\nCurrent size at /var/data:\n" >> /tmp/check_pg-prd1.txt
+
+df -h | grep "/var/data"  >> /tmp/check_pg-prd1.txt
+
+printf  "\nCurrent db size:\n" >> /tmp/check_pg-prd1.txt
+
+psql postgres postgres -c 'select t1.datname AS db_name,  pg_size_pretty(pg_database_size(t1.datname)) as db_size from pg_database t1 order by pg_database_size(t1.datname) desc;' >> /tmp/check_pg-prd1.txt
+
+printf " \nCheck db runing:\n" >> /tmp/check_pg-prd1.txt
+
+ps -ef | grep 'postmaster' >> /tmp/check_pg-prd1.txt
+
+mailx  -s "Current DB status in pg-prd1" guorong.zhang@enterprisedb.com < /tmp/check_pg-prd1.txt
+
+[enterprisedb@pg-prd1 ~]$
