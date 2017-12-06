@@ -2479,4 +2479,26 @@ Index "temp_data.ix_t_1512512991_4327073057_key"
  key    | integer | key
 unique, btree, for table "temp_data.t_1512512991_4327073057"
 
+[enterprisedb@pg-prd1 pg_log]$ grep t_1512512991_4327073057 * -B 2  -A 2
+enterprisedb-2017-12-05_000000.log-     system usage: CPU 0.00s/0.00u sec elapsed 0.00 sec
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:52 EST [28401]: [4-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512512990_2844906192" system usage: CPU 0.00s/0.00u sec elapsed 0.00 sec
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:52 EST [28401]: [5-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512512991_4327073057" system usage: CPU 0.00s/0.01u sec elapsed 0.01 sec
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:52 EST [28401]: [6-1] user=,db=LOG:  automatic vacuum of table "data_warehouse.temp_data.t_1512512990_9641426171": index scans: 1
+enterprisedb-2017-12-05_000000.log-     pages: 0 removed, 10 remain, 0 skipped due to pins, 0 skipped frozen
+--
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:52 EST [28401]: [8-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512511976_6806000232" system usage: CPU 0.00s/0.00u sec elapsed 0.00 sec
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:52 EST [28401]: [9-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512511976_8054387408" system usage: CPU 0.00s/0.01u sec elapsed 0.01 sec
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:52 EST [20680]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512512991_4327073057_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:52 EST [20680]: [2-1] user=postgres,db=data_warehouseSTATEMENT:  UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt='2017-12-05T17:29:51.948851'::timestamp, modified_dt='2017-12-05T17:29:52.177509'::timestamp, modified_by='aristos' FROM temp_data.t_1512512991_4327073057 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512512991_4327073057.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512512991_4327073057.data_status = 'M')
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:56 EST [28506]: [1-1] user=,db=LOG:  automatic vacuum of table "data_warehouse.temp_data.t_1512512991_4327073057": index scans: 1
+enterprisedb-2017-12-05_000000.log-     pages: 0 removed, 139 remain, 0 skipped due to pins, 0 skipped frozen
+enterprisedb-2017-12-05_000000.log-     tuples: 1583 removed, 1715 remain, 0 are dead but not yet removable
+--
+enterprisedb-2017-12-05_000000.log-     avg read rate: 6.226 MB/s, avg write rate: 6.848 MB/s
+enterprisedb-2017-12-05_000000.log-     system usage: CPU 0.00s/0.00u sec elapsed 0.01 sec
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:56 EST [28506]: [2-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512512991_4327073057" system usage: CPU 0.00s/0.01u sec elapsed 0.03 sec
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:56 EST [28506]: [3-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512511976_7464881216" system usage: CPU 0.00s/0.01u sec elapsed 0.01 sec
+enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:56 EST [28506]: [4-1] user=,db=LOG:  automatic vacuum of table "data_warehouse.temp_data.t_1512512996_8839053675": index scans: 0
+grep: temp_xlog: Is a directory
+[enterprisedb@pg-prd1 pg_log]$
 
