@@ -2471,3 +2471,12 @@ select * from temp_data.t_1512512991_4327073057
 ;
 select count(*) from temp_data.t_1512512991_4327073057 where key is null
 ;
+
+data_warehouse=# \d temp_data.ix_t_1512512991_4327073057_key;
+Index "temp_data.ix_t_1512512991_4327073057_key"
+ Column |  Type   | Definition
+--------+---------+------------
+ key    | integer | key
+unique, btree, for table "temp_data.t_1512512991_4327073057"
+
+
