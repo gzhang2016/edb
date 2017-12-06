@@ -2668,6 +2668,7 @@ Indexes:
     "ix_t_1512512991_4327073057_keyds" UNIQUE, btree (data_status, key)
 
 data_warehouse=#
+2017-12-06 db log"
 
 enterprisedb-2017-12-06_000000.log-2017-12-06 01:14:42 EST [26484]: [1-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512540881_2240253925" system usage: CPU 0.00s/0.07u sec elapsed 0.09 sec
 enterprisedb-2017-12-06_000000.log-2017-12-06 01:14:42 EST [26484]: [2-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512540882_6053338518" system usage: CPU 0.00s/0.00u sec elapsed 0.00 sec
