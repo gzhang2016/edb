@@ -2376,19 +2376,32 @@ mailx  -s "Current DB status in pg-prd1" guorong.zhang@enterprisedb.com < /tmp/c
 
 -- while loop to check file size reach limit :
 
-file="afile"
+[enterprisedb@pg-prd1 ~]$ cat check_tmp_file_size.sh
+#!/bin/bash
+
+
 maxsize=100    # 100 kilobytes
 
 while true; do
-    actualsize=$(du -k "$file" | cut -f1)
-    if [ $actualsize -ge $maxsize ]; then
-        echo size is over $maxsize kilobytes
-        .... send email ....
+tmpfilestring=$(du -sh /var/data/base/pgsql_tmp | awk '{print $1}')
+#tmpfilestring=$(du -sh /var/data/base | awk '{print $1}')
+if [[ $(echo $tmpfilestring | grep G) ]];
+then
+  tmpfilesize=$(echo $tmpfilestring| sed 's/G//g')
+    if [ $tmpfilesize -ge $maxsize ]; then
+       # echo "temp file size is $tmpfilestring over $maxsize GB"
+        echo " temp file size is $tmpfilestring over $maxsize GB" |mailx -s " temp file size is $tmpfilesize GB over $maxsize GB" guorong.zhang@enterprisedb.com
         exit
     else
-        echo size is under $maxsize kilobytes
+        echo "temp file size is under $maxsize GB"
     fi
-
-    sleep 1800 # in seconds = 30 minutes
+else
+    echo "temp file size is $tmpfilestring under $maxsize GB"
+fi
+    sleep 300  # in seconds = 1 minutes
 done
+
+
+[enterprisedb@pg-prd1 ~]$ ./check_tmp_file_size.sh > /tmp/check_tmp_file_size.log 2>&1 &
+
 
