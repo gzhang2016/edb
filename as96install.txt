@@ -2404,4 +2404,7 @@ done
 
 [enterprisedb@pg-prd1 ~]$ ./check_tmp_file_size.sh > /tmp/check_tmp_file_size.log 2>&1 &
 
+[enterprisedb@pg-prd1 pg_log]$ grep " null value" enterprisedb-2017-12-05_192847.log
+2017-12-05 20:04:31 EST [25911]: [16-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522269_3680374922_key"
+2017-12-05 20:06:47 EST [25911]: [23-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522404_1090602559_key"
 
