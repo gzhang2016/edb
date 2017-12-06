@@ -2578,7 +2578,33 @@ Indexes:
 2: temp_data.t_1512512991_4327073057.key key                            | integer                     
      index ix_t_1512512991_4327073057_key" UNIQUE, btree (key) --> this means it could be null.
    =================================
-   enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [1-1] user=postgres,db=data_warehouseLOG:  duration: 1013.905 ms  statement: UPDATE entity_master.perspective_entity_id_raw SET data_row_id=temp_data.t_1512529119_1931780163.data_row_id, data_object_proc_result_key=temp_data.t_1512529119_1931780163.data_object_proc_result_key, data_hash=temp_data.t_1512529119_1931780163.data_hash, resource_subset_key=temp_data.t_1512529119_1931780163.resource_subset_key, data_object_key=temp_data.t_1512529119_1931780163.data_object_key, data_object_data_effective_dt=temp_data.t_1512529119_1931780163.data_object_data_effective_dt, sys_effective_start_dt='2017-12-05T21:58:41.462996'::timestamp, sys_effective_end_dt='2079-12-31T23:59:59.999999'::timestamp, modified_dt='2017-12-05T21:58:41.478028'::timestamp, modified_by='aristos' FROM temp_data.t_1512529119_1931780163 WHERE (entity_master.perspective_entity_id_raw.key = temp_data.t_1512529119_1931780163.key) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
+   enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [1-1] user=postgres,db=data_warehouseLOG:  duration: 1013.905 ms  statement: 
+   UPDATE entity_master.perspective_entity_id_raw 
+   SET data_row_id=temp_data.t_1512529119_1931780163.data_row_id, data_object_proc_result_key=temp_data.t_1512529119_1931780163.data_object_proc_result_key, data_hash=temp_data.t_1512529119_1931780163.data_hash, 
+ resource_subset_key=temp_data.t_1512529119_1931780163.resource_subset_key, data_object_key=temp_data.t_1512529119_1931780163.data_object_key, data_object_data_effective_dt=temp_data.t_1512529119_1931780163.data_object_data_effective_dt, 
+ sys_effective_start_dt='2017-12-05T21:58:41.462996'::timestamp, sys_effective_end_dt='2079-12-31T23:59:59.999999'::timestamp,  modified_dt='2017-12-05T21:58:41.478028'::timestamp, modified_by='aristos' FROM temp_data.t_1512529119_1931780163
+ WHERE (entity_master.perspective_entity_id_raw.key = temp_data.t_1512529119_1931780163.key) 
+ AND (temp_data.t_1512529119_1931780163.data_status = 'M')
+ 
 enterprisedb-2017-12-05_192847.log:2017-12-05 21:58:42 EST [25969]: [2-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512529119_1931780163_key"
-enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [3-1] user=postgres,db=data_warehouseSTATEMENT:  UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt='2017-12-05T21:58:41.462996'::timestamp, modified_dt='2017-12-05T21:58:42.497806'::timestamp, modified_by='aristos' FROM temp_data.t_1512529119_1931780163 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512529119_1931780163.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
+enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [3-1] user=postgres,db=data_warehouseSTATEMENT: 
+UPDATE entity_master.perspective_entity_id_raw_v 
+SET sys_effective_end_dt='2017-12-05T21:58:41.462996'::timestamp, 
+modified_dt='2017-12-05T21:58:42.497806'::timestamp, 
+modified_by='aristos' FROM temp_data.t_1512529119_1931780163 
+WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512529119_1931780163.key) 
+AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
 ============================================
+
+enterprisedb-2017-12-03_184452.log:2017-12-03 19:48:45 EST [1478]: [40-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512348420_9372931989_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 00:50:05 EST [19473]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512453005_88970020_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 00:56:32 EST [22095]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512453391_9046537025_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:29:52 EST [20680]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512512991_4327073057_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 17:34:41 EST [32130]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512513279_517128066_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 18:49:55 EST [3806]: [2-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512517790_9263713003_key"
+enterprisedb-2017-12-05_000000.log:2017-12-05 18:51:34 EST [3806]: [22-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512517889_9546850689_key"
+enterprisedb-2017-12-05_192847.log:2017-12-05 20:04:31 EST [25911]: [16-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522269_3680374922_key"
+enterprisedb-2017-12-05_192847.log:2017-12-05 20:06:47 EST [25911]: [23-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522404_1090602559_key"
+enterprisedb-2017-12-05_192847.log:2017-12-05 21:58:42 EST [25969]: [2-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512529119_1931780163_key"
+grep: temp_xlog: Is a directory
+
