@@ -2408,3 +2408,66 @@ done
 2017-12-05 20:04:31 EST [25911]: [16-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522269_3680374922_key"
 2017-12-05 20:06:47 EST [25911]: [23-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512522404_1090602559_key"
 
+Error while publishing data for resource subset "QSI_Daily_": "(psycopg2.InternalError) found unexpected null value in index "ix_t_1512512991_4327073057_key"
+ [SQL: 'UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt=%(sys_effective_end_dt)s, modified_dt=%(modified_dt)s, modified_by=%(modified_by)s FROM temp_data.t_1512512991_4327073057 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512512991_4327073057.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp(%(to_timestamp_1)s, %(to_timestamp_2)s)) AND (temp_data.t_1512512991_4327073057.data_status = %(param_1)s)'] [parameters: {'sys_effective_end_dt': datetime.datetime(2017, 12, 5, 17, 29, 51, 948851), 'modified_dt': datetime.datetime(2017, 12, 5, 17, 29, 52, 177509), 'modified_by': 'aristos', 'to_timestamp_1': '2079-12-31 23:59:59.999999', 'to_timestamp_2': 'YYYY-MM-DD HH24:MI:SS.US', 'param_1': 'M'}]"
+INFO:root:Error while publishing data for resource subset "QSI_Daily_": "(psycopg2.InternalError) found unexpected null value in index "ix_t_1512512991_4327073057_key"
+ [SQL: 'UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt=%(sys_effective_end_dt)s, modified_dt=%(modified_dt)s, modified_by=%(modified_by)s FROM temp_data.t_1512512991_4327073057 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512512991_4327073057.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp(%(to_timestamp_1)s, %(to_timestamp_2)s)) AND (temp_data.t_1512512991_4327073057.data_status = %(param_1)s)'] [parameters: {'sys_effective_end_dt': datetime.datetime(2017, 12, 5, 17, 29, 51, 948851), 'modified_dt': datetime.datetime(2017, 12, 5, 17, 29, 52, 177509), 'modified_by': 'aristos', 'to_timestamp_1': '2079-12-31 23:59:59.999999', 'to_timestamp_2': 'YYYY-MM-DD HH24:MI:SS.US', 'param_1': 'M'}]"
+Traceback (most recent call last):
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.InternalError: found unexpected null value in index "ix_t_1512512991_4327073057_key"
+ 
+ 
+The above exception was the direct cause of the following exception:
+ 
+Traceback (most recent call last):
+  File "/usr/local/aristos/source/oa/aristos/ingestion/publish_manager.py", line 405, in _process_resource_subset_inner
+    result, res_subset_publishing_info)
+  File "/usr/local/aristos/source/oa/aristos/ingestion/publish_manager.py", line 636, in _publish_pei_raw_data
+    metadata_column_names=self._prep_utils.pei_prep_metadata_col_names, logger=self.manager, result=result)
+  File "/usr/local/aristos/source/oa/aristos/common/rdbms_data.py", line 1807, in publish_data
+    log_kwargs=log_kwargs, transaction=trans)
+  File "/usr/local/aristos/source/oa/aristos/common/rdbms_data.py", line 1282, in update_entity_data
+    transaction=trans)
+  File "/usr/local/aristos/source/oa/aristos/common/rdbms_data.py", line 1486, in _end_current_version_data
+    transaction=transaction)
+  File "/usr/local/aristos/source/oa/aristos/core/resource_access/access_managers/rdbms_access.py", line 2522, in update
+    add_default_metadata_column_values=add_default_metadata_column_values, transaction=transaction)
+  File "/usr/local/aristos/source/oa/aristos/core/resource_access/access_managers/rdbms_access.py", line 3354, in update
+    results = self.execute_statement(update_stmt, transaction=transaction)
+  File "/usr/local/aristos/source/oa/aristos/core/resource_access/access_managers/rdbms_access.py", line 3507, in execute_statement
+    output = self.execute_statement_inner(statement, data=data, transaction=transaction)
+  File "/usr/local/aristos/source/oa/aristos/core/resource_access/access_managers/rdbms_access.py", line 3528, in execute_statement_inner
+    output = transaction.execute(statement, data=data, autocommit=autocommit)
+  File "/usr/local/aristos/source/oa/aristos/core/resource_access/access_managers/rdbms_access.py", line 5028, in execute
+    output = self._connection.execute(statement, **kwargs)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 945, in execute
+    return meth(self, multiparams, params)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 263, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1053, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1189, in _execute_context
+    context)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1402, in _handle_dbapi_exception
+    exc_info
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1182, in _execute_context
+    context)
+  File "/home/oa/anaconda3/envs/aristos/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 470, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.InternalError: (psycopg2.InternalError) found unexpected null value in index "ix_t_1512512991_4327073057_key"
+ [SQL: 'UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt=%(sys_effective_end_dt)s, modified_dt=%(modified_dt)s, modified_by=%(modified_by)s FROM temp_data.t_1512512991_4327073057 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512512991_4327073057.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp(%(to_timestamp_1)s, %(to_timestamp_2)s)) AND (temp_data.t_1512512991_4327073057.data_status = %(param_1)s)'] [parameters: {'sys_effective_end_dt': datetime.datetime(2017, 12, 5, 17, 29, 51, 948851), 'modified_dt': datetime.datetime(2017, 12, 5, 17, 29, 52, 177509), 'modified_by': 'aristos', 'to_timestamp_1': '2079-12-31 23:59:59.999999', 'to_timestamp_2': 'YYYY-MM-DD HH24:MI:SS.US', 'param_1': 'M'}]
+INFO:root:Publishing of resource subset "QSI_Daily_" finished.
+INFO:root:Publishing of data object "northern trust/nt port acct/OUTBOUND_QSI_Daily_/QSI_Daily_11022015190449.txt" finished.
+ 
+ 
+select * from temp_data.t_1512512991_4327073057
+;
+select count(*) from temp_data.t_1512512991_4327073057 where key is null
+;
