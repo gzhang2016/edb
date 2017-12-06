@@ -2595,6 +2595,7 @@ modified_by='aristos' FROM temp_data.t_1512529119_1931780163
 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512529119_1931780163.key) 
 AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
 ============================================
+enterprisedb-2017-11-30_081253.log:2017-11-30 10:13:02 EST [7078]: [16-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512054700_3896450134_key"
 
 enterprisedb-2017-12-03_184452.log:2017-12-03 19:48:45 EST [1478]: [40-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512348420_9372931989_key"
 enterprisedb-2017-12-05_000000.log:2017-12-05 00:50:05 EST [19473]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512453005_88970020_key"
