@@ -2502,3 +2502,83 @@ enterprisedb-2017-12-05_000000.log-2017-12-05 17:29:56 EST [28506]: [4-1] user=,
 grep: temp_xlog: Is a directory
 [enterprisedb@pg-prd1 pg_log]$
 
+==================
+
+-- check 
+
+entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512512991_4327073057.key
+
+
+data_warehouse=# \d entity_master.perspective_entity_id_raw_v
+                                                         Table "entity_master.perspective_entity_id_raw_v"
+             Column             |            Type             |                                              Modifiers
+--------------------------------+-----------------------------+-----------------------------------------------------------------------------------------------------
+ key                            | bigint                      | not null default nextval('entity_master.sq_perspective_entity_id_raw_v'::regclass)
+ perspective_entity_id_raw_key  | bigint                      | not null
+ perspective_key                | integer                     | not null
+ perspective_entity_key         | bigint                      | not null
+ identifier_type_key            | integer                     | not null
+ identifier_value               | character varying(125)      | not null
+ is_primary                     | boolean                     | not null
+ effective_start_dt             | timestamp without time zone | not null
+ effective_end_dt               | timestamp without time zone | not null
+ effective_start_dt_is_estimate | boolean                     | not null
+ effective_end_dt_is_estimate   | boolean                     | not null
+ data_row_id                    | integer                     | not null
+ data_object_proc_result_key    | integer                     | not null
+ data_hash                      | character varying(32)       | not null
+ resource_subset_key            | integer                     | not null
+ data_object_key                | integer                     | not null
+ data_object_data_effective_dt  | timestamp without time zone |
+ sys_effective_start_dt         | timestamp without time zone | not null default now()
+ sys_effective_end_dt           | timestamp without time zone | not null default to_timestamp('2079-12-31 23:59:59.999999'::text, 'YYYY-MM-DD HH24:MI:SS.US'::text)
+ created_dt                     | timestamp without time zone | not null default now()
+ created_by                     | character varying(100)      | not null
+ modified_dt                    | timestamp without time zone | not null default now()
+ modified_by                    | character varying(100)      | not null
+Indexes:
+    "pk_perspective_entity_id_raw_v_" PRIMARY KEY, btree (key)
+    "ix_perspective_entity_id_raw_2" btree (identifier_value, identifier_type_key, effective_start_dt, effective_end_dt)
+    "ix_perspective_entity_id_raw_3" btree (modified_dt, perspective_entity_key)
+    "ix_perspective_entity_id_raw_4" btree (data_object_key, resource_subset_key)
+    "ix_perspective_entity_id_raw_5" btree (data_hash, data_object_key)
+    "ix_perspective_entity_id_raw_v_me" btree (perspective_entity_id_raw_key, sys_effective_end_dt)
+
+data_warehouse=# \d temp_data.t_1512512991_4327073057
+                Table "temp_data.t_1512512991_4327073057"
+             Column             |            Type             | Modifiers
+--------------------------------+-----------------------------+-----------
+ data_hash                      | character varying(32)       |
+ data_row_id                    | integer                     |
+ data_object_proc_result_key    | integer                     |
+ resource_subset_key            | integer                     |
+ data_object_key                | integer                     |
+ data_object_data_effective_dt  | timestamp without time zone |
+ pe_perspective_key             | integer                     |
+ pe_entity_type_key             | integer                     |
+ pe_identifier_type_key         | integer                     |
+ pe_identifier_value            | character varying(125)      |
+ identifier_type_key            | integer                     |
+ identifier_value               | character varying(125)      |
+ is_primary                     | boolean                     |
+ effective_start_dt             | timestamp without time zone |
+ effective_end_dt               | timestamp without time zone |
+ effective_start_dt_is_estimate | boolean                     |
+ effective_end_dt_is_estimate   | boolean                     |
+ data_status                    | character varying(1)        |
+ key                            | integer                     |
+ perspective_entity_key         | integer                     |
+ perspective_key                | integer                     |
+Indexes:
+    "ix_t_1512512991_4327073057_key" UNIQUE, btree (key)
+    "ix_t_1512512991_4327073057_keyds" UNIQUE, btree (data_status, key)
+
+1: entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key  | bigint      | not null
+    no index just for this column
+2: temp_data.t_1512512991_4327073057.key key                            | integer                     
+     index ix_t_1512512991_4327073057_key" UNIQUE, btree (key) --> this means it could be null.
+   =================================
+   enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [1-1] user=postgres,db=data_warehouseLOG:  duration: 1013.905 ms  statement: UPDATE entity_master.perspective_entity_id_raw SET data_row_id=temp_data.t_1512529119_1931780163.data_row_id, data_object_proc_result_key=temp_data.t_1512529119_1931780163.data_object_proc_result_key, data_hash=temp_data.t_1512529119_1931780163.data_hash, resource_subset_key=temp_data.t_1512529119_1931780163.resource_subset_key, data_object_key=temp_data.t_1512529119_1931780163.data_object_key, data_object_data_effective_dt=temp_data.t_1512529119_1931780163.data_object_data_effective_dt, sys_effective_start_dt='2017-12-05T21:58:41.462996'::timestamp, sys_effective_end_dt='2079-12-31T23:59:59.999999'::timestamp, modified_dt='2017-12-05T21:58:41.478028'::timestamp, modified_by='aristos' FROM temp_data.t_1512529119_1931780163 WHERE (entity_master.perspective_entity_id_raw.key = temp_data.t_1512529119_1931780163.key) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
+enterprisedb-2017-12-05_192847.log:2017-12-05 21:58:42 EST [25969]: [2-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512529119_1931780163_key"
+enterprisedb-2017-12-05_192847.log-2017-12-05 21:58:42 EST [25969]: [3-1] user=postgres,db=data_warehouseSTATEMENT:  UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt='2017-12-05T21:58:41.462996'::timestamp, modified_dt='2017-12-05T21:58:42.497806'::timestamp, modified_by='aristos' FROM temp_data.t_1512529119_1931780163 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512529119_1931780163.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512529119_1931780163.data_status = 'M')
+============================================
