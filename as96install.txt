@@ -2725,3 +2725,16 @@ log_autovacuum_min_duration = -1
 
 pg_ctl -D $PGDATA reload at 2017-12-06 8:45PM to enable statements detail on pg-prd1
 
+start data process at 8:45PM
+-- check log at 10:55PM
+enterprisedb-2017-12-06_171058.log:2017-12-06 17:10:59 EST [1119]: [34-1] user=postgres,db=aristos_metadataERROR:  null value in column "created_by" violates not-null constraint
+enterprisedb-2017-12-06_171058.log-2017-12-06 17:10:59 EST [1119]: [35-1] user=postgres,db=aristos_metadataDETAIL:  Failing row contains (119774, 34297, 6211, 3, f, t, null, ["Processing task result for element \"RealEstate_EAP_LTMYTD_201..., [], [], 2017-12-06 17:06:21.648802, 2017-12-06 17:10:59.148911, 2017-12-06 17:10:59.66348, null, 2017-12-06 17:10:59.66348, aristos).
+enterprisedb-2017-12-06_171058.log-2017-12-06 17:10:59 EST [1119]: [36-1] user=postgres,db=aristos_metadataSTATEMENT:  INSERT INTO public.data_object_processing_result (data_object_key, task_execution_key, task_exec_status_key, processing_occurred, has_errors, has_warnings, error_messages, warning_messages, info_messages, processing_start_dt, processing_end_dt, modified_dt, modified_by) VALUES (34297, 6211, 3, false, true, NULL, '["Processing task result for element \"RealEstate_EAP_LTMYTD_20171205_1.zip\" was incorrectly ended."]', '[]', '[]', '2017-12-06T17:06:21.648802'::timestamp, '2017-12-06T17:10:59.148911'::timestamp, now(), 'aristos') RETURNING public.data_object_processing_result.key
+--
+enterprisedb-2017-12-06_171058.log-     system usage: CPU 0.00s/0.01u sec elapsed 0.08 sec
+enterprisedb-2017-12-06_171058.log-2017-12-06 17:37:16 EST [12062]: [9-1] user=,db=LOG:  automatic analyze of table "data_warehouse.temp_data.t_1512599834_6677622796" system usage: CPU 0.00s/0.10u sec elapsed 0.13 sec
+enterprisedb-2017-12-06_171058.log:2017-12-06 17:37:16 EST [12056]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512599834_6677622796_key"
+enterprisedb-2017-12-06_171058.log-2017-12-06 17:37:16 EST [12056]: [2-1] user=postgres,db=data_warehouseSTATEMENT:  UPDATE entity_master.perspective_entity_id_raw_v SET sys_effective_end_dt='2017-12-06T17:37:16.012345'::timestamp, modified_dt='2017-12-06T17:37:16.851291'::timestamp, modified_by='aristos' FROM temp_data.t_1512599834_6677622796 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512599834_6677622796.key) AND (entity_master.perspective_entity_id_raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512599834_6677622796.data_status = 'M')
+enterprisedb-2017-12-06_171058.log-2017-12-06 17:37:21 EST [12089]: [1-1] user=,db=LOG:  automatic vacuum of table "data_warehouse.temp_data.t_1512599834_6677622796": index scans: 0
+grep: temp_xlog: Is a directory
+
