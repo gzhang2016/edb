@@ -2723,3 +2723,5 @@ log_checkpoints = off
 log_autovacuum_min_duration = -1
 [enterprisedb@pg-prd1 data]$
 
+pg_ctl -D $PGDATA reload at 2017-12-06 8:45PM to enable statements detail on pg-prd1
+
