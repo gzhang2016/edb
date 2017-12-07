@@ -2761,3 +2761,13 @@ Thu Dec  7 08:08:36 EST 2017
 -rw-------. 1 enterprisedb enterprisedb 10486155 Dec  7 05:50 /var/pg_log/enterprisedb-2017-12-07_051005.log
 -rw-------. 1 enterprisedb enterprisedb 10485875 Dec  7 07:12 /var/pg_log/enterprisedb-2017-12-07_055017.log
 -rw-------. 1 enterprisedb enterprisedb 8945878 Dec  7 08:08 /var/pg_log/enterprisedb-2017-12-07_071252.log
+
+-- check "found unexpected null value in index" from 2017-12-06 9PM to this morning 
+[enterprisedb@pg-prd1 pg_log]$ grep "unexpected" $(find /var/pg_log -type f -mmin -600 -exec ls  {} \;)
+/var/pg_log/enterprisedb-2017-12-06_215223.log: 2017-12-06 17:37:16 EST [12056]: [1-1] user=postgres,db=data_warehouseERROR:  found unexpected null value in index "ix_t_1512599834_6677622796_key"
+[enterprisedb@pg-prd1 pg_log]$
+-- no error !!!
+===========================
+-- check UPDATE statement for condition : entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t"
+[enterprisedb@pg-prd1 pg_log]$ grep "entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t" $(find /var/pg_log -type f -mmin -600 -exec ls    {} \;) -B 2 -A 2 > /tmp/pg-prd1_log_detail_troubleshooting.txt
+-- did not find index null value in all of update operation from 2106-12-06 10PM to 2017-12-07 8AM 
