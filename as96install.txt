@@ -2983,3 +2983,23 @@ archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
 127.0.0.1:5444:*:bartuser:bartuser
 10.91.10.226:5444:*:bartuser:bartuser
 
+========================
+check bart server 
+[enterprisedb@pg-prd1 ~]$ bart show-servers  -s pgprdas96
+SERVER NAME         : pgprdas96
+BACKUP FRIENDLY NAME: pg-prd1_%year-%month-%dayT%hour:%minute:%second
+HOST NAME           : 10.91.10.226
+USER NAME           : bartuser
+PORT                : 5444
+REMOTE HOST         :
+RETENTION POLICY    : 2017-11-30 17:25:28 EST
+DISK UTILIZATION    : 616.52 GB
+NUMBER OF ARCHIVES  : 0
+ARCHIVE PATH        : /backup/pgprdas96/archived_wals
+ARCHIVE COMMAND     : cp %p /backup/pgprdas96/archived_wals/%f
+XLOG METHOD         : fetch
+WAL COMPRESSION     : disabled
+TABLESPACE PATH(s)  :
+INCREMENTAL BACKUP  : ENABLED
+DESCRIPTION         : "PG_PRD1 EPAS 96 server"
+=================
