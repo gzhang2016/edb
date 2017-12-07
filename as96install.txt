@@ -3003,3 +3003,6 @@ TABLESPACE PATH(s)  :
 INCREMENTAL BACKUP  : ENABLED
 DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 =================
+
+[enterprisedb@pg-prd1 ~]$ bart-scanner --daemon
+[enterprisedb@pg-prd1 ~]$
