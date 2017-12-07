@@ -2902,5 +2902,8 @@ Promote Status:
 
         One or more standby databases are not in sync with the master database.
 [root@pem-prd ~]#
+[root@pem-prd ~]# /usr/efm-2.1/bin/efm cluster-status efm| grep "Allowed node host list" -A 1
+Allowed node host list:
+        10.91.10.226 10.91.10.227 10.91.10.229
 
         
