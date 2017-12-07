@@ -2738,3 +2738,26 @@ enterprisedb-2017-12-06_171058.log-2017-12-06 17:37:16 EST [12056]: [2-1] user=p
 enterprisedb-2017-12-06_171058.log-2017-12-06 17:37:21 EST [12089]: [1-1] user=,db=LOG:  automatic vacuum of table "data_warehouse.temp_data.t_1512599834_6677622796": index scans: 0
 grep: temp_xlog: Is a directory
 
+++++++++++++++++++++++++++++
+#2017-12-07
+overnight log detail files:
+[enterprisedb@pg-prd1 pg_log]$ date
+Thu Dec  7 08:08:36 EST 2017
+[enterprisedb@pg-prd1 pg_log]$ find /var/pg_log -type f -mmin -600 -exec ls -ltr {} \;
+-rw-------. 1 enterprisedb enterprisedb 10486799 Dec  6 23:08 /var/pg_log/enterprisedb-2017-12-06_215223.log
+-rw-------. 1 enterprisedb enterprisedb 6648649 Dec  6 23:59 /var/pg_log/enterprisedb-2017-12-06_230843.log
+-rw-------. 1 enterprisedb enterprisedb 10487305 Dec  7 01:45 /var/pg_log/enterprisedb-2017-12-07_000000.log
+-rw-------. 1 enterprisedb enterprisedb 10486274 Dec  7 02:30 /var/pg_log/enterprisedb-2017-12-07_014548.log
+-rw-------. 1 enterprisedb enterprisedb 10486687 Dec  7 02:30 /var/pg_log/enterprisedb-2017-12-07_023009.log
+-rw-------. 1 enterprisedb enterprisedb 10486248 Dec  7 02:30 /var/pg_log/enterprisedb-2017-12-07_023017.log
+-rw-------. 1 enterprisedb enterprisedb 10485876 Dec  7 02:30 /var/pg_log/enterprisedb-2017-12-07_023024.log
+-rw-------. 1 enterprisedb enterprisedb 10486346 Dec  7 02:34 /var/pg_log/enterprisedb-2017-12-07_023035.log
+-rw-------. 1 enterprisedb enterprisedb 10486232 Dec  7 02:55 /var/pg_log/enterprisedb-2017-12-07_023432.log
+-rw-------. 1 enterprisedb enterprisedb 10486159 Dec  7 03:15 /var/pg_log/enterprisedb-2017-12-07_025515.log
+-rw-------. 1 enterprisedb enterprisedb 10485824 Dec  7 03:26 /var/pg_log/enterprisedb-2017-12-07_031502.log
+-rw-------. 1 enterprisedb enterprisedb 10486414 Dec  7 03:54 /var/pg_log/enterprisedb-2017-12-07_032607.log
+-rw-------. 1 enterprisedb enterprisedb 10486291 Dec  7 04:23 /var/pg_log/enterprisedb-2017-12-07_035449.log
+-rw-------. 1 enterprisedb enterprisedb 10485851 Dec  7 05:10 /var/pg_log/enterprisedb-2017-12-07_042326.log
+-rw-------. 1 enterprisedb enterprisedb 10486155 Dec  7 05:50 /var/pg_log/enterprisedb-2017-12-07_051005.log
+-rw-------. 1 enterprisedb enterprisedb 10485875 Dec  7 07:12 /var/pg_log/enterprisedb-2017-12-07_055017.log
+-rw-------. 1 enterprisedb enterprisedb 8945878 Dec  7 08:08 /var/pg_log/enterprisedb-2017-12-07_071252.log
