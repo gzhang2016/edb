@@ -2818,3 +2818,30 @@ jgroups.loglevel=INFO
 efm.loglevel=INFO
 jvm.options=-Xmx32m
 [root@pg-prd1 efm-2.1]#
+===================
+[root@pg-prd1 efm-2.1]# /usr/efm-2.1/bin/efm cluster-status efm
+Cluster Status: efm
+VIP: 10.91.10.225
+Automatic failover is disabled.
+
+        Agent Type  Address              Agent  DB       Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         UP     UP
+
+Allowed node host list:
+        10.91.10.226 10.91.10.227 10.91.10.229
+
+Membership coordinator: 10.91.10.226
+
+Standby priority host list:
+        (List is empty.)
+
+Promote Status:
+
+        DB Type     Address              XLog Loc         Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         13A9/8E73D2B0
+
+        No standby databases were found.
+
+=========================
