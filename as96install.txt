@@ -2716,3 +2716,10 @@ enterprisedb-2017-12-06_000000.log-2017-12-06 08:18:04 EST [22494]: [6-1] user=,
 tos' FROM temp_data.t_1512576964_1647238568 WHERE (entity_master.perspective_entity_id_raw_v.perspective_entity_id_raw_key = temp_data.t_1512576964_1647238568.key) AND (entity_master.perspective_entity_id
 _raw_v.sys_effective_end_dt = to_timestamp('2079-12-31 23:59:59.999999', 'YYYY-MM-DD HH24:MI:SS.US')) AND (temp_data.t_1512576964_1647238568.data_status = 'M')
 
+# Troubleshooting in postgresql.conf at pg-prd1:
+
+log_min_duration_statement = 0
+log_checkpoints = off
+log_autovacuum_min_duration = -1
+[enterprisedb@pg-prd1 data]$
+
