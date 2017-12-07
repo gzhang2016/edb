@@ -3008,6 +3008,11 @@ DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 [enterprisedb@pg-prd1 ~]$
 
 -- full backup 
-bart backup -s pgpradas96 --backup-name pgprdas96_full_parent
+[enterprisedb@pg-prd1 ~]$ bart backup -s pgprdas96  --backup-name pgprdas96_full_parent
+INFO:  creating backup for server 'pgprdas96'
+INFO:  backup identifier: '1512686558705'
+  14053844/1112120706 kB (1%), 0/1 tablespace
+
+
 
 
