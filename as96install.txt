@@ -3013,6 +3013,9 @@ INFO:  creating backup for server 'pgprdas96'
 INFO:  backup identifier: '1512686558705'
   14053844/1112120706 kB (1%), 0/1 tablespace
 
+command failed with exit code 1
+pg_basebackup: could not get transaction log end position from server: ERROR:  requested WAL segment 00000001000013EC000000C5 has already been removed
+
 
 
 
