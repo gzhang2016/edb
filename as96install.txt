@@ -2872,5 +2872,35 @@ Promote Status:
         Standby     10.91.10.227         13AB/52DAB178
 
         One or more standby databases are not in sync with the master database.
-        
+      ================
+      [root@pem-prd ~]# /usr/efm-2.1/bin/runefm.sh  start efm
+[root@pem-prd ~]# /usr/efm-2.1/bin/efm cluster-status efm
+Cluster Status: efm
+VIP: 10.91.10.225
+Automatic failover is disabled.
+
+        Agent Type  Address              Agent  DB       Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         UP     UP
+        Witness     10.91.10.229         UP     N/A
+        Standby     10.91.10.227         UP     UP
+
+Allowed node host list:
+        10.91.10.226 10.91.10.227 10.91.10.229
+
+Membership coordinator: 10.91.10.226
+
+Standby priority host list:
+        10.91.10.227
+
+Promote Status:
+
+        DB Type     Address              XLog Loc         Info
+        --------------------------------------------------------------
+        Master      10.91.10.226         13AC/5EA90100
+        Standby     10.91.10.227         13AC/5EAC9FF0
+
+        One or more standby databases are not in sync with the master database.
+[root@pem-prd ~]#
+
         
