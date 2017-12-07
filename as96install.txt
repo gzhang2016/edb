@@ -2906,4 +2906,45 @@ Promote Status:
 Allowed node host list:
         10.91.10.226 10.91.10.227 10.91.10.229
 
-        
+ -----------------------------
+ -- check how fast wal transfer from pg-prd1 to pg-dr
+ 
+ [enterprisedb@pg-dr pg_log]$ pwd
+/var/pg_log
+[enterprisedb@pg-dr pg_log]$ tail -n 200  enterprisedb-2017-12-07_105932.log| grep archive
+2017-12-07 14:46:36 EST [24481]: [18163-1] user=,db=LOG:  restored log file "00000001000013DC00000072" from archive
+2017-12-07 14:46:37 EST [24481]: [18164-1] user=,db=LOG:  restored log file "00000001000013DC00000073" from archive
+2017-12-07 14:46:38 EST [24481]: [18165-1] user=,db=LOG:  restored log file "00000001000013DC00000074" from archive
+2017-12-07 14:46:38 EST [24481]: [18166-1] user=,db=LOG:  restored log file "00000001000013DC00000075" from archive
+2017-12-07 14:46:39 EST [24481]: [18167-1] user=,db=LOG:  restored log file "00000001000013DC00000076" from archive
+2017-12-07 14:46:39 EST [24481]: [18168-1] user=,db=LOG:  restored log file "00000001000013DC00000077" from archive
+2017-12-07 14:46:40 EST [24481]: [18169-1] user=,db=LOG:  restored log file "00000001000013DC00000078" from archive
+2017-12-07 14:46:41 EST [24481]: [18170-1] user=,db=LOG:  restored log file "00000001000013DC00000079" from archive
+2017-12-07 14:46:42 EST [24481]: [18171-1] user=,db=LOG:  restored log file "00000001000013DC0000007A" from archive
+2017-12-07 14:46:42 EST [24481]: [18172-1] user=,db=LOG:  restored log file "00000001000013DC0000007B" from archive
+2017-12-07 14:46:43 EST [24481]: [18173-1] user=,db=LOG:  restored log file "00000001000013DC0000007C" from archive
+2017-12-07 14:46:44 EST [24481]: [18174-1] user=,db=LOG:  restored log file "00000001000013DC0000007D" from archive
+2017-12-07 14:46:44 EST [24481]: [18175-1] user=,db=LOG:  restored log file "00000001000013DC0000007E" from archive
+2017-12-07 14:46:48 EST [24481]: [18176-1] user=,db=LOG:  restored log file "00000001000013DC0000007F" from archive
+2017-12-07 14:46:49 EST [24481]: [18177-1] user=,db=LOG:  restored log file "00000001000013DC00000080" from archive
+2017-12-07 14:46:50 EST [24481]: [18178-1] user=,db=LOG:  restored log file "00000001000013DC00000081" from archive
+2017-12-07 14:46:51 EST [24481]: [18179-1] user=,db=LOG:  restored log file "00000001000013DC00000082" from archive
+2017-12-07 14:46:52 EST [24481]: [18180-1] user=,db=LOG:  restored log file "00000001000013DC00000083" from archive
+2017-12-07 14:46:52 EST [24481]: [18181-1] user=,db=LOG:  restored log file "00000001000013DC00000084" from archive
+2017-12-07 14:46:53 EST [24481]: [18182-1] user=,db=LOG:  restored log file "00000001000013DC00000085" from archive
+2017-12-07 14:46:54 EST [24481]: [18183-1] user=,db=LOG:  restored log file "00000001000013DC00000086" from archive
+2017-12-07 14:46:54 EST [24481]: [18184-1] user=,db=LOG:  restored log file "00000001000013DC00000087" from archive
+2017-12-07 14:46:55 EST [24481]: [18185-1] user=,db=LOG:  restored log file "00000001000013DC00000088" from archive
+2017-12-07 14:46:55 EST [24481]: [18186-1] user=,db=LOG:  restored log file "00000001000013DC00000089" from archive
+2017-12-07 14:46:56 EST [24481]: [18187-1] user=,db=LOG:  restored log file "00000001000013DC0000008A" from archive
+2017-12-07 14:46:57 EST [24481]: [18188-1] user=,db=LOG:  restored log file "00000001000013DC0000008B" from archive
+2017-12-07 14:46:57 EST [24481]: [18189-1] user=,db=LOG:  restored log file "00000001000013DC0000008C" from archive
+2017-12-07 14:46:58 EST [24481]: [18190-1] user=,db=LOG:  restored log file "00000001000013DC0000008D" from archive
+2017-12-07 14:46:59 EST [24481]: [18191-1] user=,db=LOG:  restored log file "00000001000013DC0000008E" from archive
+[enterprisedb@pg-dr pg_log]$
+
+28 WAL file are scped from pg-prd1 to pg-dr with 24 seconds 
+
+transfer speed = 28 file X 16MB /24 seconds X 60 = 1120 MB /miunte = 1GB /minutes 
+
+
