@@ -3006,3 +3006,8 @@ DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 
 [enterprisedb@pg-prd1 ~]$ bart-scanner --daemon
 [enterprisedb@pg-prd1 ~]$
+
+-- full backup 
+bart backup -s pgpradas96 --backup-name pgprdas96_full_parent
+
+
