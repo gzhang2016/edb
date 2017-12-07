@@ -2969,4 +2969,9 @@ allow_incremental_backups = enabled
 description = "PG_PRD1 EPAS 96 server"
 [root@pg-prd1 etc]#
 ======================
+-- bart pg_hba.conf setup must connect to template1 
+host    template1       bartuser        127.0.0.1/32             md5
+host    template1       bartuser        10.91.10.226/32          md5
+host    all             bartuser        10.91.10.226/32          md5
 
+==============================================
