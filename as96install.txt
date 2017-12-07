@@ -2979,3 +2979,7 @@ for bart, enable archive_command :
 
 archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
 ======================
+.pgpass for bartuser :
+10.91.10.226:5444:replication:repuser:reppass
+10.91.10.227:5444:replication:repuser:reppass
+10.81.10.226:5444:replication:repuser:reppass
