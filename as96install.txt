@@ -3162,3 +3162,43 @@ PEM reciever email: Technology@qsinvestors.com
 
 Dec 08 12:06:49 pem-prd systemd[1]: Starting Starts and stops the Apache Server...
 Dec 08 12:06:49 pem-prd systemd[1]: Started Starts and stops the Apache Server.
+=============
+2017-12-08
+-- delete all of backup and re start full backp first 
+[enterprisedb@pg-prd1 ~]$ bart show-backups
+ SERVER NAME   BACKUP ID       BACKUP NAME             BACKUP PARENT   BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+
+ pgprdas96     1512754931159   pgprdas96_full_parent   none            2017-12-08 13:38:16 EST   1.05 TB       96.00 MB      6           active
+
+[enterprisedb@pg-prd1 ~]$ bart manage -s pgprdas96
+INFO:  processing server 'pgprdas96', backup '1512754931159'
+INFO:  46598 Unused WAL file(s) present
+INFO:  93190 Unused file(s) (WALs included) present, use 'MANAGE -l' for the list
+=====================
+write bart backup scripot 
+
+[enterprisedb@pg-prd1 ~]$ cat  bart_bk.sh
+#!/bin/bash
+
+dbserver="pgprdas96"
+#last_inc_date=$(date +%y%m%d --date='yesterday')
+fullbk="${dbserver}_parent"
+incrementbk="${dbserver}_incrbk"
+
+last_bk=$(cat bart_test.txt |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| head -n 1)
+
+echo "Last backup name: ${last_bk}"
+#check_parent_bk
+  parent_bk=$(cat bart_test.txt |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| grep "parent")
+  echo "Parent backup name: $parent_bk."
+  if [[ $parent_bk ]];
+    then
+      echo "Parent backup already exist , start incremental backup..."
+      bart BACKUP -s $dbserver -F p --parent ${last_bk}  --backup-name ${incrementbk}_$(date +%y%m%d%H%M)
+    else
+      echo " NO  parent backup , start full backup... "
+      bart backup -s $dbserver  --backup-name $fullbk_$(date +%y%m%d%H%M)
+  fi
+
+
+===============================
