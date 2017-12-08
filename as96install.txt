@@ -3312,4 +3312,7 @@ WARNING: no obsolete backup(s) exist for server 'pgprdas96'
 29603:2017-12-08 16:06:02 EST  ERROR: waiting for all MBM files. Last MBM file is '00000001000014A3800006F8000014A380FFF8E0.mbm'
 29603:2017-12-08 16:06:03 EST  ERROR: backup failed for server 'pgprdas96'
 
+================
 
+-- NEED TO CHECK if required mbm is in catalog 
+bart BACKUP -s pgprdas96  -F p --parent pgprdas96_incrbk_1712081511    --check 
