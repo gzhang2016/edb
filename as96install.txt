@@ -3069,4 +3069,9 @@ TOTAL DURATION: 57 min(s)
 
 [enterprisedb@pg-prd1 ~]$
 
+--- incrementaql bart backup 
+-- bart-scanner --daemon already started 
+
+
+bart BACKUP -s dxpgedb01 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_
 
