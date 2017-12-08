@@ -3085,3 +3085,28 @@ ECDSA key fingerprint is MD5:c5:f1:bd:8c:4c:5b:fe:c6:ff:29:95:f6:83:0c:2e:3c.
 Are you sure you want to continue connecting (yes/no)? yes
 INFO:  reading directory /backup/pgprdas96/archived_wals
 INFO:  all files processed
+NOTICE:  pg_stop_backup complete, all required WAL segments have been archived
+INFO:  incremental backup completed successfully
+INFO:
+BACKUP DETAILS:
+BACKUP STATUS: active
+BACKUP IDENTIFIER: 1512698646329
+BACKUP NAME: pgprdas96_incr_1712072101
+BACKUP PARENT: 1512690649408
+BACKUP LOCATION: /backup/pgprdas96/1512698646329
+BACKUP SIZE: 2.21 GB
+BACKUP FORMAT: plain
+BACKUP TIMEZONE: US/Eastern
+XLOG METHOD: fetch
+BACKUP CHECKSUM(s): 0
+TABLESPACE(s): 0
+START WAL LOCATION: 00000001000013ED0000004A
+STOP WAL LOCATION: 00000001000013ED0000004B
+BACKUP METHOD: pg_start_backup
+BACKUP FROM: master
+START TIME: 2017-12-07 21:04:39 EST
+STOP TIME: 2017-12-07 21:07:17 EST
+TOTAL DURATION: 2.63333 min(s)
+
+[enterprisedb@pg-prd1 ~]$
+
