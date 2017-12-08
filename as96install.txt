@@ -3072,6 +3072,16 @@ TOTAL DURATION: 57 min(s)
 --- incrementaql bart backup 
 -- bart-scanner --daemon already started 
 
+incrtime=$(date +%y%m%d%H%M)
+bart BACKUP -s pgprdas96 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_$incrtime
 
-bart BACKUP -s dxpgedb01 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_
-
+[enterprisedb@pg-prd1 ~]$ bart BACKUP -s pgprdas96 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_$incrtime
+INFO:  creating incremental backup for server 'pgprdas96'
+INFO:  checking mbm files /backup/pgprdas96/archived_wals
+INFO:  new backup identifier generated 1512698646329
+The authenticity of host '10.91.10.226 (10.91.10.226)' can't be established.
+ECDSA key fingerprint is SHA256:fuIqwb05GobZCz6OSEK3Ie7IWL6N82MS4huuxoZcfBw.
+ECDSA key fingerprint is MD5:c5:f1:bd:8c:4c:5b:fe:c6:ff:29:95:f6:83:0c:2e:3c.
+Are you sure you want to continue connecting (yes/no)? yes
+INFO:  reading directory /backup/pgprdas96/archived_wals
+INFO:  all files processed
