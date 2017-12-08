@@ -3131,4 +3131,14 @@ Prd -> qsi-nydc-exca
 
 PEM sender's email: postgres_moitor@qsinvestors.com
 PEM reciever email: Technology@qsinvestors.com 
+--- re do incremental backup ( always based on full pratent backup)
+
+[enterprisedb@pg-prd1 pgprdas96]$ bart show-backups
+ SERVER NAME   BACKUP ID       BACKUP NAME                 BACKUP PARENT           BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+
+ pgprdas96     1512746529495   pgprdas96_incr_1712081022   pgprdas96_full_parent   2017-12-08 10:22:14 EST   218.08 GB                               active
+ pgprdas96     1512699086214   pgprdas96_incr_1712072111   pgprdas96_full_parent   2017-12-07 21:11:28 EST   2.21 GB                                 active
+ pgprdas96     1512698646329   pgprdas96_incr_1712072101   pgprdas96_full_parent   2017-12-07 21:05:21 EST   2.21 GB                                 active
+ pgprdas96     1512690649408   pgprdas96_full_parent       none                    2017-12-07 19:48:06 EST   1.04 TB       725.86 GB     46455       active
+
 
