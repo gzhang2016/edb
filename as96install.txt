@@ -3265,5 +3265,47 @@ TOTAL DURATION: 7 sec(s)
 INFO:  processing server 'pgprdas96', backup '1512754931159'
 INFO:  46598 Unused WAL file(s) present
 INFO:  93190 Unused file(s) (WALs included) present, use 'MANAGE -l' for the list
-[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96 -l
+
+-- dry run ( -n) to see any obsolete backups 
+[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96 -n 
+
+INFO:  processing server 'pgprdas96', backup '1512754931159'
+INFO:  46598 Unused WAL file(s) present
+INFO:  93190 Unused file(s) (WALs included) present, use 'MANAGE -l' for the list
+
+-- delete obdoleted backup and unused wal files 
+
+[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96 -d 
+....
+INFO:  removing (unused) file '00000001000013ECD4000DB8000013ECD4FFF180.mbm'
+INFO:  removing (unused) file '00000001000013ECD3000668000013ECD3FFF4A8.mbm'
+INFO:  removing (unused) file '00000001000013ECD2001B30000013ECD2FFE6E0.mbm'
+INFO:  removing (unused) file '00000001000013ECD1000028000013ECD1FFFDA0.mbm'
+INFO:  removing (unused) file '00000001000013ECD0001548000013ECD1000000.mbm'
+INFO:  removing (unused) file '00000001000013ECCF000028000013ECCFFFFA20.mbm'
+
+[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96 -d
+INFO:  removing all obsolete backups of server 'pgprdas96'
+WARNING: no obsolete backup(s) exist for server 'pgprdas96'
+[enterprisedb@pg-prd1 tmp]$
+
+-- check backup again after deleting wal files 
+[enterprisedb@pg-prd1 tmp]$ bart show-backups -s pgprdas96
+ SERVER NAME   BACKUP ID       BACKUP NAME                   BACKUP PARENT           BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+
+ pgprdas96     1512763908134   pgprdas96_incrbk_1712081511   pgprdas96_full_parent   2017-12-08 15:16:21 EST   742.34 MB                               active
+ pgprdas96     1512754931159   pgprdas96_full_parent         none                    2017-12-08 13:38:16 EST   1.05 TB       1.27 GB       81          active
+
+--- check bart catalog physical size after deleting wal files 
+[enterprisedb@pg-prd1 pgprdas96]$ pwd
+/backup/pgprdas96
+
+[enterprisedb@pg-prd1 pgprdas96]$ du -sh *
+700G    1512754931159
+522M    1512763908134
+1.1G    archived_wals
+[enterprisedb@pg-prd1 pgprdas96]$
+
+
+
 
