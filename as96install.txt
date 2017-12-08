@@ -3075,7 +3075,7 @@ TOTAL DURATION: 57 min(s)
 incrtime=$(date +%y%m%d%H%M)
 bart BACKUP -s pgprdas96 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_$incrtime
 
-[enterprisedb@pg-prd1 ~]$ bart BACKUP -s pgprdas96 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_$incrtime
+[enterprisedb@pg-prd1 ~]$ bart BACKUP -s pgprdas96 -F p --parent pgprdas96_full_parent --backup-name pgprdas96_incr_$(date +%y%m%d%H%M)
 INFO:  creating incremental backup for server 'pgprdas96'
 INFO:  checking mbm files /backup/pgprdas96/archived_wals
 INFO:  new backup identifier generated 1512698646329
@@ -3109,4 +3109,12 @@ STOP TIME: 2017-12-07 21:07:17 EST
 TOTAL DURATION: 2.63333 min(s)
 
 [enterprisedb@pg-prd1 ~]$
+-- show backups
+[enterprisedb@pg-prd1 pgprdas96]$ bart show-backups;
+ SERVER NAME   BACKUP ID       BACKUP NAME                 BACKUP PARENT           BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
 
+ pgprdas96     1512699086214   pgprdas96_incr_1712072111   pgprdas96_full_parent   2017-12-07 21:11:28 EST   2.21 GB                                 active
+ pgprdas96     1512698646329   pgprdas96_incr_1712072101   pgprdas96_full_parent   2017-12-07 21:05:21 EST   2.21 GB                                 active
+ pgprdas96     1512690649408   pgprdas96_full_parent       none                    2017-12-07 19:48:06 EST   1.04 TB       2.98 GB       191         active
+
+[enterprisedb@pg-prd1 pgprdas96]$
