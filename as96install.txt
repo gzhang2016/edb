@@ -3185,20 +3185,65 @@ dbserver="pgprdas96"
 fullbk="${dbserver}_parent"
 incrementbk="${dbserver}_incrbk"
 
-last_bk=$(cat bart_test.txt |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| head -n 1)
+backup_list=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}' | sed '/^\s*$/d')
 
-echo "Last backup name: ${last_bk}"
+printf "Backup list:\n ${backup_list}\n\n"
+
+last_bk=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| head -n 1)
+
+echo "Last backup name: ${last_bk}."
 #check_parent_bk
-  parent_bk=$(cat bart_test.txt |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| grep "parent")
-  echo "Parent backup name: $parent_bk."
-  if [[ $parent_bk ]];
+  parentbk=$(bart show-backups  |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| grep "parent")
+  echo "Parent backup name: $parentbk."
+  if [[ $parentbk ]];
     then
-      echo "Parent backup already exist , start incremental backup..."
+      printf  "\nParent backup already exist , \nStart incremental backup with backup name: ${incrementbk}_$(date +%y%m%d%H%M)\n"
       bart BACKUP -s $dbserver -F p --parent ${last_bk}  --backup-name ${incrementbk}_$(date +%y%m%d%H%M)
     else
       echo " NO  parent backup , start full backup... "
-      bart backup -s $dbserver  --backup-name $fullbk_$(date +%y%m%d%H%M)
+      bart backup -s $dbserver  --backup-name ${fullbk}_$(date +%y%m%d%H%M)
   fi
 
-
 ===============================
+
+-- using script to do incrmental backup 
+[enterprisedb@pg-prd1 ~]$ ./bart_bk.sh
+Backup list:
+ pgprdas96_full_parent
+
+Last backup name: pgprdas96_full_parent.
+Parent backup name: pgprdas96_full_parent.
+
+Parent backup already exist ,
+Start incremental backup with backup name: pgprdas96_incrbk_1712081511
+INFO:  creating incremental backup for server 'pgprdas96'
+INFO:  checking mbm files /backup/pgprdas96/archived_wals
+INFO:  new backup identifier generated 1512763908134
+INFO:  reading directory /backup/pgprdas96/archived_wals
+INFO:  all files processed
+NOTICE:  pg_stop_backup complete, all required WAL segments have been archived
+INFO:  incremental backup completed successfully
+INFO:
+BACKUP DETAILS:
+BACKUP STATUS: active
+BACKUP IDENTIFIER: 1512763908134
+BACKUP NAME: pgprdas96_incrbk_1712081511
+BACKUP PARENT: 1512754931159
+BACKUP LOCATION: /backup/pgprdas96/1512763908134
+BACKUP SIZE: 742.34 MB
+BACKUP FORMAT: plain
+BACKUP TIMEZONE: US/Eastern
+XLOG METHOD: fetch
+BACKUP CHECKSUM(s): 0
+TABLESPACE(s): 0
+START WAL LOCATION: 00000001000014A2000000E9
+STOP WAL LOCATION: 00000001000014A2000000FE
+BACKUP METHOD: pg_start_backup
+BACKUP FROM: master
+START TIME: 2017-12-08 15:16:18 EST
+STOP TIME: 2017-12-08 15:16:25 EST
+TOTAL DURATION: 7 sec(s)
+
+[enterprisedb@pg-prd1 ~]$
+
+===================
