@@ -3142,3 +3142,23 @@ PEM reciever email: Technology@qsinvestors.com
  pgprdas96     1512690649408   pgprdas96_full_parent       none                    2017-12-07 19:48:06 EST   1.04 TB       725.86 GB     46455       active
 
 
+-- pemclient cannot bess accessed 
+
+-- stop PEMHTTPD.service and restart it --> webclient now can access 
+
+[root@pem-prd system]# systemctl status PEMHTTPD.service
+● PEMHTTPD.service - Starts and stops the Apache Server
+   Loaded: loaded (/usr/lib/systemd/system/PEMHTTPD.service; enabled; vendor preset: disabled)
+   Active: active (running) since Fri 2017-12-08 12:06:49 EST; 2min 0s ago
+  Process: 22091 ExecStart=/opt/edb/pem/httpd/apache/bin/apachectl start (code=exited, status=0/SUCCESS)
+ Main PID: 22094 (httpd)
+   CGroup: /system.slice/PEMHTTPD.service
+           ├─22094 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+           ├─22095 EDBPEM                              -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+           ├─22096 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+           ├─22097 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+           ├─22098 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+           └─22208 /opt/edb/pem/httpd/apache/bin/httpd -k start -f /opt/edb/pem/httpd/apache/conf/httpd.conf
+
+Dec 08 12:06:49 pem-prd systemd[1]: Starting Starts and stops the Apache Server...
+Dec 08 12:06:49 pem-prd systemd[1]: Started Starts and stops the Apache Server.
