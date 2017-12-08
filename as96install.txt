@@ -3247,3 +3247,23 @@ TOTAL DURATION: 7 sec(s)
 [enterprisedb@pg-prd1 ~]$
 
 ===================
+
+--- check incremental backup
+[enterprisedb@pg-prd1 tmp]$ bart show-backups -s pgprdas96
+ SERVER NAME   BACKUP ID       BACKUP NAME                   BACKUP PARENT           BACKUP TIME               BACKUP SIZE                                                           WAL(s) SIZE   WAL FILES   STATUS
+                                                                                                                                                                                   
+ pgprdas96     1512763908134   pgprdas96_incrbk_1712081511   pgprdas96_full_parent   2017-12-08 15:16:21 EST   742.34 MB                                                                                       active
+ pgprdas96     1512754931159   pgprdas96_full_parent         none                    2017-12-08 13:38:16 EST   1.05 TB                                                               912.00 MB     57          active
+                                                                                                                                                                                   
+[enterprisedb@pg-prd1 tmp]$ bart show-backups -s pgprdas96
+ SERVER NAME   BACKUP ID       BACKUP NAME                   BACKUP PARENT           BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+
+ pgprdas96     1512763908134   pgprdas96_incrbk_1712081511   pgprdas96_full_parent   2017-12-08 15:16:21 EST   742.34 MB                               active
+ pgprdas96     1512754931159   pgprdas96_full_parent         none                    2017-12-08 13:38:16 EST   1.05 TB       912.00 MB     57          active
+
+[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96
+INFO:  processing server 'pgprdas96', backup '1512754931159'
+INFO:  46598 Unused WAL file(s) present
+INFO:  93190 Unused file(s) (WALs included) present, use 'MANAGE -l' for the list
+[enterprisedb@pg-prd1 tmp]$ bart manage -s pgprdas96 -l
+
