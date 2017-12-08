@@ -3307,5 +3307,9 @@ WARNING: no obsolete backup(s) exist for server 'pgprdas96'
 [enterprisedb@pg-prd1 pgprdas96]$
 
 
+--m sometime incremental backup failed due to MBM file 
+29603:2017-12-08 16:06:02 EST  ERROR: waiting for WAL files to be archived; currently waiting for '00000001000014A300000081'
+29603:2017-12-08 16:06:02 EST  ERROR: waiting for all MBM files. Last MBM file is '00000001000014A3800006F8000014A380FFF8E0.mbm'
+29603:2017-12-08 16:06:03 EST  ERROR: backup failed for server 'pgprdas96'
 
 
