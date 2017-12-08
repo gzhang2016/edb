@@ -3023,6 +3023,42 @@ postgres=# show wal_keep_segments;
  2000
 (1 row)
 
+-- re try bart full backup 
+[enterprisedb@pg-prd1 ~]$ bart backup -s pgprdas96  --backup-name pgprdas96_full_parent
+......
+-- this time is done with no error.
+\[enterprisedb@pg-prd1 tmp]$ \cat fullbk.log
+INFO:  creating backup for server 'pgprdas96'
+INFO:  backup identifier: '1512690649408'
+1112305759/1112305759 kB (100%), 1/1 tablespace
+
+INFO:  backup completed successfully
+INFO:  backup checksum: 2dfa63b0b0b46854814a810cea1b9582 of base.tar
+INFO:
+BACKUP DETAILS:
+BACKUP STATUS: active
+BACKUP IDENTIFIER: 1512690649408
+BACKUP NAME: pgprdas96_full_parent
+BACKUP PARENT: none
+BACKUP LOCATION: /backup/pgprdas96/1512690649408
+BACKUP SIZE: 1.04 TB
+BACKUP FORMAT: tar
+BACKUP TIMEZONE: US/Eastern
+XLOG METHOD: fetch
+BACKUP CHECKSUM(s): 1
+ ChkSum                             File
+ 2dfa63b0b0b46854814a810cea1b9582   base.tar
+
+TABLESPACE(s): 0
+START WAL LOCATION: 00000001000013EC000000CF
+STOP WAL LOCATION: 00000001000013EC000000D9
+BACKUP METHOD: streamed
+BACKUP FROM: master
+START TIME: 2017-12-07 18:50:50 EST
+STOP TIME: 2017-12-07 19:47:50 EST
+TOTAL DURATION: 57 min(s)
+
+[enterprisedb@pg-prd1 tmp]$
 
 
 
