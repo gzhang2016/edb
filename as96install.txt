@@ -3316,3 +3316,15 @@ WARNING: no obsolete backup(s) exist for server 'pgprdas96'
 
 -- NEED TO CHECK if required mbm is in catalog 
 bart BACKUP -s pgprdas96  -F p --parent pgprdas96_incrbk_1712081511    --check 
+
+-- check wal log delay time
+postgres=# select now()-pg_last_xact_replay_timestamp() as replication_lag ;
+ replication_lag
+-----------------
+ 00:00:56.043764
+(1 row)
+
+postgres=# SELECT CASE WHEN pg_last_xlog_receive_location() =
+pg_last_xlog_replay_location() THEN 0 ELSE EXTRACT (EPOCH FROM now() -
+pg_last_xact_replay_timestamp()) END AS log_delay;
+ log_delay
