@@ -3398,3 +3398,8 @@ fi
 ========================================
 -- print all of lines before match pattern including pattern 
  cat bart_test_1.txt| grep -v "SERVER NAME"|awk '{print $3}'| sed '/parent/q'| sed '/^\s*$/d'
+=========================================
+[enterprisedb@pg-prd1 ~]$ crontab -l
+*/20 * * * * /home/enterprisedb/check_pg-prd1.sh
+01 18 * * * /home/enterprisedb/bart_bk.sh > /tmp/bart_bk_$(date +%y%m%d%H%M).log 2>&1
+[enterprisedb@pg-prd1 ~]$
