@@ -3449,3 +3449,22 @@ allow_batch_probes=false
 heartbeat_connection=true
 enable_nagios=false
 ===============
+[enterprisedb@pg-prd1 ~]$ bart show-servers
+SERVER NAME         : pgprdas96
+BACKUP FRIENDLY NAME: pg-prd1_%year-%month-%dayT%hour:%minute:%second
+HOST NAME           : 10.91.10.226
+USER NAME           : bartuser
+PORT                : 5444
+REMOTE HOST         :
+RETENTION POLICY    : 1 Backups
+DISK UTILIZATION    : 2.25 TB
+NUMBER OF ARCHIVES  : 56648
+ARCHIVE PATH        : /backup/pgprdas96/archived_wals
+ARCHIVE COMMAND     : cp %p /backup/pgprdas96/archived_wals/%f
+XLOG METHOD         : fetch
+WAL COMPRESSION     : disabled
+TABLESPACE PATH(s)  :
+INCREMENTAL BACKUP  : ENABLED
+DESCRIPTION         : "PG_PRD1 EPAS 96 server"
+
+
