@@ -3403,3 +3403,23 @@ fi
 */20 * * * * /home/enterprisedb/check_pg-prd1.sh
 01 18 * * * /home/enterprisedb/bart_bk.sh > /tmp/bart_bk_$(date +%y%m%d%H%M).log 2>&1
 [enterprisedb@pg-prd1 ~]$
+pem server pg_hba.conf 
+ # Allow local PEM agents and admins to connect to PEM server
+ hostssl pem      +pem_user   10.91.10.229/32 md5
+ hostssl pem      +pem_agent  10.91.10.229/32 cert
+ hostssl postgres +pem_user   10.91.10.229/32 md5
+
+ hostssl pem +pem_user        10.91.10.226/32 md5
+ hostssl pem +pem_agent       10.91.10.226/32 cert
+ hostssl postgres +pem_user   10.91.10.226/32 md5
+
+ hostssl pem +pem_user        10.91.10.227/32 md5
+ hostssl pem +pem_agent       10.91.10.227/32 cert
+ hostssl postgres +pem_user   10.91.10.227/32 md5
+
+
+
+
+ hostssl pem      +pem_user   127.0.0.1/32         md5
+ hostssl pem      +pem_agent  127.0.0.1/32         cert
+=============================
