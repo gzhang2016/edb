@@ -3396,3 +3396,5 @@ printf "Backup information after deleting obsoleted backup and unused WAL files.
 }
 fi
 ========================================
+-- print all of lines before match pattern including pattern 
+ cat bart_test_1.txt| grep -v "SERVER NAME"|awk '{print $3}'| sed '/parent/q'| sed '/^\s*$/d'
