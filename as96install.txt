@@ -3467,4 +3467,5 @@ TABLESPACE PATH(s)  :
 INCREMENTAL BACKUP  : ENABLED
 DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 
+30 18 * * * /home/enterprisedb/bart_bk.sh > /tmp/bart_bk.log 2>&1
 
