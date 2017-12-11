@@ -3331,3 +3331,68 @@ pg_last_xact_replay_timestamp()) END AS log_delay;
 
 -- check lag in bytes in master 
 pg_xlog_location_diff(pg_stat_replication.sent_location, pg_stat_replication.replay_location)
+
+=========================
+2017-12-10
+bart backup scripts 
+[enterprisedb@pg-prd1 ~]$ cat bart_bk.sh
+#!/bin/bash
+retentionday=3
+dbserver="pgprdas96"
+#last_inc_date=$(date +%y%m%d --date='yesterday')
+fullbk="${dbserver}_parent"
+incrementbk="${dbserver}_incrbk"
+backup_list=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}' | sed '/^\s*$/d')
+printf "Backup list:\n ${backup_list}\n\n"
+backupnum=$(bart show-backups |grep -v "SERVER NAME"|sed '/^\s*$/d'|wc -l)
+echo " The total backups: $backupnum."
+# if  backups is less than total backups which is dienfied, continue  to do incremental backup
+if [[ $backupnum -lt $retentionday ]];then
+{
+last_bk=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| head -n 1)
+echo "Last backup name: ${last_bk}."
+#check_parent_bk
+  parentbk=$(bart show-backups  |grep -v "SERVER NAME"| awk '{print $3}'| sed '/^\s*$/d'| grep "parent")
+  echo "Parent backup name: $parentbk."
+  if [[ $parentbk ]];
+    then
+      printf  "\nParent backup already exist , \nStart incremental backup with backup name: ${incrementbk}_$(date +%y%m%d%H%M)\n"
+      bart BACKUP -s $dbserver -F p --parent ${last_bk}  --backup-name ${incrementbk}_$(date +%y%m%d%H%M)
+      if [ $? -ne 0   ];then
+       echo " Bart backup failed !" | mailx -s " BART backup failed !" guorong.zhang@enterprisedb.com
+      fi
+    else
+      echo " NO  parent backup , start full backup... "
+      bart backup -s $dbserver  --backup-name ${fullbk}_$(date +%y%m%d%H%M)
+      if [ $? -ne 0   ];then
+       echo " Bart backup failed !" | mailx -s " BART backup failed !" guorong.zhang@enterprisedb.com
+      fi
+  fi
+backup_list=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}' | sed '/^\s*$/d')
+printf  " \nBackup lists after backup:\n ${backup_list}\n"
+printf "\nList obsoleted backups and unused WAL files after backup.\n\n"
+   bart manage -s $dbserver -n
+printf "\nDeleting  obsoleted backups and unused WAL files....\n\n"
+   bart manage -s $dbserver -d
+printf "Backup information after deleting obsoleted backup and unused WAL files.\n\n"
+   bart show-backups -s $dbserver
+}
+ else
+{
+# if number of backups is equal the total backups which is defined , then do new full backup
+  printf  " \nBecuase the total backups = $backupnum , New full backup is needed.\n New full baqckup is starting ....\n"
+      bart backup -s $dbserver  --backup-name ${fullbk}_$(date +%y%m%d%H%M)
+      if [ $? -ne 0   ];then
+       echo " Bart backup failed !" | mailx -s " BART backup failed !" guorong.zhang@enterprisedb.com
+      fi
+ backup_list=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}' | sed '/^\s*$/d')
+ printf  " \nBackup lists after backup:\n ${backup_list}\n"
+ printf "\nList obsoleted backups and unused WAL files after backup.\n\n"
+   bart manage -s $dbserver -n
+ printf "\nDeleting  obsoleted backups and unused WAL files....\n\n"
+   bart manage -s $dbserver -d
+ printf "Backup information after deleting obsoleted backup and unused WAL files.\n\n"
+   bart show-backups -s $dbserver
+}
+fi
+========================================
