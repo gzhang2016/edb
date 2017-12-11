@@ -3423,3 +3423,29 @@ pem server pg_hba.conf
  hostssl pem      +pem_user   127.0.0.1/32         md5
  hostssl pem      +pem_agent  127.0.0.1/32         cert
 =============================
+pemagent config file
+[root@pg-prd1 etc]# cat agent.cfg
+[PEM/agent]
+pem_host=pem-prd
+pem_port=5432
+agent_id=3
+agent_ssl_key=/root/.pem/agent3.key
+agent_ssl_crt=/root/.pem/agent3.crt
+log_level=warning
+log_location=/var/log/pem/worker.log
+agent_log_location=/var/log/pem/agent.log
+long_wait=30
+short_wait=10
+alert_threads=0
+enable_smtp=false
+enable_snmp=false
+allow_server_restart=true
+allow_package_management=false
+allow_streaming_replication=false
+max_connections=0
+connect_timeout=-1
+connection_lifetime=0
+allow_batch_probes=false
+heartbeat_connection=true
+enable_nagios=false
+===============
