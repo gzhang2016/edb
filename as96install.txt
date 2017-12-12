@@ -3468,4 +3468,11 @@ INCREMENTAL BACKUP  : ENABLED
 DESCRIPTION         : "PG_PRD1 EPAS 96 server"
 
 30 18 * * * /home/enterprisedb/bart_bk.sh > /tmp/bart_bk.log 2>&1
-
+======================
+[enterprisedb@pg-prd1 ~]$ bart show-backups
+ SERVER NAME   BACKUP ID       BACKUP NAME                   BACKUP PARENT                 BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+                                                                                                                                 
+ pgprdas96     1513013922523   pgprdas96_incrbk_1712111238   pgprdas96_incrbk_1712111033   2017-12-11 12:42:20 EST   11.50 GB                                active
+ pgprdas96     1513006403033   pgprdas96_incrbk_1712111033   pgprdas96_parent_1712102205   2017-12-11 10:38:05 EST   261.53 GB                               active
+ pgprdas96     1512961504973   pgprdas96_parent_1712102205   none                          2017-12-10 23:01:28 EST   1.14 TB       866.62 GB     55464       active
+                                              
