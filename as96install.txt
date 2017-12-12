@@ -3475,4 +3475,18 @@ DESCRIPTION         : "PG_PRD1 EPAS 96 server"
  pgprdas96     1513013922523   pgprdas96_incrbk_1712111238   pgprdas96_incrbk_1712111033   2017-12-11 12:42:20 EST   11.50 GB                                active
  pgprdas96     1513006403033   pgprdas96_incrbk_1712111033   pgprdas96_parent_1712102205   2017-12-11 10:38:05 EST   261.53 GB                               active
  pgprdas96     1512961504973   pgprdas96_parent_1712102205   none                          2017-12-10 23:01:28 EST   1.14 TB       866.62 GB     55464       active
-                                              
+  =============================
+  [enterprisedb@pg-prd1 ~]$ cat .pgpass
+localhost:5444:replication:repuser:reppass
+localhost:5444:*:postges:edb
+localhost:5444:replication:bartuser:bartuser
+127.0.0.1:5444:replication:postgres:edb
+127.0.0.1:5444:*:bartuser:bartuser
+10.91.10.226:5444:*:bartuser:bartuser
+10.91.10.226:5444:replication:repuser:reppass
+10.91.10.227:5444:replication:repuser:reppass
+10.81.10.226:5444:replication:repuser:reppass
+10.91.10.226:*:*:postgres:edb
+10.91.10.227:*:*:postgres:edb
+10.81.10.226:*:*:postgres:edb
+======================
