@@ -3526,3 +3526,10 @@ LAST WAL FILE  : 000000010000194A0000006A
 CREATION TIME  : 2017-12-12 18:52:36 EST
 
 [enterprisedb@pg-prd1 archived_wals]$
+-- recovery.conf in pg-dr
+enterprisedb@pg-dr data]$ cat recovery.conf
+standby_mode = 'on'
+#vip 10.91.10.225 is used for primary_conninfo
+primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
+#restore_command = 'scp enterprisedb@10.91.10.225:/backup/pgprdas96/archived_wals/%f %p'
+recovery_target_timeline = 'latest'
