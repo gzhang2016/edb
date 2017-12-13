@@ -3490,3 +3490,39 @@ localhost:5444:replication:bartuser:bartuser
 10.91.10.227:*:*:postgres:edb
 10.81.10.226:*:*:postgres:edb
 ======================
+-- incremental backpup 
+[enterprisedb@pg-prd1 archived_wals]$ bart show-backups
+ SERVER NAME   BACKUP ID       BACKUP NAME                   BACKUP PARENT                 BACKUP TIME               BACKUP SIZE   WAL(s) SIZE   WAL FILES   STATUS
+                                                                                                                                             
+ pgprdas96     1513119672062   pgprdas96_incrbk_1712121801   pgprdas96_parent_1712120945   2017-12-12 18:03:34 EST   173.21 GB                               active
+ pgprdas96     1513089927462   pgprdas96_parent_1712120945   none                          2017-12-12 11:00:14 EST   1.10 TB       519.70 GB     33261       active
+                                                                                                                                             
+[enterprisedb@pg-prd1 archived_wals]$ bart show-backups -s pgprdas96 -i pgprdas96_incrbk_1712121801 -t
+SERVER NAME    : pgprdas96
+BACKUP ID      : 1513119672062
+BACKUP NAME    : pgprdas96_incrbk_1712121801
+BACKUP PARENT  : pgprdas96_parent_1712120945
+BACKUP STATUS  : active
+BACKUP TIME    : 2017-12-12 18:03:34 EST
+BACKUP SIZE    : 173.21 GB
+WAL(S) SIZE    :
+NO. OF WALS    :
+FIRST WAL FILE : 000000010000194700000094
+CREATION TIME  : 2017-12-12 18:03:32 EST
+
+[enterprisedb@pg-prd1 archived_wals]$ bart show-backups -s pgprdas96 -i pgprdas96_parent_1712120945 -t
+SERVER NAME    : pgprdas96
+BACKUP ID      : 1513089927462
+BACKUP NAME    : pgprdas96_parent_1712120945
+BACKUP PARENT  : none
+BACKUP STATUS  : active
+BACKUP TIME    : 2017-12-12 11:00:14 EST
+BACKUP SIZE    : 1.10 TB
+WAL(S) SIZE    : 519.70 GB
+NO. OF WALS    : 33261
+FIRST WAL FILE : 00000001000018C80000007E
+CREATION TIME  : 2017-12-12 09:48:47 EST
+LAST WAL FILE  : 000000010000194A0000006A
+CREATION TIME  : 2017-12-12 18:52:36 EST
+
+[enterprisedb@pg-prd1 archived_wals]$
