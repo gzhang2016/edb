@@ -3533,3 +3533,60 @@ standby_mode = 'on'
 primary_conninfo = 'user=repuser host=10.91.10.225 port=5444 sslmode=prefer sslcompression=1 krbsrvname=postgres target_session_attrs=any'
 #restore_command = 'scp enterprisedb@10.91.10.225:/backup/pgprdas96/archived_wals/%f %p'
 recovery_target_timeline = 'latest'
+
+===============================
+pg-prd1 postgresql.conf
+edb_dynatune = 100
+log_directory = '/var/pg_log'
+max_connections = 300
+shared_buffers = 10GB
+effective_cache_size = 36GB
+work_mem = 128MB
+maintenance_work_mem = 4GB
+default_statistics_target = 100
+max_worker_processes = 12
+
+hot_standby = on
+hot_standby_feedback = on
+max_wal_senders = 6
+archive_mode = on
+archive_command = 'cp %p /backup/pgprdas96/archived_wals/%f'
+wal_buffers = 64MB
+wal_log_hints = on
+wal_compression = off
+
+logging_collector = on
+log_lock_waits = on
+log_temp_files = 0
+log_checkpoints = on
+log_autovacuum_min_duration = 0
+log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d'
+log_min_duration_statement = 1000
+
+min_wal_size = 1GB
+max_wal_size = 10GB
+
+bgwriter_delay = 100ms
+bgwriter_lru_maxpages = 1000
+bgwriter_lru_multiplier = 4
+checkpoint_completion_target = 0.9
+checkpoint_timeout = 5min
+checkpoint_warning = 1min
+cpu_tuple_cost = 0.03
+random_page_cost = 2
+max_parallel_workers_per_gather = 4
+
+autovacuum = on
+autovacuum_vacuum_cost_delay = 10ms
+autovacuum_max_workers = 3
+autovacuum_naptime = 5
+autovacuum_vacuum_scale_factor = 0.05
+autovacuum_analyze_scale_factor = 0.05
+autovacuum_vacuum_cost_limit = -1
+vacuum_cost_limit = 800
+
+max_replication_slots = 10
+full_page_writes = on
+
+wal_keep_segments = 10000
+===============================
