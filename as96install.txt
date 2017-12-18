@@ -3645,4 +3645,45 @@ TABLESPACE PATH(s)  :
 INCREMENTAL BACKUP  : ENABLED
 DESCRIPTION         : "PG_DR EPAS 96 server"
 
-==============================================
+=============================================
+bart backup in pg-dr 
+[enterprisedb@pg-dr ~]$ cat bart_bkp.sh
+PGDATA=/var/lib/edb/as9.6/data
+LD_LIBRARY_PATH=/usr/edb/as9.6/lib:/usr/edb/bart2.0/lib
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/edb/as9.6/bin:/usr/edb/bart2.0/bin
+export PGDATA
+export LD_LIBRARY_PATH
+export PATH
+
+dbserver="pgdras96"
+today=$(date +%y_%m_%d_%H%M)
+bart_logs=/home/enterprisedb/bart_logs
+
+        bart backup -s $dbserver  --backup-name fullbk_$(date +%y%m%d%H%M) >> $bart_logs/bart_backup_$today.log 2>&1
+        result=$?
+        if [ $result -ne 0   ];then
+                echo "Bart incremental backup failed ! Try again " >> $bart_logs/bart_backup_$today.log
+        mailx -s " BART backup failed ! Please connect to the server and check ASAP " -a $bart_logs/bart_backup_$today.log qsi-rdba@enterprisedb.com
+        else
+                echo " Bart incremental backup is success !"  >> $bart_logs/bart_backup_$today.log
+                echo " Bart incremental backup is success !" | mailx -s " BART incremental backup success !" rdba-info@enterprisedb.com
+        fi
+
+
+        backup_list=$(bart show-backups |grep -v "SERVER NAME"| awk '{print $3}' | sed '/^\s*$/d')
+        echo " \nBackup list after backup:\n ${backup_list}\n" >> $bart_logs/bart_backup_$today.log
+
+        echo "\nList obsoleted backups and unused WAL files after backup.\n\n" >> $bart_logs/bart_backup_$today.log
+        bart show-backups -s $dbserver  >> $bart_logs/bart_backup_$today.log
+        bart manage -s $dbserver >> $bart_logs/bart_backup_$today.log
+
+        echo "\nDeleting  obsoleted backups and unused WAL files....\n\n"  >> $bart_logs/bart_backup_$today.log
+        bart manage -s $dbserver -d  >> $bart_logs/bart_backup_$today.log
+
+        echo "Backups information after deleting obsoleted backup and unused WAL files.\n\n"  >> $bart_logs/bart_backup_$today.log
+        bart show-backups -s $dbserver  >> $bart_logs/bart_backup_$today.log
+
+
+
+[enterprisedb@pg-dr ~]$
+
