@@ -3590,3 +3590,28 @@ full_page_writes = on
 
 wal_keep_segments = 10000
 ===============================
+++++++++++++++++++++++++
+#2017-12-18
+cronatb jobs on pg-rpd1
+####01 18 * * * /home/enterprisedb/bart_bk.sh > /tmp/bart_bk.log 2>&1
+
+* * * * * bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/pgping.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+*/10 * * * * bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/os_monitor.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+00 00 * * * bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_summary.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+*/20 * * * * bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/queries_and_connections_info.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh -q /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/queries96.sh > /dev/null 2>&1
+
+#Weekly report Genration script
+00 01 * * 5 /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/report_generator.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+#Replication lag script for pg_dr server :
+*/10 * * * *  bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/replication_lag.sh -c   /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+###Archive tar script for 12am and 12pm####
+00 00,12 * * *  bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/archive_backup_tar.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
+###Archive compression script for 1am and 1pm###
+00 01,13 * * *  bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/archive_backup_compression.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
+
