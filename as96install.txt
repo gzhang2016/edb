@@ -3615,3 +3615,34 @@ cronatb jobs on pg-rpd1
 ###Archive compression script for 1am and 1pm###
 00 01,13 * * *  bash /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/archive_backup_compression.sh -c /home/enterprisedb/Downloads/RDBA_Scripts/Scripts/mailx/cronjobs_conf_5444.sh > /dev/null 2>&1
 
+==========================
+bart conig in pg-dr ( still point to pg-prd1 remote backup)
+
+[enterprisedb@pg-dr ~]$ ps -ef | grep bart
+enterpr+ 22425 21540  0 10:16 pts/0    00:00:00 grep --color=auto bart
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$
+[enterprisedb@pg-dr ~]$ /usr/edb/bart2.0/bin/bart show-servers
+SERVER NAME         : pgdras96
+BACKUP FRIENDLY NAME: pg-dr_%year-%month-%dayT%hour:%minute:%second
+HOST NAME           : 10.81.10.226
+USER NAME           : bartuser
+PORT                : 5444
+REMOTE HOST         :
+RETENTION POLICY    : 1 Backups
+DISK UTILIZATION    : 1.15 TB
+WARNING: not marking any WALs as unused WALs, the WAL file '/backup/pgdras96/archived_wals/0000000100001C5B00000006' is required, yet not available in archived_wals directory
+NUMBER OF ARCHIVES  : 0
+ARCHIVE PATH        : /backup/pgdras96/archived_wals
+ARCHIVE COMMAND     : /bin/true
+XLOG METHOD         : fetch
+WAL COMPRESSION     : disabled
+TABLESPACE PATH(s)  :
+INCREMENTAL BACKUP  : ENABLED
+DESCRIPTION         : "PG_DR EPAS 96 server"
+
+==============================================
